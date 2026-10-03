@@ -1,0 +1,512 @@
+{
+ "id": "2026-10-04_measure_magic",
+ "title": "Drill 2 · Measure Magic 📏",
+ "drill_date": "2026-10-04",
+ "subject": "Maths",
+ "minutes": 39,
+ "pace_seconds": 90,
+ "focus": [
+  "Unit conversion",
+  "Volume & tanks",
+  "Area & perimeter",
+  "Time",
+  "Best buy & rates"
+ ],
+ "source_note": "wiki/Topics/Money_Measurement.md (most-repeated test error: unit conversion) + Area/Perimeter drill + ClassNotes 2024-03-17, 2024-04-28, 2024-11-03, 2025-T3 MeasurementMixed, 2026-01-30, 2026-04-03 + Oxford Yr8 8G",
+ "questions": [
+  {
+   "id": "m1",
+   "type": "mcq",
+   "topic": "Money_Measurement",
+   "difficulty": 1,
+   "stem": "A jug holds 2.4 L of juice. Mia pours out 6 cups of 180 mL each. How much juice is left in the jug?",
+   "options": [
+    "1.32 L",
+    "2.22 L",
+    "1.08 L",
+    "0.132 L"
+   ],
+   "answer": 0,
+   "explanation": "Change to mL first: 2.4 L = 2400 mL. Poured out 6 × 180 = 1080 mL. Left: 2400 − 1080 = 1320 mL, which is 1.32 L.",
+   "technique": "Write the target unit first, then convert everything to the SAME unit before you add or subtract.",
+   "trap": "Taking away only one cup (2.22 L) or giving the amount poured out (1.08 L)",
+   "source": "Topics/Money_Measurement: unit conversion is the most repeated test error",
+   "shuffle": true
+  },
+  {
+   "id": "m6",
+   "type": "mcq",
+   "topic": "Money_Measurement",
+   "difficulty": 2,
+   "stem": "A container holds 24 000 cm³ of water. How many litres is that?",
+   "options": [
+    "24 L",
+    "240 L",
+    "2.4 L",
+    "2 400 L"
+   ],
+   "answer": 0,
+   "explanation": "1 L = 1000 cm³ (1 mL = 1 cm³). So 24 000 ÷ 1000 = 24 L.",
+   "technique": "Remember: 1 cm³ = 1 mL, and 1000 cm³ = 1 L.",
+   "trap": "Dividing by 100 instead of 1000",
+   "source": "Test_Analysis_2025-12-05 Q47 (L vs cm³)",
+   "shuffle": true
+  },
+  {
+   "id": "m12",
+   "type": "mcq",
+   "topic": "Circles_Composite_Shapes",
+   "difficulty": 2,
+   "stem": "A rectangle has an area of 84 cm² and a length of 12 cm. What is its PERIMETER?",
+   "options": [
+    "38 cm",
+    "19 cm",
+    "84 cm",
+    "96 cm"
+   ],
+   "answer": 0,
+   "explanation": "Width = 84 ÷ 12 = 7 cm. Perimeter = 2 × (12 + 7) = 38 cm.",
+   "technique": "Back-solve the missing side first, then re-read: area or perimeter?",
+   "trap": "Adding only one length and one width (19 cm)",
+   "source": "ClassNotes_2023-10-15 (working backward from perimeter)",
+   "shuffle": true
+  },
+  {
+   "id": "m17",
+   "type": "mcq",
+   "topic": "Money_Measurement",
+   "difficulty": 2,
+   "stem": "A train leaves at 10:45 am and arrives at 2:20 pm. How long is the trip?",
+   "options": [
+    "3 h 35 min",
+    "4 h 25 min",
+    "3 h 25 min",
+    "4 h 35 min"
+   ],
+   "answer": 0,
+   "explanation": "Count up: 10:45 → 11:00 is 15 min. 11:00 → 2:00 pm is 3 h. 2:00 → 2:20 is 20 min. Total 3 h 35 min.",
+   "technique": "Elapsed time: jump to the next whole hour, then whole hours, then the leftover minutes.",
+   "trap": "Subtracting times like ordinary decimals",
+   "source": "Oxford Yr8 8G (duration method); Test_Analysis_2025-12-05 Q46",
+   "shuffle": true
+  },
+  {
+   "id": "m4",
+   "type": "mcq",
+   "topic": "Quantitative_Reasoning",
+   "difficulty": 2,
+   "stem": "A straight fence is 30 m long. A post goes at each end and every 2.5 m along it. How many posts are there?",
+   "options": [
+    "13",
+    "12",
+    "11",
+    "75"
+   ],
+   "answer": 0,
+   "explanation": "30 ÷ 2.5 = 12 gaps. A straight line with posts at both ends needs one more post than gaps: 13.",
+   "technique": "Fence posts on a straight line: posts = gaps + 1. (Cuts on a ribbon: cuts = pieces − 1.) Draw a tiny one to check.",
+   "trap": "Counting gaps instead of posts (12)",
+   "source": "Mistake_Tracker 2026-07-10 P1 Q20 (fencepost / cuts vs pieces)",
+   "shuffle": true
+  },
+  {
+   "id": "m2",
+   "type": "mcq",
+   "topic": "Money_Measurement",
+   "difficulty": 2,
+   "stem": "A box holds 3 packets of rice, each 750 g, and 2 bags of flour, each 1.2 kg. What is the total mass in kg?",
+   "options": [
+    "4.65 kg",
+    "3.15 kg",
+    "1.95 kg",
+    "46.5 kg"
+   ],
+   "answer": 0,
+   "explanation": "Rice: 3 × 750 g = 2250 g = 2.25 kg. Flour: 2 × 1.2 = 2.4 kg. Total 2.25 + 2.4 = 4.65 kg.",
+   "technique": "Watch the multipliers: '3 packets of 750 g' is 3 × 750 g, not 750 g.",
+   "trap": "Counting only one packet of rice (3.15 kg)",
+   "source": "Topics/Money_Measurement: quantity multipliers",
+   "shuffle": true
+  },
+  {
+   "id": "m13",
+   "type": "mcq",
+   "topic": "Circles_Composite_Shapes",
+   "difficulty": 3,
+   "stem": "Find the area of the shaded triangle. The dashed pink line is the perpendicular height.",
+   "options": [
+    "15 cm²",
+    "29.7 cm²",
+    "30 cm²",
+    "16.8 cm²"
+   ],
+   "answer": 0,
+   "explanation": "Area = ½ × base × perpendicular height = ½ × 6 × 5 = 15 cm². The height must be at a right angle to the base, even when it falls outside the triangle. The slanted sides are not the height.",
+   "technique": "Height = the line that makes a right angle (90°) with the base. Look for the little square.",
+   "trap": "Using a slanted side as the height (29.7 or 16.8)",
+   "source": "ClassNotes_2024-04-28 / 05-05 (base–height identification: weak)",
+   "shuffle": true,
+   "image": "data:image/png;base64,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"
+  },
+  {
+   "id": "m21",
+   "type": "mcq",
+   "topic": "Money_Measurement",
+   "difficulty": 2,
+   "stem": "Which is the better buy? A: 750 g of cereal for $4.50. B: 1.2 kg of cereal for $6.60.",
+   "options": [
+    "B: $5.50 per kg",
+    "A: $6.00 per kg",
+    "They cost the same per kg",
+    "A: $0.60 per kg"
+   ],
+   "answer": 0,
+   "explanation": "Compare price per kg. A: $4.50 ÷ 0.75 kg = $6.00/kg. B: $6.60 ÷ 1.2 kg = $5.50/kg. B is cheaper per kg.",
+   "technique": "Best buy: change to the same unit (per kg or per 100 g), THEN compare.",
+   "trap": "Comparing the sticker prices only",
+   "source": "ClassNotes_2026-01-30 (best-buy: 1/5)",
+   "shuffle": true
+  },
+  {
+   "id": "m5",
+   "type": "mcq",
+   "topic": "Money_Measurement",
+   "difficulty": 2,
+   "stem": "Convert 3.5 m² into cm².",
+   "options": [
+    "350 cm²",
+    "3 500 cm²",
+    "35 000 cm²",
+    "350 000 cm²"
+   ],
+   "answer": 2,
+   "explanation": "1 m = 100 cm, so 1 m² = 100 cm × 100 cm = 10 000 cm². Then 3.5 × 10 000 = 35 000 cm².",
+   "technique": "Squared units: multiply by the conversion TWICE (100 × 100 = 10 000).",
+   "trap": "Multiplying by 100 only once (350 cm²)",
+   "source": null,
+   "shuffle": true
+  },
+  {
+   "id": "m9",
+   "type": "mcq",
+   "topic": "Money_Measurement",
+   "difficulty": 3,
+   "stem": "The 60 L tank is already ¼ full. A tap pours in 12 L per minute. How long until the tank is full?",
+   "options": [
+    "3 min 45 s",
+    "5 min",
+    "3 min 75 s",
+    "1 min 15 s"
+   ],
+   "answer": 0,
+   "explanation": "¼ full means ¾ is still empty: ¾ × 60 = 45 L. Then 45 ÷ 12 = 3.75 min. 0.75 min is 0.75 × 60 = 45 s, so the answer is 3 min 45 s.",
+   "technique": "Fill problems: find what's still EMPTY first. Decimal minutes × 60 gives the seconds.",
+   "trap": "Filling the whole tank (5 min), or reading 3.75 min as 3 min 75 s",
+   "source": "ClassNotes_2025-Term3_Block-MeasurementMixed (rate + fractional fill)",
+   "shuffle": true
+  },
+  {
+   "id": "m18",
+   "type": "mcq",
+   "topic": "Money_Measurement",
+   "difficulty": 2,
+   "stem": "A movie starts at 19:40 and runs for 2 h 35 min. What time does it finish, in 12-hour time?",
+   "options": [
+    "10:15 pm",
+    "10:15 am",
+    "9:15 pm",
+    "11:15 pm"
+   ],
+   "answer": 0,
+   "explanation": "19:40 + 2 h = 21:40. Add 35 min: 21:40 + 20 min = 22:00, + 15 min = 22:15. 22:15 is 10:15 pm.",
+   "technique": "24-hour → 12-hour: afternoon/evening times subtract 12 and add 'pm'.",
+   "trap": "Forgetting pm (10:15 am)",
+   "source": "Oxford Yr8 8G (12/24-hour time)",
+   "shuffle": true
+  },
+  {
+   "id": "m14",
+   "type": "mcq",
+   "topic": "Circles_Composite_Shapes",
+   "difficulty": 3,
+   "stem": "Find the PERIMETER of this shape. All corners are right angles.",
+   "options": [
+    "36 cm",
+    "29 cm",
+    "68 cm",
+    "43 cm"
+   ],
+   "answer": 0,
+   "explanation": "Walk around the outside edge: 10 + 5 + 4 + 3 + 6 + 8 = 36 cm. The two missing sides are 8 − 3 = 5 cm and 10 − 4 = 6 cm. A notch in a corner doesn't change the perimeter of the rectangle around it: 2 × (10 + 8) = 36.",
+   "technique": "Perimeter: trace the outside with your finger and label every missing side before adding.",
+   "trap": "Subtracting the notch's sides, or giving the area (68)",
+   "source": "Topics/Circles_Composite_Shapes (composite perimeter)",
+   "shuffle": true,
+   "image": "data:image/png;base64,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"
+  },
+  {
+   "id": "m11",
+   "type": "numeric",
+   "topic": "Money_Measurement",
+   "difficulty": 2,
+   "stem": "How many 150 mL cups can be filled COMPLETELY from a 2 L bottle? (Type a whole number.)",
+   "answer": 13,
+   "tolerance": 0.001,
+   "unit": "",
+   "explanation": "2 L = 2000 mL. 2000 ÷ 150 = 13.33… Only 13 cups can be filled all the way. The 14th would only be partly full.",
+   "technique": "When the answer must be 'complete' things, round DOWN.",
+   "trap": "Rounding up to 14",
+   "source": "ClassNotes_2024-03-17 (rounding in context: weak)"
+  },
+  {
+   "id": "m22",
+   "type": "mcq",
+   "topic": "Money_Measurement",
+   "difficulty": 2,
+   "stem": "Ella earns $24 per hour. One week she works 38 normal hours, plus 4 hours of overtime at time-and-a-half. What is her pay for the week?",
+   "options": [
+    "$1056",
+    "$1008",
+    "$1104",
+    "$1152"
+   ],
+   "answer": 0,
+   "explanation": "Normal: 38 × $24 = $912. Overtime rate = 1.5 × $24 = $36. Overtime: 4 × $36 = $144. Total $912 + $144 = $1056.",
+   "technique": "Time-and-a-half = rate × 1.5. Double time = rate × 2. Work out each part separately.",
+   "trap": "Paying all 42 hours at the normal rate ($1008)",
+   "source": "ClassNotes_2026-02-06 (wages & overtime)",
+   "shuffle": true
+  },
+  {
+   "id": "m3",
+   "type": "mcq",
+   "topic": "Money_Measurement",
+   "difficulty": 2,
+   "stem": "A ribbon is 3.6 m long. Sam cuts off 8 pieces that are each 35 cm long. How much ribbon is left?",
+   "options": [
+    "80 cm",
+    "3.25 m",
+    "0.8 cm",
+    "280 cm"
+   ],
+   "answer": 0,
+   "explanation": "3.6 m = 360 cm. Cut off 8 × 35 = 280 cm. Left: 360 − 280 = 80 cm.",
+   "technique": "m → cm: × 100. Do the conversion BEFORE you subtract.",
+   "trap": "Giving the cut-off length (280 cm) as the answer",
+   "source": "Test_Analysis_2024-10-06 (dense conversion cluster)",
+   "shuffle": true
+  },
+  {
+   "id": "m7",
+   "type": "mcq",
+   "topic": "Money_Measurement",
+   "difficulty": 2,
+   "stem": "This tank is a cuboid. What is its capacity in litres?",
+   "options": [
+    "60 L",
+    "6 L",
+    "600 L",
+    "120 L"
+   ],
+   "answer": 0,
+   "explanation": "Volume = 50 × 40 × 30 = 60 000 cm³. Since 1000 cm³ = 1 L, that's 60 L.",
+   "technique": "Volume of a cuboid = length × width × height. Then cm³ ÷ 1000 = litres.",
+   "trap": "Wrong power of ten when converting",
+   "source": "ClassNotes_2025-Term3_Block-MeasurementMixed (tank volume)",
+   "shuffle": true,
+   "image": "data:image/png;base64,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"
+  },
+  {
+   "id": "m24",
+   "type": "mcq",
+   "topic": "Number",
+   "difficulty": 2,
+   "stem": "Which is the best ESTIMATE of 49.7 × 0.205?",
+   "options": [
+    "10",
+    "1",
+    "100",
+    "0.1"
+   ],
+   "answer": 0,
+   "explanation": "49.7 ≈ 50 and 0.205 ≈ 0.2. 50 × 0.2 = 10. (The exact answer is 10.1885.)",
+   "technique": "Estimate: round each number to one easy figure first, then multiply.",
+   "trap": "Losing track of the decimal place",
+   "source": "ClassNotes_2024-03-17 (rounding/estimation: 11/18)",
+   "shuffle": false
+  },
+  {
+   "id": "m19",
+   "type": "mcq",
+   "topic": "Money_Measurement",
+   "difficulty": 2,
+   "stem": "Melbourne is on UTC+10 and Perth is on UTC+8 (no daylight saving). It's 4:30 pm in Melbourne. What time is it in Perth?",
+   "options": [
+    "2:30 pm",
+    "6:30 pm",
+    "4:30 pm",
+    "12:30 pm"
+   ],
+   "answer": 0,
+   "explanation": "Perth is 2 hours BEHIND Melbourne (8 is less than 10). 4:30 pm − 2 h = 2:30 pm.",
+   "technique": "Time zones: a bigger UTC number is further ahead. West of us = earlier.",
+   "trap": "Adding the difference instead of subtracting",
+   "source": "Oxford Yr8 8G (time zones)",
+   "shuffle": true
+  },
+  {
+   "id": "m15",
+   "type": "mcq",
+   "topic": "Circles_Composite_Shapes",
+   "difficulty": 2,
+   "stem": "Find the area of this trapezium.",
+   "options": [
+    "72 cm²",
+    "144 cm²",
+    "54 cm²",
+    "90 cm²"
+   ],
+   "answer": 0,
+   "explanation": "Area = ½ × (sum of parallel sides) × height = ½ × (9 + 15) × 6 = ½ × 24 × 6 = 72 cm².",
+   "technique": "Trapezium: average the two parallel sides, then × height.",
+   "trap": "Forgetting the ½ (144)",
+   "source": "Practice/Area_Perimeter_Drill.md (trapezium)",
+   "shuffle": true,
+   "image": "data:image/png;base64,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"
+  },
+  {
+   "id": "m23",
+   "type": "mcq",
+   "topic": "Money_Measurement",
+   "difficulty": 3,
+   "stem": "A taxi charges $4.20 to start, plus $2.15 for every km. Jai's fare was $36.45. How far did he travel?",
+   "options": [
+    "15 km",
+    "16.95 km",
+    "17 km",
+    "13 km"
+   ],
+   "answer": 0,
+   "explanation": "Take off the starting charge: $36.45 − $4.20 = $32.25. Then $32.25 ÷ $2.15 = 15 km. Check: 4.20 + 15 × 2.15 = 36.45 ✓",
+   "technique": "Working backwards: undo the steps in REVERSE order (subtract the fixed fee first, then divide).",
+   "trap": "Dividing the whole fare by $2.15",
+   "source": "ClassNotes_2026-04-03 (reverse rate-table: 0/1)",
+   "shuffle": true
+  },
+  {
+   "id": "m8",
+   "type": "mcq",
+   "topic": "Money_Measurement",
+   "difficulty": 3,
+   "stem": "A tank has a rectangular base 40 cm by 25 cm. It holds 15 L of water. How deep is the water?",
+   "options": [
+    "15 cm",
+    "1.5 cm",
+    "150 cm",
+    "37.5 cm"
+   ],
+   "answer": 0,
+   "explanation": "15 L = 15 000 cm³. Base area = 40 × 25 = 1000 cm². Depth = volume ÷ base area = 15 000 ÷ 1000 = 15 cm.",
+   "technique": "Working backwards: height = volume ÷ base area. Change litres to cm³ first.",
+   "trap": "Forgetting to change L to cm³",
+   "source": "ClassNotes_2024-11-03 (back-solving volume, 2/4)",
+   "shuffle": true
+  },
+  {
+   "id": "m20",
+   "type": "mcq",
+   "topic": "Speed_Distance_Time",
+   "difficulty": 2,
+   "stem": "A car leaves at 9:50 am and arrives at 12:20 pm. It travels 200 km. What is its average speed?",
+   "options": [
+    "80 km/h",
+    "83.3 km/h",
+    "66.7 km/h",
+    "100 km/h"
+   ],
+   "answer": 0,
+   "explanation": "9:50 → 12:20 is 2 h 30 min = 2.5 h. Speed = 200 ÷ 2.5 = 80 km/h.",
+   "technique": "Clock times → duration first. 30 min = 0.5 h, not 0.3 h.",
+   "trap": "Using 2.4 h or 3 h",
+   "source": "Oxford Yr8 8G cross-reference to Speed_Distance_Time",
+   "shuffle": true
+  },
+  {
+   "id": "m26",
+   "type": "mcq",
+   "topic": "Money_Measurement",
+   "difficulty": 2,
+   "stem": "3 identical apples and a 200 g weight balance exactly with 2 of the same apples and a 450 g weight. What is the mass of ONE apple?",
+   "options": [
+    "250 g",
+    "650 g",
+    "125 g",
+    "0.25 g"
+   ],
+   "answer": 0,
+   "explanation": "Take 2 apples off both sides: 1 apple + 200 g = 450 g. So 1 apple = 450 − 200 = 250 g.",
+   "technique": "Balance problems: remove the SAME thing from both sides until one item is left alone.",
+   "trap": null,
+   "source": "ClassNotes_2023-08-27 Q28 (balance-scale mass)",
+   "shuffle": true
+  },
+  {
+   "id": "m16",
+   "type": "mcq",
+   "topic": "Circles_Composite_Shapes",
+   "difficulty": 3,
+   "stem": "A path 1 m wide goes around the OUTSIDE of a 12 m by 8 m lawn. What is the area of the path?",
+   "options": [
+    "44 m²",
+    "40 m²",
+    "140 m²",
+    "22 m²"
+   ],
+   "answer": 0,
+   "explanation": "Big rectangle (lawn + path) = 14 m × 10 m = 140 m². The path adds 1 m on EACH side. Take away the lawn: 140 − 96 = 44 m².",
+   "technique": "Border/path area = big outside rectangle − inside rectangle. Each side grows by 2 × the path width.",
+   "trap": "Perimeter × width (40), forgetting the corners",
+   "source": null,
+   "shuffle": true,
+   "image": "data:image/png;base64,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"
+  },
+  {
+   "id": "m10",
+   "type": "mcq",
+   "topic": "Money_Measurement",
+   "difficulty": 2,
+   "stem": "A pool holds 18 000 L. It drains at 250 L per minute. How long does it take to empty?",
+   "options": [
+    "1 h 12 min",
+    "1 h 20 min",
+    "72 h",
+    "7 h 12 min"
+   ],
+   "answer": 0,
+   "explanation": "18 000 ÷ 250 = 72 minutes. 72 min = 60 min + 12 min = 1 h 12 min.",
+   "technique": "Minutes → hours: take out groups of 60. Don't treat 1.2 h as 1 h 20 min.",
+   "trap": "Reading 1.2 hours as 1 h 20 min",
+   "source": "Test_Analysis_2025-11-29 Q48 (tank rate)",
+   "shuffle": true
+  },
+  {
+   "id": "m25",
+   "type": "mcq",
+   "topic": "Money_Measurement",
+   "difficulty": 3,
+   "stem": "A map has a scale of 1 : 25 000. Two towns are 6.4 cm apart on the map. How far apart are they in real life?",
+   "options": [
+    "1.6 km",
+    "16 km",
+    "0.16 km",
+    "160 km"
+   ],
+   "answer": 0,
+   "explanation": "6.4 × 25 000 = 160 000 cm. 160 000 cm = 1600 m = 1.6 km (÷ 100 for m, then ÷ 1000 for km).",
+   "technique": "cm → km: ÷ 100 000 (÷ 100 for m, then ÷ 1000 for km).",
+   "trap": "Dropping a zero when converting",
+   "source": null,
+   "shuffle": true
+  }
+ ]
+}

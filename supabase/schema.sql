@@ -188,7 +188,7 @@ begin
     execute format('drop policy if exists %1$s_update on public.%1$s', t);
     execute format('create policy %1$s_update on public.%1$s for update using (user_id = auth.uid() or (public.is_parent() and public.in_my_family(user_id)))', t);
     execute format('drop policy if exists %1$s_delete on public.%1$s', t);
-    execute format('create policy %1$s_delete on public.%1$s for delete using (user_id = auth.uid())', t);
+    execute format('create policy %1$s_delete on public.%1$s for delete using (user_id = auth.uid() or (public.is_parent() and public.in_my_family(user_id)))', t);
   end loop;
 end $$;
 

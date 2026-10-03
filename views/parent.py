@@ -23,6 +23,8 @@ def render():
     with t3:
         _export(kid)
     with t4:
+        _reset(kid)
+        st.divider()
         _settings(kid)
 
 
@@ -174,6 +176,46 @@ def _export(kid):
         for a in att:
             data.store().update("attempts", {"id": a["id"]}, {"exported_at": now_iso()})
         st.rerun()
+
+
+def _reset(kid):
+    st.markdown("#### 🧹 Reset test data")
+    st.caption("Use this after trying things out. It can't be undone.")
+    uid = kid["id"]
+    att = data.attempts(uid)
+    drills = {d["id"]: d["title"] for d in data.drills(include_archived=True)}
+    tried = sorted({a["drill_id"] for a in att})
+    s = data.store()
+
+    c1, c2 = st.columns(2)
+    with c1:
+        st.markdown("**Reset one drill**")
+        st.caption("Removes her attempts and answers for that drill, and the notebook cards made from it, "
+                   "so it shows as NEW again. XP and badges stay.")
+        pick = st.selectbox("Drill", tried, format_func=lambda i: drills.get(i, i), key="reset_pick",
+                            index=None, placeholder="Choose a drill she has tried")
+        ok1 = st.checkbox("Yes, reset this drill", key="reset_ok1")
+        if st.button("Reset drill", disabled=not (pick and ok1), use_container_width=True):
+            for a in [a for a in att if a["drill_id"] == pick]:
+                s.delete("answers", {"attempt_id": a["id"]})
+                s.delete("attempts", {"id": a["id"]})
+            s.delete("notebook", {"user_id": uid, "source": pick})
+            st.session_state.pop("run", None)
+            st.success("Done. That drill is fresh again.")
+            st.rerun()
+    with c2:
+        st.markdown("**Start completely fresh**")
+        st.caption("Wipes ALL her attempts, answers, notebook cards, XP, badges and check-ins. "
+                   "Drills you've published stay.")
+        word = st.text_input("Type RESET to confirm", key="reset_word")
+        if st.button("Wipe everything", disabled=word.strip() != "RESET", use_container_width=True):
+            for a in att:
+                s.delete("answers", {"attempt_id": a["id"]})
+            for t in ("attempts", "notebook", "xp_events", "badges", "checkins"):
+                s.delete(t, {"user_id": uid})
+            st.session_state.pop("run", None)
+            st.success("All clean ✨ She starts at Level 1 with a fresh streak.")
+            st.rerun()
 
 
 def _settings(kid):
