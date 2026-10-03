@@ -217,9 +217,7 @@ def _play(run, d):
     style.card(
         f'<div>{style.pill(g.TOPIC_LABEL.get(q.get("topic"), q.get("topic", "")), "aqua")}'
         f'{style.pill(diff, "gold")}{style.pill("came back to this one", "pink") if skipped else ""}</div>'
-        f'<div class="sb-q" style="margin-top:8px">{esc(q["stem"])}</div>')
-    if q.get("image"):
-        st.image(q["image"], use_container_width=False, width=420)
+        f'<div class="sb-q" style="margin-top:8px">{esc(q["stem"])}</div>{style.img(q.get("image"))}')
 
     chosen = None
     if q.get("type", "mcq") == "numeric":
@@ -334,7 +332,8 @@ def _review(run, d):
         is_fixed = qid in fixed
         title = style.md(("✅ " if is_fixed else "🔧 ") + (q.get("short") or q["stem"][:70]))
         with st.expander(title, expanded=not is_fixed and qid == next((w for w in wrong if w not in fixed), None)):
-            st.markdown(f'<div class="sb-q" style="font-size:1.05rem">{esc(q["stem"])}</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="sb-q" style="font-size:1.05rem">{esc(q["stem"])}</div>{style.img(q.get("image"), 380)}',
+                        unsafe_allow_html=True)
             c1, c2 = st.columns(2)
             c1.markdown(f'<div class="sb-bad">Your answer: {esc(_answer_text(q, a["chosen"]) if a else "not answered")}</div>',
                         unsafe_allow_html=True)

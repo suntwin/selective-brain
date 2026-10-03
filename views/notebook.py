@@ -18,6 +18,7 @@ def _card_html(c, reveal=True):
     body = f'<div>{pills}</div><div class="sb-title" style="font-size:1.15rem;margin-top:6px">{esc(c["title"])}</div>'
     if q.get("stem") and q.get("stem") != c["title"]:
         body += f'<div class="sb-q" style="font-size:1rem;margin-top:4px">{esc(q["stem"])}</div>'
+    body += style.img(q.get("image"), 340)
     if reveal:
         if q.get("options") is not None and q.get("type", "mcq") == "mcq":
             body += f'<div class="sb-ok" style="margin-top:8px">Answer: {esc(q["options"][int(q["answer"])])}</div>'

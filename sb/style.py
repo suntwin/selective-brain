@@ -142,6 +142,17 @@ def esc(s) -> str:
     return _html.escape(str(s) if s is not None else "")
 
 
+def img(src, max_w=460) -> str:
+    """Question diagram: a data: URI (embedded in the drill JSON) or an https URL."""
+    if not src:
+        return ""
+    src = str(src)
+    if not (src.startswith("data:image/") or src.startswith("https://")):
+        return ""
+    return (f'<div style="margin-top:10px"><img src="{esc(src)}" style="max-width:min(100%,{max_w}px);'
+            f'border-radius:14px;border:2px solid #f1d9ff;background:#fff"/></div>')
+
+
 def card(body_html: str, cls: str = "sb-card"):
     st.markdown(f'<div class="{cls}">{body_html}</div>', unsafe_allow_html=True)
 

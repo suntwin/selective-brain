@@ -26,6 +26,12 @@ def validate(d: dict) -> list[str]:
         ids.add(q["id"])
         if q["topic"] not in TOPICS:
             errs.append(f"Q{i} ({q['id']}): unknown topic '{q['topic']}' (use one of {TOPICS})")
+        im = q.get("image")
+        if im:
+            if not (str(im).startswith("data:image/") or str(im).startswith("https://")):
+                errs.append(f"Q{i} ({q['id']}): 'image' must be a data:image/... URI or an https:// URL")
+            elif len(str(im)) > 400_000:
+                errs.append(f"Q{i} ({q['id']}): image is too big ({len(str(im)) // 1000} KB) — keep under ~300 KB")
         t = q.get("type", "mcq")
         if t == "mcq":
             opts = q.get("options") or []
@@ -106,7 +112,7 @@ def attempt_markdown(drill: dict, attempt: dict, answers: list[dict], checkin: d
         rc[a.get("reason")] += 1
         lines += [
             f"### {qid} · {TOPIC_LABEL.get(q['topic'], q['topic'])}" + (f" · trap: {q['trap']}" if q.get("trap") else ""),
-            f"- **Question:** {q['stem']}",
+            f"- **Question:** {q['stem']}" + (" *(has diagram)*" if q.get("image") else ""),
             f"- **Her answer:** {_ans(q, a.get('chosen')) if a else 'not answered'} · **Correct:** {_correct(q)}"
             f" · **Time:** {a.get('seconds', '—')} s",
             f"- **Why (her tag):** {REASON_TXT.get(a.get('reason'), a.get('reason'))}",
