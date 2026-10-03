@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from collections import Counter
 
+from .answers import answer_text, correct_text, word_results
 from .gamify import TOPICS, TOPIC_LABEL, to_local_date
 
 REQUIRED_Q = {"id", "topic", "stem"}
@@ -41,6 +42,25 @@ def validate(d: dict) -> list[str]:
                 errs.append(f"Q{i} ({q['id']}): 'answer' must be the 0-based index of the right option")
             if len(set(map(str, opts))) != len(opts):
                 errs.append(f"Q{i} ({q['id']}): duplicate options")
+        elif t == "word":
+            parts = q.get("parts") or []
+            if not parts:
+                errs.append(f"Q{i} ({q['id']}): word problem needs 'parts'")
+            labels = [p.get("label") for p in parts]
+            if len(set(labels)) != len(labels) or None in labels:
+                errs.append(f"Q{i} ({q['id']}): each part needs a unique 'label'")
+            for p in parts:
+                if p.get("accept"):
+                    continue
+                try:
+                    float(p["answer"])
+                except (KeyError, TypeError, ValueError):
+                    errs.append(f"Q{i} ({q['id']}) part {p.get('label')}: needs a numeric 'answer' or an 'accept' list")
+            if not q.get("solution"):
+                errs.append(f"Q{i} ({q['id']}): word problem needs 'solution' steps")
+            af = q.get("asks_for")
+            if af and not (isinstance(af.get("answer"), int) and 0 <= af["answer"] < len(af.get("options", []))):
+                errs.append(f"Q{i} ({q['id']}): asks_for.answer must index asks_for.options")
         elif t == "numeric":
             try:
                 float(q["answer"])
@@ -56,18 +76,11 @@ REASON_TXT = {"concept": "Concept gap", "careless": "Careless slip", "misread": 
 
 
 def _ans(q, v):
-    if v in (None, "", "None"):
-        return "—"
-    if q.get("type", "mcq") == "numeric":
-        return f'{v} {q.get("unit", "")}'.strip()
-    try:
-        return str(q["options"][int(v)])
-    except (ValueError, IndexError, KeyError):
-        return str(v)
+    return answer_text(q, v)
 
 
 def _correct(q):
-    return _ans(q, q["answer"]) if q.get("type", "mcq") == "numeric" else str(q["options"][int(q["answer"])])
+    return correct_text(q)
 
 
 def attempt_markdown(drill: dict, attempt: dict, answers: list[dict], checkin: dict | None = None) -> str:
@@ -84,7 +97,7 @@ def attempt_markdown(drill: dict, attempt: dict, answers: list[dict], checkin: d
         f"beat_clock: {bool(attempt.get('beat_clock'))}", f"xp: {attempt.get('xp_earned', 0)}", "---", "",
         f"# App Drill Result — {day} — {drill['title']}", "",
         f"- **Score:** {score}/{total} ({round(score / max(1, total) * 100)}%)",
-        f"- **Time limit:** {int(attempt.get('time_limit_sec') or 0) // 60} min at {drill.get('pace_seconds', 90)} s/question"
+        f"- **Time limit:** {int(attempt.get('time_limit_sec') or 0) // 60} min (exam pace)"
         f" · **Beat the clock:** {'yes' if attempt.get('beat_clock') else 'no'}"
         f"{' · finished in overtime' if attempt.get('overtime') else ''}",
         f"- **Median seconds/question:** {sorted(secs)[len(secs) // 2] if secs else '—'}",
@@ -118,6 +131,10 @@ def attempt_markdown(drill: dict, attempt: dict, answers: list[dict], checkin: d
             f"- **Why (her tag):** {REASON_TXT.get(a.get('reason'), a.get('reason'))}",
             f"- **Her fix:** {a.get('fix_note') or '—'}",
         ]
+        if q.get("type") == "word":
+            lines.append("- **Parts:** " + "; ".join(
+                f"({r['label']}) {'✅' if r['ok'] else '❌'} {r['given'] or '—'} → {r['correct']}"
+                for r in word_results(q, a.get("chosen") if a else None)))
         if q.get("source"):
             lines.append(f"- **Source:** {q['source']}")
         lines.append("")

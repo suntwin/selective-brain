@@ -83,6 +83,27 @@ Claude writes `Practice/App_Drills/<date>_<name>.json` into the vault. Upload it
   ]
 }
 ```
+### Word problems (`"type": "word"`)
+She works on paper, then types the final answer for each part. Every part is auto-marked: a fraction like `5/8`, a mixed number, `$`, `%`, a unit such as `45 L`, and commas are all accepted. After answering she sees which parts were right, and the review shows the full worked solution.
+```json
+{
+  "id": "w1", "type": "word", "topic": "Ratio_Proportion", "difficulty": 3,
+  "stem": "A bakery sells cupcakes and muffins in the ratio 5 : 3. On Monday it sold 120 more cupcakes than muffins.",
+  "parts": [
+    {"label": "a", "prompt": "How many muffins were sold?", "answer": 180},
+    {"label": "b", "prompt": "What fraction were cupcakes?", "answer": 0.625, "display": "5/8"},
+    {"label": "c", "prompt": "Simplest ratio of cupcakes to total?", "accept": ["5:8", "5 : 8"]}
+  ],
+  "solution": ["Difference 2 units = 120, so 1 unit = 60", "…"],
+  "asks_for": {"prompt": "What does part (c) want?", "options": ["…", "…"], "answer": 1},
+  "seconds": 270
+}
+```
+- `accept` holds text answers such as ratios or times. `display` controls how the answer is shown. `unit: "$"` shows `$108`.
+- `asks_for` is optional. It's a "what is this question really asking?" check before she answers, worth +3 XP. It trains the habit of answering the wrong quantity.
+- `seconds` is the time allowed. The default is 90 s per part, with at least 2 parts.
+- XP: +6 per correct part, +6 if all parts are right, plus the usual speed bonus.
+
 - `answer` for MCQ is the **0-based index** of the right option. Options are shuffled per attempt unless `"shuffle": false`.
 - `topic` must be one of: Fractions, Ratio_Proportion, Percentages, Indices, Algebra, Angles_Geometry, Circles_Composite_Shapes, Statistics_Probability, Speed_Distance_Time, Money_Measurement, Number, Quantitative_Reasoning. These match the vault's `wiki/Topics/` pages.
 - Session sizes serve 100%, 75% or 40% of the questions (Full, Normal, Light). The time limit is questions × `pace_seconds`.

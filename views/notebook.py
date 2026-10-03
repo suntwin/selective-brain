@@ -1,6 +1,6 @@
 import streamlit as st
 
-from sb import data, gamify as g, style
+from sb import answers as ans, data, gamify as g, style
 from sb.style import esc
 
 KIND = {"mistake": ("🔧", "Mistake"), "technique": ("💡", "Technique"), "pattern": ("🔁", "Pattern")}
@@ -15,12 +15,22 @@ def _card_html(c, reveal=True):
         pills += style.pill(REASON.get(c["reason"], c["reason"]), "gold")
     if c.get("mastered"):
         pills += style.pill("🏅 mastered", "lav")
-    body = f'<div>{pills}</div><div class="sb-title" style="font-size:1.15rem;margin-top:6px">{esc(c["title"])}</div>'
-    if q.get("stem") and q.get("stem") != c["title"]:
-        body += f'<div class="sb-q" style="font-size:1rem;margin-top:4px">{esc(q["stem"])}</div>'
+    body = f'<div>{pills}</div>'
+    stem = q.get("stem") or ""
+    if not (stem and stem.startswith(str(c["title"]).rstrip("…"))):   # title isn't just the start of the question
+        body += f'<div class="sb-title" style="font-size:1.15rem;margin-top:6px">{esc(c["title"])}</div>'
+    if stem:
+        body += f'<div class="sb-q" style="font-size:1.05rem;margin-top:6px">{esc(stem)}</div>'
     body += style.img(q.get("image"), 340)
     if reveal:
-        if q.get("options") is not None and q.get("type", "mcq") == "mcq":
+        if q.get("type") == "word":
+            parts = "".join(f'<div>({esc(p["label"])}) {esc(p.get("prompt", ""))} → <b>{esc(ans.part_answer_text(p))}</b></div>'
+                            for p in q.get("parts", []))
+            steps = "".join(f"<li>{esc(x)}</li>" for x in q.get("solution", []))
+            body += f'<div class="sb-ok" style="margin-top:8px">{parts}</div>'
+            if steps:
+                body += f'<ol style="margin:.5rem 0 0 1.1rem;font-weight:600">{steps}</ol>'
+        elif q.get("options") is not None and q.get("type", "mcq") == "mcq":
             body += f'<div class="sb-ok" style="margin-top:8px">Answer: {esc(q["options"][int(q["answer"])])}</div>'
         elif q.get("answer") is not None:
             body += f'<div class="sb-ok" style="margin-top:8px">Answer: {esc(q["answer"])} {esc(q.get("unit", ""))}</div>'

@@ -68,7 +68,7 @@ def render():
     tm = g.topic_map(s["answers"])
     chips = "".join(
         f'<span class="sb-topic {t["color"]}">{esc(t["label"])} '
-        f'{"" if t["acc"] is None else f"· {round(t["acc"] * 100)}%"}</span>' for t in tm)
+        f'{"" if t["acc"] is None else "· " + str(round(t["acc"] * 100)) + "%"}</span>' for t in tm)
     style.card(chips + '<div class="sb-small" style="margin-top:6px">🟢 80%+ · 🟡 60–79% · 🔴 under 60% · '
                'based on your last 20 answers per topic</div>')
 
@@ -122,11 +122,14 @@ def _today_plan(ci, is_child, stk):
         d = sorted(todo, key=lambda x: x["drill_date"])[0]   # oldest unfinished first
         focus = "".join(style.pill(f, "pink") for f in (d.get("focus") or [])[:5])
         sz = size if size in ("Full", "Normal", "Light") else "Light"
-        nq = len(data.pick_questions(d, sz)) if size else len(d["questions"])
-        mins = round(nq * int(d.get("pace_seconds", 90)) / 60)
+        sel = data.pick_questions(d, sz) if size else [q["id"] for q in d["questions"]]
+        nq = len(sel)
+        mins = round(data.session_seconds(d, sel) / 60)
+        nw = sum(1 for q in d["questions"] if q.get("type") == "word" and q["id"] in sel)
+        extra = f" · 📝 {nw} word problem{'s' if nw != 1 else ''}" if nw else ""
         style.card(f'<div class="sb-title" style="font-size:1.2rem">{esc(d["title"])}</div>'
-                   f'<div class="sb-small">{nq} questions · ⏳ {mins} min at exam pace '
-                   f'({d.get("pace_seconds", 90)} s per question)</div><div style="margin-top:6px">{focus}</div>')
+                   f'<div class="sb-small">{nq} questions · ⏳ {mins} min at exam pace{extra}</div>'
+                   f'<div style="margin-top:6px">{focus}</div>')
         if is_child and st.button("Start my drill 🚀", use_container_width=True, disabled=size is None):
             st.session_state.drill_pick = d["id"]
             nav.go("drill")

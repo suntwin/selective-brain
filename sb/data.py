@@ -103,9 +103,16 @@ def pick_questions(d: dict, size: str) -> list[str]:
     return [qs[int(i * step)]["id"] for i in range(n)]
 
 
+def session_seconds(d: dict, qids: list[str]) -> int:
+    from .answers import q_seconds
+    qm = {q["id"]: q for q in d["questions"]}
+    pace = int(d.get("pace_seconds", 90))
+    return sum(q_seconds(qm[i], pace) for i in qids if i in qm)
+
+
 def start_attempt(d: dict, size: str) -> dict:
     qids = pick_questions(d, size)
-    limit = len(qids) * int(d.get("pace_seconds", 90))
+    limit = session_seconds(d, qids)
     return store().insert("attempts", {
         "user_id": me()["id"], "drill_id": d["id"], "session_size": size,
         "started_at": now_iso(), "time_limit_sec": limit, "total": len(qids),

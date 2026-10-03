@@ -11,6 +11,9 @@ XP = {
     "checkin": 5,
     "attempt": 2,          # any answered question
     "correct": 10,
+    "word_part": 6,        # each correct part of a word problem
+    "word_all": 6,         # bonus when every part is right
+    "read_right": 3,       # picked what the question really asks for
     "speedy": 3,           # correct AND within exam pace
     "drill_done": 25,
     "perfect": 50,
