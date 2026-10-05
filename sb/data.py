@@ -76,6 +76,25 @@ def badges(uid=None):
     return {b["badge_key"]: b for b in store().select("badges", eq={"user_id": uid or child()["id"]})}
 
 
+def mistake_map() -> dict | None:
+    """The family's current Mistake Map (uploaded by the parent), or None."""
+    try:
+        rows = store().select("insights", eq={"family_id": me()["family_id"], "kind": "mistake_map"})
+    except Exception:          # table not created yet (003_mistake_map.sql not run)
+        return None
+    if not rows:
+        return None
+    rows.sort(key=lambda r: str(r.get("updated") or ""), reverse=True)
+    return rows[0].get("data")
+
+
+def save_mistake_map(m: dict):
+    fam = me()["family_id"]
+    store().upsert("insights", {"id": f"mistake_map_{fam}", "family_id": fam, "kind": "mistake_map",
+                                "title": m.get("title", "Mistake Map"), "updated": m.get("updated"), "data": m},
+                   on_conflict="id")
+
+
 # ---------------------------------------------------------------- writes
 def add_xp(amount: int, reason: str):
     if amount:

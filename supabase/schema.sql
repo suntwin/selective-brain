@@ -196,3 +196,26 @@ create index if not exists idx_answers_user on public.answers(user_id, created_a
 create index if not exists idx_attempts_user on public.attempts(user_id, started_at);
 create index if not exists idx_notebook_review on public.notebook(user_id, next_review);
 create index if not exists idx_xp_user on public.xp_events(user_id);
+
+-- ---------------------------------------------------------------
+-- Mistake Map (same as 003_mistake_map.sql)
+-- ---------------------------------------------------------------
+create table if not exists public.insights (
+  id text primary key,                       -- mistake_map_<family id>: one current map per family
+  family_id uuid not null references public.families(id) on delete cascade,
+  kind text not null default 'mistake_map',
+  title text,
+  updated date,
+  data jsonb not null,                       -- the whole map JSON built by Claude from the vault
+  created_at timestamptz default now()
+);
+
+alter table public.insights enable row level security;
+
+drop policy if exists insights_select on public.insights;
+create policy insights_select on public.insights for select using (family_id = public.my_family());
+
+drop policy if exists insights_write on public.insights;
+create policy insights_write on public.insights for all
+  using (family_id = public.my_family() and public.is_parent())
+  with check (family_id = public.my_family() and public.is_parent());

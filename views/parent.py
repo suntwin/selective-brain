@@ -15,9 +15,13 @@ from sb.store import now_iso
 def render():
     kid = data.child()
     st.markdown(f"## 🧭 Parent Hub · {kid['display_name']}")
-    t1, t2, t3, t4 = st.tabs(["📈 This week", "🪄 Publish a drill", "📤 Export to vault", "⚙️ Settings"])
+    t1, tm, t2, t3, t4 = st.tabs(["📈 This week", "🗺️ Mistake Map", "🪄 Publish a drill", "📤 Export to vault",
+                                  "⚙️ Settings"])
     with t1:
         _week(kid)
+    with tm:
+        from views import mistake_map
+        mistake_map.render_parent(kid)
     with t2:
         _publish()
     with t3:

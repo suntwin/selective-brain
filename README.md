@@ -108,6 +108,16 @@ She works on paper, then types the final answer for each part. Every part is aut
 - `topic` must be one of: Fractions, Ratio_Proportion, Percentages, Indices, Algebra, Angles_Geometry, Circles_Composite_Shapes, Statistics_Probability, Speed_Distance_Time, Money_Measurement, Number, Quantitative_Reasoning. These match the vault's `wiki/Topics/` pages.
 - Session sizes serve 100%, 75% or 40% of the questions (Full, Normal, Light). The time limit is questions × `pace_seconds`.
 
+## Mistake Map (Parent Hub → 🗺️ Mistake Map, Notebook → 🎯 My focus)
+
+Claude builds the map from every test mistake in the vault and saves it as
+`Practice/App_Insights/<date>_mistake_map.json`. Upload it in **Parent Hub → 🗺️ Mistake Map → Update the Mistake Map**.
+Uploading again replaces the old map. The format is described at the top of `sb/insights.py`.
+
+- **Parent view:** ranked problem areas, with an "In the app" column showing her live accuracy per topic. Also how she loses marks, cross-topic habits, and the full filterable list.
+- **Her view (🎯 My focus):** her top 4 focus areas with tips and progress bars, wins so far, and "super-power habits" she can add to her notebook with one tap (+XP).
+- **One-time setup:** run `supabase/003_mistake_map.sql` in Supabase → SQL Editor. It creates the `insights` table. New installs get it from `schema.sql`.
+
 ## Where things live
 | | |
 |---|---|

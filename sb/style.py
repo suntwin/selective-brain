@@ -120,6 +120,16 @@ div[data-testid="stTabs"] button p{font-family:'Fredoka',sans-serif; font-size:1
 .sb-topic.red{background:#ffe0e6; color:#a3203d}
 .sb-topic.grey{background:#f2eef7; color:#8d7fa3}
 .sb-small{font-size:.85rem; color:var(--ink2); font-weight:600}
+.sb-scroll{overflow-x:auto; padding:.4rem .6rem}
+.sb-table{width:100%; border-collapse:collapse; font-size:.92rem; min-width:820px}
+.sb-table th, .sb-table td{border:0 !important; border-bottom:1px solid var(--line) !important}
+.sb-table th{font-family:'Fredoka',sans-serif; font-weight:600; text-align:left; color:var(--ink2); padding:.55rem .5rem; border-bottom:2px solid var(--line); white-space:nowrap}
+.sb-table td{padding:.6rem .5rem; border-bottom:1px solid var(--line); vertical-align:top}
+.sb-table tr:last-child td{border-bottom:0 !important}
+.sb-table .nw{white-space:nowrap}
+.sb-table td.why{min-width:300px}
+.sb-table .sb-pill{white-space:nowrap}
+.sb-table .n{text-align:right; font-weight:800; font-variant-numeric:tabular-nums; white-space:nowrap}
 @media (max-width: 640px){
   .sb-hero h1{font-size:1.45rem} .sb-hero{padding:1rem 1.1rem} .sb-hero::after{display:none}
   .sb-stat .box{flex:1 1 42%} .sb-stat .big{font-size:1.5rem} .sb-q{font-size:1.08rem}

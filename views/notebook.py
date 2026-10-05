@@ -46,7 +46,12 @@ def render():
     st.markdown("## 📒 Mistake & Technique Notebook")
     st.caption("Every mistake you fix becomes a card. Cards come back on a schedule (1 → 2 → 4 → 7 → 14 → 30 days) "
                "until they're locked in.")
-    tab_recall, tab_all, tab_add = st.tabs(["🧠 Recall time", "📚 All my cards", "➕ Add a technique"])
+    tab_recall, tab_focus, tab_all, tab_add = st.tabs(["🧠 Recall time", "🎯 My focus", "📚 All my cards",
+                                                       "➕ Add a technique"])
+
+    with tab_focus:
+        from views import mistake_map
+        mistake_map.render_focus(is_child)
 
     with tab_recall:
         due = data.due_cards()
@@ -107,15 +112,28 @@ def render():
             st.info("Siyonah adds her own techniques here, in her own words, so she owns them. "
                     "To suggest one, put it in a drill question's 'technique' field.")
             return
+        st.markdown("Made up a trick that works? Save it here **in your own words**. It comes back in "
+                    "🧠 Recall time so you never forget it. (Tip: the habits in 🎯 My focus can be added with one tap.)")
+        with st.expander("💡 What makes a great card?", expanded=False):
+            st.markdown(style.md(
+                "1. **Name it** so you can spot it fast: *\u201cOf the remaining → of WHAT?\u201d*\n"
+                "2. **When to use it:** the clue words in the question: *\u201cremaining\u201d, \u201cthen\u201d, \u201cof the rest\u201d*\n"
+                "3. **The steps**, short: *Draw a bar. Cut off the first part. Split only what is left.*\n"
+                "4. **A tiny example:** *Spent 1/4, then 1/2 of the rest → 3/4 × 1/2 = 3/8 left.*\n\n"
+                "**Technique** = a method for one kind of question. **Pattern** = a trap you keep falling into "
+                "(e.g. *\u201cI forget the total changes when people join\u201d*)."))
         with st.form("add_tech", clear_on_submit=True):
             kind = st.segmented_control("Card type", ["technique", "pattern"], default="technique",
                                         format_func=lambda k: f"{KIND[k][0]} {KIND[k][1]}")
             topic = st.selectbox("Topic", g.TOPICS, format_func=lambda t: g.TOPIC_LABEL[t])
-            title = st.text_input("Name it", placeholder="e.g. Ratio change → find what stays the same")
-            tech = st.text_area("How it works (your words)", placeholder="Draw before/after bars. The unchanged "
-                                "person's units must match…")
-            if st.form_submit_button("Add card ✨", use_container_width=True) and title.strip() and tech.strip():
-                data.add_card(kind or "technique", topic, title.strip(), tech.strip())
-                if is_child:
+            title = st.text_input("Name it", placeholder="e.g. Of the remaining → of WHAT?")
+            tech = st.text_area("When to use it + the steps (your words)",
+                                placeholder="When I see 'remaining' or 'the rest': draw a bar, cut off the first part, "
+                                            "then split ONLY what is left. Example: 1/4 then 1/2 of the rest → 3/8 left.")
+            if st.form_submit_button("Add card ✨", use_container_width=True):
+                if not (title.strip() and tech.strip()):
+                    st.warning("Give your card a name and write how it works, then press Add card.")
+                else:
+                    data.add_card(kind or "technique", topic, title.strip(), tech.strip())
                     data.add_xp(g.XP["technique_added"], "Added a technique")
-                st.success("Card added!")
+                    st.success("Card added! Find it in 📚 All my cards. It comes back in 🧠 Recall time. ✨")
