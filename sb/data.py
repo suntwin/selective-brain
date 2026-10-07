@@ -189,6 +189,39 @@ def due_cards(uid=None):
     return [c for c in notebook(uid) if not c.get("mastered") and str(c.get("next_review"))[:10] <= t]
 
 
+# ---------------------------------------------------------------- past drills & discussion
+DISCUSS_SQL = "supabase/004_discuss.sql"
+
+
+def finished_attempts(uid=None):
+    """Finished drill attempts, newest first."""
+    return [a for a in attempts(uid) if a.get("finished_at")][::-1]
+
+
+def open_flags(uid=None):
+    """Answers she (or Papa) flagged to talk about and that haven't been discussed yet."""
+    return [a for a in answers(uid) if a.get("discuss") and not a.get("discussed")]
+
+
+def save_discussion(attempt, q, fields: dict, answer_row=None) -> str | None:
+    """Update the discussion fields on one answer. Returns an error message, or None if saved.
+
+    A question she never reached has no answer row yet: the child's login creates one (as 'not answered').
+    """
+    try:
+        if answer_row is None:
+            if me()["role"] != "child":
+                return "She didn't reach this question, so only her login can flag it."
+            record_answer(attempt, q, "", False, 0)
+        if fields.get("discussed"):
+            fields = {**fields, "discussed_at": now_iso()}
+        store().update("answers", {"attempt_id": attempt["id"], "question_id": q["id"]}, fields)
+    except Exception as e:  # columns missing until 004_discuss.sql is run
+        return (f"Couldn't save ({e}). If this is the live app, Papa needs to run "
+                f"`{DISCUSS_SQL}` once in Supabase.")
+    return None
+
+
 # ---------------------------------------------------------------- stats bundle
 def stats(uid=None):
     uid = uid or child()["id"]

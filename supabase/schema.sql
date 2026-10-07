@@ -104,6 +104,11 @@ create table if not exists public.answers (
   seconds int,
   reason text check (reason in ('concept','careless','time','misread') or reason is null),
   fix_note text,
+  discuss boolean not null default false,   -- "talk about this with Papa" (Past drills)
+  discuss_note text,                        -- her question, in her words
+  parent_note text,                         -- Papa's notes / reply
+  discussed boolean not null default false,
+  discussed_at timestamptz,
   created_at timestamptz default now(),
   unique (attempt_id, question_id)
 );
@@ -196,6 +201,9 @@ create index if not exists idx_answers_user on public.answers(user_id, created_a
 create index if not exists idx_attempts_user on public.attempts(user_id, started_at);
 create index if not exists idx_notebook_review on public.notebook(user_id, next_review);
 create index if not exists idx_xp_user on public.xp_events(user_id);
+
+-- ---------------------------------------------------------------
+-- (004_discuss.sql adds the discuss* / parent_note columns above to an existing database)
 
 -- ---------------------------------------------------------------
 -- Mistake Map (same as 003_mistake_map.sql)

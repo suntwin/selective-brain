@@ -145,5 +145,16 @@ def attempt_markdown(drill: dict, attempt: dict, answers: list[dict], checkin: d
         a = am.get(qid, {})
         res = "✅" if a.get("correct") else ("❌" if a else "⏭️ not reached")
         lines.append(f"| {i} | {qid} | {TOPIC_LABEL.get(qm[qid]['topic'], qm[qid]['topic'])} | {res} | {a.get('seconds', '—')} |")
+    talk = [qid for qid in served if am.get(qid, {}).get("discuss") or am.get(qid, {}).get("parent_note")]
+    if talk:
+        lines += ["", "## Talked through with Papa", ""]
+        for qid in talk:
+            a = am[qid]
+            q = qm[qid]
+            state = "talked it through" if a.get("discussed") else "still to talk about"
+            lines += [f"### {qid} · {TOPIC_LABEL.get(q['topic'], q['topic'])} · {state}",
+                      f"- **Question:** {q['stem']}",
+                      f"- **Her question:** {a.get('discuss_note') or '—'}",
+                      f"- **Papa's notes:** {a.get('parent_note') or '—'}", ""]
     lines += ["", "## Source", f"- Selective Brain app, attempt `{attempt['id']}`", "- Exported for vault ingest"]
     return "\n".join(lines) + "\n"

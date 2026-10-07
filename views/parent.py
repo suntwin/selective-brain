@@ -34,6 +34,14 @@ def render():
 
 # ---------------------------------------------------------------- weekly review
 def _week(kid):
+    flags = data.open_flags(kid["id"])
+    if flags:
+        c1, c2 = st.columns([4, 1])
+        c1.warning(f"🗣️ {kid['display_name']} wants to talk about **{len(flags)}** question(s) from her drills.")
+        if c2.button("Open 📚", use_container_width=True, key="go_past"):
+            st.session_state.past_filter = "talk"
+            from sb import nav
+            nav.go("past")
     s = data.stats(kid["id"])
     since = g.today() - timedelta(days=6)
     att = [a for a in s["attempts"] if a.get("finished_at") and g.to_local_date(a["finished_at"]) >= since]

@@ -104,6 +104,13 @@ def _picker():
         open_a = data.open_attempt(d["id"])
         c1, c2 = st.columns([1, 3])
         label = "Resume ▶️" if open_a else ("Practise again 🔁" if done else "Start 🚀")
+        if done:
+            last = max((a for a in att if a["drill_id"] == d["id"] and a.get("finished_at")),
+                       key=lambda a: str(a["finished_at"]), default=None)
+            if last and c2.button("Look back at my answers 📚" if me["role"] == "child" else "See her answers 📚",
+                                  key=f"past_{d['id']}", type="tertiary"):
+                st.session_state.past_attempt = last["id"]
+                nav.go("past")
         if me["role"] != "child":
             continue
         if c1.button(label, key=f"go_{d['id']}", use_container_width=True) or (pick == d["id"] and not done):
@@ -416,6 +423,8 @@ def _review(run, d):
                     run["burst"] = True
                 st.rerun()
     st.write("")
+    st.caption("📚 You can open this drill again any time in **Past drills**: every question, your answer and "
+               "the working. Tap 🗣️ there on anything you want to talk about with Papa.")
     c1, c2 = st.columns(2)
     if c1.button("Back home 🏠", use_container_width=True):
         data.store().update("attempts", {"id": attempt["id"]}, {"xp_earned": run["xp"]})
