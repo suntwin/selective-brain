@@ -1,0 +1,65 @@
+{
+ "id": "2026-10-11_sunday_writing",
+ "title": "Writing 2 · Sunday Writing ✍️",
+ "drill_date": "2026-10-11",
+ "subject": "Writing",
+ "pace_seconds": 90,
+ "focus": [
+  "Story with a choice",
+  "Persuade the principal",
+  "20 minutes each"
+ ],
+ "source_note": "Two 20-minute tasks like the 40-minute exam block. Marked by Claude with wiki/English/Writing_Rubric.md after export.",
+ "questions": [
+  {
+   "id": "w1",
+   "type": "writing",
+   "topic": "Writing_Creative",
+   "difficulty": 3,
+   "seconds": 1200,
+   "stem": "Write a story in which a character finds something that does NOT belong to them.\n\nWhat is it? What do they decide to do, and what happens because of that choice?",
+   "tips": [
+    "Start in the middle of the moment they find it, not with 'One day…'.",
+    "The heart of the story is the CHOICE: show them hesitate (hands, breath, thoughts).",
+    "Use one or two lines of dialogue, with speech marks and a new line for each speaker.",
+    "End by showing how the choice changed something, even something small."
+   ],
+   "checklist": [
+    "I spent 2–3 minutes planning first",
+    "I used paragraphs",
+    "I used at least three precise, interesting words",
+    "I varied how my sentences start",
+    "I checked spelling and punctuation at the end",
+    "My character makes a clear choice, and the ending shows what it led to"
+   ],
+   "technique": "Plan, write, check: 3 min / 15 min / 2 min.",
+   "source": "ACER SEHS Writing block: two tasks in 40 minutes; marked with wiki/English/Writing_Rubric.md"
+  },
+  {
+   "id": "w2",
+   "type": "writing",
+   "topic": "Writing_Persuasive",
+   "difficulty": 3,
+   "seconds": 1200,
+   "stem": "“Every student in Years 7 and 8 should learn to cook at school.”\n\nDo you agree or disagree? Write a persuasive piece to convince your principal.",
+   "tips": [
+    "Decide your side in the first minute and say it clearly in your opening paragraph.",
+    "Give 2–3 reasons, each in its own paragraph, with a real example (a meal, a skill, a cost).",
+    "Answer one argument from the other side: 'Some people say… However…'.",
+    "You're writing to the principal: be polite and confident, not chatty. End with a strong last line."
+   ],
+   "checklist": [
+    "I spent 2–3 minutes planning first",
+    "I used paragraphs",
+    "I used at least three precise, interesting words",
+    "I varied how my sentences start",
+    "I checked spelling and punctuation at the end",
+    "I answered one argument from the other side",
+    "I wrote for my audience (the principal)"
+   ],
+   "technique": "Opinion → reasons with examples → counter-argument → conclusion.",
+   "source": "ACER SEHS Writing block: two tasks in 40 minutes; marked with wiki/English/Writing_Rubric.md"
+  }
+ ],
+ "minutes": 40
+}
