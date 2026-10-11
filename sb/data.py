@@ -144,10 +144,25 @@ def open_attempt(drill_id):
     return rows[-1] if rows else None
 
 
+def passage_for(d: dict, q: dict) -> dict | None:
+    """Reading questions point at a shared passage: q['passage'] -> d['passages'][id]."""
+    pid = q.get("passage")
+    if not pid:
+        return None
+    p = (d.get("passages") or {}).get(pid) or q.get("passage_obj")
+    return dict(p, id=pid) if p else None
+
+
+def with_passage(d: dict, q: dict) -> dict:
+    """Question copy that carries its passage (for notebook cards, which outlive the drill)."""
+    p = passage_for(d, q)
+    return dict(q, passage_obj=p) if p else q
+
+
 def record_answer(attempt, q, chosen, correct, seconds):
     store().upsert("answers", {
         "attempt_id": attempt["id"], "user_id": me()["id"], "question_id": q["id"],
-        "topic": q.get("topic"), "chosen": str(chosen), "correct": bool(correct),
+        "topic": q.get("topic"), "chosen": str(chosen), "correct": None if correct is None else bool(correct),
         "seconds": int(seconds)}, on_conflict="attempt_id,question_id")
 
 

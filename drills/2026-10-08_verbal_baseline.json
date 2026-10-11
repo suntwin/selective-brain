@@ -1,0 +1,401 @@
+{
+ "id": "2026-10-08_verbal_baseline",
+ "title": "English 1 · Verbal Baseline 🧠",
+ "drill_date": "2026-10-08",
+ "subject": "Verbal",
+ "pace_seconds": 60,
+ "focus": [
+  "Word meanings",
+  "Analogies",
+  "Odd one out",
+  "Codes & series",
+  "Logic"
+ ],
+ "source_note": "Baseline to find her verbal-reasoning gaps. Original questions in ACER's 'words, concepts and logic' style; vocabulary items reuse her vault vocab bank.",
+ "questions": [
+  {
+   "id": "v1",
+   "type": "mcq",
+   "topic": "Verbal_Vocabulary",
+   "difficulty": 2,
+   "stem": "Which word is closest in meaning to WARILY?",
+   "options": [
+    "cautiously",
+    "angrily",
+    "lazily",
+    "cheerfully"
+   ],
+   "answer": 0,
+   "explanation": "Warily means carefully, because you think something might be dangerous or tricky.",
+   "technique": "Put the word in a sentence you know: 'The cat crept warily towards the dog.'",
+   "trap": null,
+   "source": "wiki/VocabularyWords.md (her vocab bank)",
+   "shuffle": true
+  },
+  {
+   "id": "v2",
+   "type": "mcq",
+   "topic": "Verbal_Vocabulary",
+   "difficulty": 2,
+   "stem": "Which word is most nearly OPPOSITE in meaning to PLENTIFUL?",
+   "options": [
+    "scarce",
+    "abundant",
+    "colourful",
+    "generous"
+   ],
+   "answer": 0,
+   "explanation": "Plentiful means there is lots of something. Scarce means there is very little.",
+   "technique": "Opposite questions: first find a synonym (plentiful = lots), then look for 'very little'.",
+   "trap": "Abundant is a SYNONYM, not an opposite — read the capital letters in the question",
+   "source": "wiki/VocabularyWords.md (her vocab bank)",
+   "shuffle": true
+  },
+  {
+   "id": "v3",
+   "type": "mcq",
+   "topic": "Verbal_Vocabulary",
+   "difficulty": 2,
+   "stem": "Choose the best word for the gap: Tom stared at the jigsaw in complete ______; none of the pieces seemed to fit anywhere.",
+   "options": [
+    "bewilderment",
+    "recognition",
+    "permission",
+    "insistence"
+   ],
+   "answer": 0,
+   "explanation": "Bewilderment means being confused and puzzled, which fits 'none of the pieces seemed to fit'.",
+   "technique": "Look for the clue in the rest of the sentence, then test each word in the gap.",
+   "trap": null,
+   "source": "wiki/VocabularyWords.md (her vocab bank)",
+   "shuffle": true
+  },
+  {
+   "id": "v4",
+   "type": "mcq",
+   "topic": "Verbal_Vocabulary",
+   "difficulty": 2,
+   "stem": "INTRICATE most nearly means:",
+   "options": [
+    "complicated and full of small details",
+    "very old and valuable",
+    "easy to break",
+    "brightly coloured"
+   ],
+   "answer": 0,
+   "explanation": "Something intricate has many small, detailed parts, like an intricate pattern on a carpet.",
+   "technique": "Think of phrases you've heard the word in: 'an intricate design'.",
+   "trap": null,
+   "source": "wiki/VocabularyWords.md (her vocab bank)",
+   "shuffle": true
+  },
+  {
+   "id": "v5",
+   "type": "mcq",
+   "topic": "Verbal_Vocabulary",
+   "difficulty": 2,
+   "stem": "Which word can go in front of all three of these to make new words?   ___ball   ___print   ___step",
+   "options": [
+    "foot",
+    "hand",
+    "snow",
+    "base"
+   ],
+   "answer": 0,
+   "explanation": "football, footprint, footstep. Hand works for handball and handprint but not 'handstep'; snow works only for snowball.",
+   "technique": "Test the option with ALL three words, not just the first one.",
+   "trap": "Stopping after the first word that works (snowball, handball)",
+   "source": "ACER SEHS skill description",
+   "shuffle": true
+  },
+  {
+   "id": "v6",
+   "type": "mcq",
+   "topic": "Verbal_Analogies",
+   "difficulty": 2,
+   "stem": "Feather is to bird as scale is to …",
+   "options": [
+    "fish",
+    "weight",
+    "music",
+    "mountain"
+   ],
+   "answer": 0,
+   "explanation": "A bird is covered in feathers; a fish is covered in scales.",
+   "technique": "Make a sentence for the first pair ('A bird is covered in feathers'), then use the SAME sentence for the second.",
+   "trap": "'weight' uses a different meaning of scale (bathroom scales)",
+   "source": "ACER SEHS skill description",
+   "shuffle": true
+  },
+  {
+   "id": "v7",
+   "type": "mcq",
+   "topic": "Verbal_Analogies",
+   "difficulty": 2,
+   "stem": "Author is to novel as composer is to …",
+   "options": [
+    "symphony",
+    "orchestra",
+    "piano",
+    "concert"
+   ],
+   "answer": 0,
+   "explanation": "An author writes a novel; a composer writes a symphony.",
+   "technique": "Sentence test: 'An author WRITES a novel. A composer WRITES a ___.'",
+   "trap": "Orchestra and piano are linked to music but aren't what a composer writes",
+   "source": "ACER SEHS skill description",
+   "shuffle": true
+  },
+  {
+   "id": "v8",
+   "type": "mcq",
+   "topic": "Verbal_Analogies",
+   "difficulty": 2,
+   "stem": "Thermometer is to temperature as odometer is to …",
+   "options": [
+    "distance",
+    "speed",
+    "time",
+    "fuel"
+   ],
+   "answer": 0,
+   "explanation": "A thermometer measures temperature; an odometer (in a car) measures the distance travelled.",
+   "technique": "Sentence test: 'A thermometer MEASURES temperature.'",
+   "trap": "Speed is measured by a speedometer, not an odometer",
+   "source": "ACER SEHS skill description",
+   "shuffle": true
+  },
+  {
+   "id": "v9",
+   "type": "mcq",
+   "topic": "Verbal_Analogies",
+   "difficulty": 3,
+   "stem": "Reluctantly is to eagerly as warily is to …",
+   "options": [
+    "boldly",
+    "cautiously",
+    "nervously",
+    "silently"
+   ],
+   "answer": 0,
+   "explanation": "Reluctantly and eagerly are opposites. The opposite of warily (cautiously) is boldly.",
+   "technique": "First decide what kind of link it is: same meaning, opposite, part of, used for…",
+   "trap": "Cautiously means the SAME as warily, but the pair is opposites",
+   "source": "wiki/VocabularyWords.md (her vocab bank)",
+   "shuffle": true
+  },
+  {
+   "id": "v10",
+   "type": "mcq",
+   "topic": "Verbal_Classify",
+   "difficulty": 2,
+   "stem": "Which word is the odd one out?",
+   "options": [
+    "shout",
+    "whisper",
+    "murmur",
+    "mutter",
+    "mumble"
+   ],
+   "answer": 0,
+   "explanation": "Whisper, murmur, mutter and mumble are all ways of speaking quietly. Shout is loud.",
+   "technique": "Find what MOST of the words have in common, then spot the one that breaks it.",
+   "trap": null,
+   "source": "ACER SEHS skill description",
+   "shuffle": true
+  },
+  {
+   "id": "v11",
+   "type": "mcq",
+   "topic": "Verbal_Classify",
+   "difficulty": 2,
+   "stem": "Which word is the odd one out?",
+   "options": [
+    "granite",
+    "sapphire",
+    "emerald",
+    "ruby",
+    "diamond"
+   ],
+   "answer": 0,
+   "explanation": "Sapphire, emerald, ruby and diamond are gemstones. Granite is an ordinary rock used for building.",
+   "technique": "Name the group the others belong to.",
+   "trap": null,
+   "source": "ACER SEHS skill description",
+   "shuffle": true
+  },
+  {
+   "id": "v12",
+   "type": "mcq",
+   "topic": "Verbal_Classify",
+   "difficulty": 2,
+   "stem": "Which word does NOT belong with the others?",
+   "options": [
+    "ignored",
+    "pondered",
+    "considered",
+    "reflected",
+    "contemplated"
+   ],
+   "answer": 0,
+   "explanation": "Pondered, considered, reflected and contemplated all mean thought carefully about something. Ignored means paid no attention.",
+   "technique": "Group the words by meaning.",
+   "trap": null,
+   "source": "wiki/VocabularyWords.md (her vocab bank)",
+   "shuffle": true
+  },
+  {
+   "id": "v13",
+   "type": "mcq",
+   "topic": "Verbal_Codes",
+   "difficulty": 2,
+   "stem": "In a code, CAT is written as DBU. How is DOG written in the same code?",
+   "options": [
+    "EPH",
+    "CNF",
+    "EPF",
+    "DPH"
+   ],
+   "answer": 0,
+   "explanation": "Each letter moves one place forward in the alphabet: C→D, A→B, T→U. So D→E, O→P, G→H: EPH.",
+   "technique": "Compare each letter with its code letter and count the jump. Check the rule works for every letter.",
+   "trap": "Moving letters backwards (CNF)",
+   "source": "ACER SEHS skill description",
+   "shuffle": true
+  },
+  {
+   "id": "v14",
+   "type": "mcq",
+   "topic": "Verbal_Codes",
+   "difficulty": 2,
+   "stem": "What comes next in this series?   B, E, H, K, ?",
+   "options": [
+    "N",
+    "M",
+    "O",
+    "L"
+   ],
+   "answer": 0,
+   "explanation": "Each letter jumps forward 3 places: B (+3) E (+3) H (+3) K (+3) N.",
+   "technique": "Write the alphabet position under each letter (B=2, E=5, H=8, K=11) and look at the gaps.",
+   "trap": "Jumping 2 (M) after miscounting",
+   "source": "ACER SEHS skill description",
+   "shuffle": true
+  },
+  {
+   "id": "v15",
+   "type": "mcq",
+   "topic": "Verbal_Codes",
+   "difficulty": 2,
+   "stem": "In a code, PLANT is written as TNALP. How is BREAD written in the same code?",
+   "options": [
+    "DAERB",
+    "DEARB",
+    "BDAER",
+    "ERDAB"
+   ],
+   "answer": 0,
+   "explanation": "TNALP is PLANT written backwards. BREAD backwards is DAERB.",
+   "technique": "Look for simple rules first: reversed, shifted, or letters swapped.",
+   "trap": null,
+   "source": "ACER SEHS skill description",
+   "shuffle": true
+  },
+  {
+   "id": "v16",
+   "type": "mcq",
+   "topic": "Verbal_Codes",
+   "difficulty": 2,
+   "stem": "What comes next?   AZ, BY, CX, ?",
+   "options": [
+    "DW",
+    "DV",
+    "EW",
+    "DX"
+   ],
+   "answer": 0,
+   "explanation": "The first letter goes forward through the alphabet (A, B, C, D) and the second goes backwards from Z (Z, Y, X, W).",
+   "technique": "Treat each position in the pair as its own series.",
+   "trap": null,
+   "source": "ACER SEHS skill description",
+   "shuffle": true
+  },
+  {
+   "id": "v17",
+   "type": "mcq",
+   "topic": "Verbal_Logic",
+   "difficulty": 2,
+   "stem": "All marsupials carry their young in a pouch. A wombat is a marsupial. Which statement MUST be true?",
+   "options": [
+    "A wombat carries its young in a pouch.",
+    "Every animal with a pouch is a marsupial.",
+    "Only wombats carry their young in pouches.",
+    "Wombats are the largest marsupials."
+   ],
+   "answer": 0,
+   "explanation": "Wombats belong to the group 'marsupials', and everything in that group carries young in a pouch.",
+   "technique": "Only use what the statements say. Don't turn 'All A are B' around into 'All B are A'.",
+   "trap": "Turning the rule around (every animal with a pouch is a marsupial)",
+   "source": "ACER SEHS skill description",
+   "shuffle": true
+  },
+  {
+   "id": "v18",
+   "type": "mcq",
+   "topic": "Verbal_Logic",
+   "difficulty": 2,
+   "stem": "Mia is taller than Jo. Jo is taller than Sam. Ana is shorter than Sam. Who is the SECOND shortest?",
+   "options": [
+    "Sam",
+    "Jo",
+    "Ana",
+    "Mia"
+   ],
+   "answer": 0,
+   "explanation": "Line them up from tallest: Mia, Jo, Sam, Ana. The shortest is Ana, so the second shortest is Sam.",
+   "technique": "Draw a quick line from tallest to shortest and place each person as you read.",
+   "trap": "Answering the shortest (Ana)",
+   "source": "ACER SEHS skill description",
+   "shuffle": true
+  },
+  {
+   "id": "v19",
+   "type": "mcq",
+   "topic": "Verbal_Logic",
+   "difficulty": 3,
+   "stem": "Five friends have birthdays on different days from Monday to Friday this week. Lee's is on Wednesday. Ravi's is the day after Lee's. Sophie's is the day before Lee's. Kim's is not on Monday. The fifth friend is Zara. Whose birthday is on Monday?",
+   "options": [
+    "Zara",
+    "Kim",
+    "Sophie",
+    "Ravi"
+   ],
+   "answer": 0,
+   "explanation": "Lee Wed, Ravi Thu, Sophie Tue. Monday and Friday are left for Kim and Zara. Kim isn't Monday, so Zara is Monday.",
+   "technique": "Make a 5-box table (Mon–Fri) and fill in the certain facts first.",
+   "trap": null,
+   "source": "ACER SEHS skill description",
+   "shuffle": true
+  },
+  {
+   "id": "v20",
+   "type": "mcq",
+   "topic": "Verbal_Logic",
+   "difficulty": 3,
+   "stem": "Some pupils in the choir also play in the school band. Everyone in the band plays an instrument. Which statement MUST be true?",
+   "options": [
+    "Some pupils in the choir play an instrument.",
+    "All pupils in the choir play an instrument.",
+    "Everyone who plays an instrument is in the band.",
+    "No pupil in the choir plays an instrument."
+   ],
+   "answer": 0,
+   "explanation": "The choir pupils who are in the band must play an instrument, so at least SOME choir pupils do.",
+   "technique": "Draw two overlapping circles (choir, band). 'Some' means only the overlap is certain.",
+   "trap": "Jumping from 'some' to 'all'",
+   "source": "ACER SEHS skill description",
+   "shuffle": true
+  }
+ ],
+ "minutes": 20
+}

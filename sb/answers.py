@@ -81,8 +81,22 @@ def word_results(q: dict, chosen) -> list[dict]:
     return out
 
 
-def is_correct(q: dict, chosen) -> bool:
+def is_scored(q: dict) -> bool:
+    """Writing tasks aren't right/wrong: they're marked later against a rubric."""
+    return q.get("type", "mcq") != "writing"
+
+
+def writing_given(chosen) -> dict:
+    """{'text': str, 'checks': [ticked checklist items], 'words': int}"""
+    g = word_given(chosen)
+    text = str(g.get("text") or "")
+    return {"text": text, "checks": list(g.get("checks") or []), "words": len(text.split())}
+
+
+def is_correct(q: dict, chosen):
     t = q.get("type", "mcq")
+    if t == "writing":
+        return None
     if t == "word":
         return all(r["ok"] for r in word_results(q, chosen))
     if t == "numeric":
@@ -97,6 +111,9 @@ def answer_text(q: dict, chosen) -> str:
     if chosen in (None, "", "None"):
         return "—"
     t = q.get("type", "mcq")
+    if t == "writing":
+        w = writing_given(chosen)
+        return f'{w["words"]} words: {w["text"]}'
     if t == "word":
         return "; ".join(f'({r["label"]}) {r["given"] or "—"}' for r in word_results(q, chosen))
     if t == "numeric":
@@ -109,6 +126,8 @@ def answer_text(q: dict, chosen) -> str:
 
 def correct_text(q: dict) -> str:
     t = q.get("type", "mcq")
+    if t == "writing":
+        return "Marked later with the writing rubric"
     if t == "word":
         return "; ".join(f'({p["label"]}) {part_answer_text(p)}' for p in q["parts"])
     if t == "numeric":

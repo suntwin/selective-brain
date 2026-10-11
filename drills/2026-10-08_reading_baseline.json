@@ -1,0 +1,271 @@
+{
+ "id": "2026-10-08_reading_baseline",
+ "title": "English 2 · Reading Baseline 📖",
+ "drill_date": "2026-10-08",
+ "subject": "Reading",
+ "pace_seconds": 110,
+ "passages": {
+  "lantern": {
+   "title": "The Lantern Keeper",
+   "kind": "Story",
+   "text": "Every evening at six, Mr Okafor wheeled his barrow of lanterns down Wattle Lane, and every evening Ruby watched him from the front step, pretending to read.\n\nHe was not a real lamplighter. The lane had had electric streetlights for longer than Ruby had been alive. But in March a storm had wrestled with the lane and won, and three of the poles still leaned like tired giraffes, their bulbs dark. Until the repair crew came, Mr Okafor had appointed himself the keeper of the night.\n\n'Aren't you going to help him?' her brother Tom asked on the fourth evening, dropping his schoolbag on her book.\n\n'Help with what?' Ruby said, although she knew.\n\nShe had not spoken to Mr Okafor since the business with the cricket ball and his front window. He had not shouted. That was the worst part. He had simply picked up the glass, piece by piece, while she stood on the footpath with her apology stuck somewhere behind her teeth.\n\nNow she watched him stop at the first dark pole. He set a lantern on the low brick wall beneath it, struck a match, and cupped the flame against the wind until the wick caught. A soft circle of gold spread across the footpath. He moved on to the second pole, then the third, his knees cracking each time he bent.\n\nOn the fifth evening it rained. Ruby saw him come out with his barrow and an umbrella that kept trying to turn itself inside out. At the second pole the wind won. The umbrella flew, the match went out, and then the next one did too.\n\nRuby was across the road before she had decided to go. Without a word she held her raincoat open like a tent, and in the dry space beneath it the third match caught.\n\nMr Okafor looked at her for a long moment. Rain dripped from his eyebrows.\n\n'Steady hands,' he said at last. 'Better than mine. Same time tomorrow?'\n\nRuby nodded. The apology was still stuck, but it no longer felt quite so heavy. Tomorrow, she thought, she might be able to say it.",
+   "source": "Original story written for Selective Brain"
+  },
+  "shade": {
+   "title": "Shade Makers",
+   "kind": "Persuasive article",
+   "text": "On a hot summer afternoon, the footpath outside a busy shopping strip can become hot enough to burn bare feet. Step a few metres into the shade of a large plane tree and the ground can be many degrees cooler. That difference is not just pleasant. For older people, babies and anyone who works outdoors, it can be the difference between an uncomfortable day and a dangerous one.\n\nScientists call this the urban heat island effect. Roads, roofs and car parks soak up the sun's energy during the day and release it slowly at night, so cities stay hotter than the countryside around them. Suburbs with few trees can be noticeably warmer on summer nights than leafy suburbs only a few kilometres away.\n\nTrees fight back in two ways. Their canopies block sunlight before it reaches the ground, and their leaves release water vapour, which cools the air in much the same way that sweat cools your skin. A large, healthy tree quietly does cooling work that would otherwise need air-conditioners, without the power bill.\n\nYet many suburbs are losing trees faster than they are planting them. Old trees are removed for new driveways, wider roads and bigger houses, and the young trees planted in their place can take twenty years to give real shade. Critics point out that trees drop leaves into gutters, crack footpaths with their roots and cost money to water and prune. These are real problems. But they are small compared with the cost of people falling ill in heatwaves, or of a suburb that becomes too hot to walk in.\n\nThe solution is not complicated. Councils should set a target for how much of each suburb is shaded by trees, protect large old trees wherever possible, and choose species that suit a hotter, drier future. Residents can help too, by planting trees in their own gardens and watering young street trees through their first summers.\n\nWe plant trees for the people who will be here in twenty years' time. The best time to start was twenty years ago. The second-best time is now.",
+   "source": "Original article written for Selective Brain"
+  }
+ },
+ "focus": [
+  "Find the information",
+  "Read between the lines",
+  "Words in context",
+  "Author's purpose"
+ ],
+ "source_note": "Baseline to find her reading gaps. Two original passages (story, persuasive article), 6 questions each, covering ACER's retrieve / interpret / reflect-and-evaluate skills.",
+ "questions": [
+  {
+   "id": "r1",
+   "type": "mcq",
+   "topic": "Reading_Retrieve",
+   "difficulty": 2,
+   "stem": "Why were three of the streetlights in Wattle Lane not working?",
+   "options": [
+    "A storm had damaged the poles.",
+    "The council had turned them off to save money.",
+    "Ruby's cricket ball had broken them.",
+    "The repair crew was replacing the bulbs."
+   ],
+   "answer": 0,
+   "explanation": "Paragraph 2: 'in March a storm had wrestled with the lane and won, and three of the poles still leaned…'",
+   "technique": "Retrieve questions: find the exact sentence in the passage before you choose.",
+   "trap": "The cricket ball broke Mr Okafor's WINDOW, not the lights",
+   "source": "ACER SEHS skill description",
+   "shuffle": true,
+   "passage": "lantern"
+  },
+  {
+   "id": "r2",
+   "type": "mcq",
+   "topic": "Reading_Infer",
+   "difficulty": 2,
+   "stem": "Why had Ruby not spoken to Mr Okafor?",
+   "options": [
+    "She felt guilty and embarrassed about breaking his window.",
+    "He had shouted at her.",
+    "She was too busy reading.",
+    "Her brother had told her to stay away."
+   ],
+   "answer": 0,
+   "explanation": "The 'business with the cricket ball and his front window', and her apology being 'stuck', show she felt bad. The story says he did NOT shout.",
+   "technique": "Inference: the answer isn't written word for word, but clues point to it.",
+   "trap": "'He had not shouted' — read the small words",
+   "source": "ACER SEHS skill description",
+   "shuffle": true,
+   "passage": "lantern"
+  },
+  {
+   "id": "r3",
+   "type": "mcq",
+   "topic": "Reading_Vocab",
+   "difficulty": 2,
+   "stem": "Mr Okafor 'had appointed himself the keeper of the night'. This means he had …",
+   "options": [
+    "chosen to take on the job without being asked",
+    "been paid by the council to do it",
+    "been elected by his neighbours",
+    "been ordered to do it by the repair crew"
+   ],
+   "answer": 0,
+   "explanation": "To appoint HIMSELF means he gave himself the job. Nobody else asked him.",
+   "technique": "Words in context: replace the phrase with each option and see which keeps the meaning.",
+   "trap": null,
+   "source": "ACER SEHS skill description",
+   "shuffle": true,
+   "passage": "lantern"
+  },
+  {
+   "id": "r4",
+   "type": "mcq",
+   "topic": "Reading_Infer",
+   "difficulty": 2,
+   "stem": "The words 'her apology stuck somewhere behind her teeth' suggest that Ruby …",
+   "options": [
+    "wanted to say sorry but couldn't get the words out",
+    "had something stuck in her teeth",
+    "didn't think she needed to apologise",
+    "had already apologised quietly"
+   ],
+   "answer": 0,
+   "explanation": "This is figurative language: the apology was ready but she was too embarrassed to say it.",
+   "technique": "Figurative language: ask what feeling or idea the picture is showing, not what it literally says.",
+   "trap": "Taking the phrase literally",
+   "source": "ACER SEHS skill description",
+   "shuffle": true,
+   "passage": "lantern"
+  },
+  {
+   "id": "r5",
+   "type": "mcq",
+   "topic": "Reading_Infer",
+   "difficulty": 3,
+   "stem": "What does Mr Okafor's reply, 'Steady hands … Same time tomorrow?', show about him?",
+   "options": [
+    "He accepts her help and gives her a way to make things right.",
+    "He is still angry about the window.",
+    "He wants Ruby to pay for the window.",
+    "He doesn't recognise Ruby."
+   ],
+   "answer": 0,
+   "explanation": "He praises her and invites her back, which opens the door to repairing their relationship.",
+   "technique": "Character questions: what do their words and actions tell you about how they feel?",
+   "trap": null,
+   "source": "ACER SEHS skill description",
+   "shuffle": true,
+   "passage": "lantern"
+  },
+  {
+   "id": "r6",
+   "type": "mcq",
+   "topic": "Reading_Purpose",
+   "difficulty": 3,
+   "stem": "Which sentence best describes the main message of the story?",
+   "options": [
+    "Small acts of kindness can begin to mend a damaged relationship.",
+    "Electric lights are better than lanterns.",
+    "Children shouldn't play cricket near houses.",
+    "Councils are slow to repair storm damage."
+   ],
+   "answer": 0,
+   "explanation": "The story is about Ruby helping Mr Okafor, and the apology feeling 'not quite so heavy' afterwards.",
+   "technique": "Main message: which option is true of the WHOLE story, not just one detail?",
+   "trap": "Picking a true detail (slow repairs) instead of the big idea",
+   "source": "ACER SEHS skill description",
+   "shuffle": true,
+   "passage": "lantern"
+  },
+  {
+   "id": "r7",
+   "type": "mcq",
+   "topic": "Reading_Retrieve",
+   "difficulty": 2,
+   "stem": "According to the article, how do the leaves of trees help to cool the air?",
+   "options": [
+    "They release water vapour.",
+    "They reflect heat back into space.",
+    "They store heat until night-time.",
+    "They stop the wind from blowing."
+   ],
+   "answer": 0,
+   "explanation": "Paragraph 3: 'their leaves release water vapour, which cools the air in much the same way that sweat cools your skin.'",
+   "technique": "Find the sentence that answers the question, then match it to an option.",
+   "trap": null,
+   "source": "ACER SEHS skill description",
+   "shuffle": true,
+   "passage": "shade"
+  },
+  {
+   "id": "r8",
+   "type": "mcq",
+   "topic": "Reading_Vocab",
+   "difficulty": 2,
+   "stem": "In paragraph 3, the word 'canopies' most likely means …",
+   "options": [
+    "the leafy tops of trees spread overhead",
+    "the roots of trees under the ground",
+    "plastic covers over a footpath",
+    "the trunks of very old trees"
+   ],
+   "answer": 0,
+   "explanation": "The canopies 'block sunlight before it reaches the ground', so they must be the spreading tops of the trees.",
+   "technique": "Use what the word DOES in the sentence to work out what it is.",
+   "trap": null,
+   "source": "ACER SEHS skill description",
+   "shuffle": true,
+   "passage": "shade"
+  },
+  {
+   "id": "r9",
+   "type": "mcq",
+   "topic": "Reading_Retrieve",
+   "difficulty": 2,
+   "stem": "Why do some suburbs stay warmer at night, according to the article?",
+   "options": [
+    "Hard surfaces release the day's heat slowly and there are few trees.",
+    "They are closer to the sun.",
+    "People run their air-conditioners all night.",
+    "The countryside sends warm wind into them."
+   ],
+   "answer": 0,
+   "explanation": "Paragraph 2: roads, roofs and car parks 'release it slowly at night', and suburbs 'with few trees' are warmer.",
+   "technique": "Retrieve: combine two nearby sentences if the answer needs both.",
+   "trap": null,
+   "source": "ACER SEHS skill description",
+   "shuffle": true,
+   "passage": "shade"
+  },
+  {
+   "id": "r10",
+   "type": "mcq",
+   "topic": "Reading_Purpose",
+   "difficulty": 3,
+   "stem": "Why does the writer mention that trees 'crack footpaths with their roots'?",
+   "options": [
+    "To admit an argument against trees before showing it matters less.",
+    "To prove that trees are dangerous.",
+    "To explain how roots find water.",
+    "To persuade councils to remove old trees."
+   ],
+   "answer": 0,
+   "explanation": "The writer says 'These are real problems. But they are small compared with…' — a counter-argument, then a reply.",
+   "technique": "Persuasive writers often mention the other side and then answer it. Look for 'But…' straight after.",
+   "trap": "Thinking the writer agrees trees should go",
+   "source": "ACER SEHS skill description",
+   "shuffle": true,
+   "passage": "shade"
+  },
+  {
+   "id": "r11",
+   "type": "mcq",
+   "topic": "Reading_Purpose",
+   "difficulty": 2,
+   "stem": "What is the main purpose of the article?",
+   "options": [
+    "To persuade readers that suburbs need more trees and to suggest what to do.",
+    "To explain how air-conditioners work.",
+    "To describe the history of plane trees.",
+    "To warn people not to go outside in summer."
+   ],
+   "answer": 0,
+   "explanation": "It gives reasons, answers objections and says what 'councils should' and 'residents can' do — that's persuasion.",
+   "technique": "Purpose: inform, persuade, entertain or instruct? Words like 'should' are clues to persuasion.",
+   "trap": null,
+   "source": "ACER SEHS skill description",
+   "shuffle": true,
+   "passage": "shade"
+  },
+  {
+   "id": "r12",
+   "type": "mcq",
+   "topic": "Reading_Infer",
+   "difficulty": 3,
+   "stem": "The last sentence, 'The second-best time is now', suggests that …",
+   "options": [
+    "we should start planting trees straight away, even though it is late",
+    "planting trees is a waste of time",
+    "trees planted now will give shade next summer",
+    "twenty years ago was a bad time to plant trees"
+   ],
+   "answer": 0,
+   "explanation": "The best time has passed (twenty years ago), so the next best choice is to begin now.",
+   "technique": "Endings of persuasive texts are often a call to action. What does the writer want readers to DO?",
+   "trap": "'next summer' — the article says young trees take about twenty years to give real shade",
+   "source": "ACER SEHS skill description",
+   "shuffle": true,
+   "passage": "shade"
+  }
+ ],
+ "minutes": 22
+}

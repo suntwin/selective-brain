@@ -22,6 +22,10 @@ def _card_html(c, reveal=True):
     if stem:
         body += f'<div class="sb-q" style="font-size:1.05rem;margin-top:6px">{esc(stem)}</div>'
     body += style.img(q.get("image"), 340)
+    p = q.get("passage_obj")
+    if p:
+        body += (f'<details style="margin-top:6px"><summary><b>📖 {esc(p.get("title", "Passage"))}</b> (tap to read)</summary>'
+                 f'<div style="white-space:pre-wrap;margin-top:6px;line-height:1.6">{esc(p.get("text", ""))}</div></details>')
     if reveal:
         if q.get("type") == "word":
             parts = "".join(f'<div>({esc(p["label"])}) {esc(p.get("prompt", ""))} → <b>{esc(ans.part_answer_text(p))}</b></div>'

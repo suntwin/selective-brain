@@ -66,9 +66,14 @@ def render():
 
     st.markdown("#### 🗺️ My Topic Map")
     tm = g.topic_map(s["answers"])
-    chips = "".join(
-        f'<span class="sb-topic {t["color"]}">{esc(t["label"])} '
-        f'{"" if t["acc"] is None else "· " + str(round(t["acc"] * 100)) + "%"}</span>' for t in tm)
+    chips = ""
+    for subj in ("Maths", "Reading", "Verbal"):
+        row = [t for t in tm if t["subject"] == subj]
+        if subj != "Maths" and not any(t["n"] for t in row):
+            continue                      # English rows appear once she has answered some
+        chips += (f'<div class="sb-small" style="margin:.3rem 0 .1rem">{g.SUBJECTS[subj]} {subj}</div>' + "".join(
+            f'<span class="sb-topic {t["color"]}">{esc(t["label"])} '
+            f'{"" if t["acc"] is None else "· " + str(round(t["acc"] * 100)) + "%"}</span>' for t in row))
     style.card(chips + '<div class="sb-small" style="margin-top:6px">🟢 80%+ · 🟡 60–79% · 🔴 under 60% · '
                'based on your last 20 answers per topic</div>')
 

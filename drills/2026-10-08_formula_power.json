@@ -1,0 +1,439 @@
+{
+ "id": "2026-10-08_formula_power",
+ "title": "Drill 7 · Formula Power ⚡",
+ "drill_date": "2026-10-08",
+ "subject": "Maths",
+ "pace_seconds": 90,
+ "focus": [
+  "Area & circles",
+  "Volume & units",
+  "Angles & Pythagoras",
+  "Index laws",
+  "% formulas",
+  "Speed & averages"
+ ],
+ "source_note": "Formula sheet built from Oxford Maths Victoria Yr 7-10 (Practice/Printable_Drills/FormulaSheet_2026-10-08_Oxford_Yr7-10.pdf). One question per key formula; traps from her Mistake Tracker. π = 3.14.",
+ "questions": [
+  {
+   "id": "p1",
+   "type": "mcq",
+   "topic": "Circles_Composite_Shapes",
+   "difficulty": 2,
+   "stem": "Find the area of this trapezium.",
+   "options": [
+    "54 cm²",
+    "108 cm²",
+    "462 cm²",
+    "36 cm²"
+   ],
+   "answer": 0,
+   "explanation": "Trapezium: A = ½ × (a + b) × h = ½ × (7 + 11) × 6 = ½ × 18 × 6 = 54 cm².",
+   "technique": "Trapezium = ½ × (sum of the PARALLEL sides) × perpendicular height.",
+   "trap": "Forgetting the ½ (108)",
+   "source": "FormulaSheet 2026-10-08 (Oxford Yr 7-10) §11; Area_Perimeter_Drill (trapezium)",
+   "shuffle": true,
+   "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAADMCAYAAABHlNc/AAAAOnRFWHRTb2Z0d2FyZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjksIGh0dHBzOi8vbWF0cGxvdGxpYi5vcmcvJkbTWQAAAAlwSFlzAAAPYQAAD2EBqD+naQAAEgFJREFUeJzt3Xt0VNW9B/DvvDJ5TB6QQMI7vBENiIIIEeXlWtiFlC5sQUG0RS6CULFdoF4bLVhsF2oF5GrtA1GuIIoV5CGKBkp5IwqClkeuBAETIAkJJkxmMjPn/hEICZnJJJPZc/Y+8/2sxXIynIl71jJfv+f8Zp+YNE3TQEQkiFnvBRCRsTFkiEgohgwRCcWQISKhGDJEJBRDhoiEYsgQkVAMGSISiiFDREIxZIhIKIYMEQnFkCEioRgyRCQUQ4aIhGLIEJFQDBkiEoohQ0RCWfVeAAU284F5OLj3P37/7veLfo2R9w6O8IqIms7E22/K6+SJM6god9Z57v03N2HbJ/uwbvfrSGmZpNPKiBqPTUZinbu3r/fcvCf+D7fd0YcBQ8pgyCjk8IFjKDh9HlN/84ugx7pdVVi+9J/Ysn4nis6VIKVlEvoPvgnPvDgDALBgzms4evg7/DrnISxdsAKn8wvQu283PPPidCQ44vFizt+xd/shpLRMxLTfTsCI0Tw1o9AwZBSyZf1OxMXbMWRk/6DH/u6xP+PA7m/w4PSxuLFfd5QWX8K/Pt1X55iSojIsfWEFJs8YC6vNikXzl2P+E0thj7Pj5gG9MGb8cHy0Ohfzf/s/uLFfd2S0ayXqrZGBMWQU4fF4kbtxD7JH3Iq4+NgGj92/42vs2voVnntlFu4ek13zfO3HAHCptByvrnwWXXp0AAAUnSvBK/OWY+K0MXh41jgAQK8+XbH9k33Y/ul+/OKXPwnzu6JowBG2Ivbv+BqlJZfqBYU/X+w6gtg4e9DpU1p6i5qAAYAOndsAAPpnZ9U8l5iUgJTUZJwvKA5x5RTtGDKK+Gz9TiS3SMTAIX2DHnvpYjlSW6XAZDI1eJwjMb7O11ZbdbFNvO55m80Ct7uqiSsmqsaQUYCr0o3tW77AsHsG1gRBQ5JaOFB8oRT8dALJgCGjgB2ffQFnRWWjTpWA6tOdSqcLuRt3C14ZUXC88KuALet3Ir1tGvr079Wo4wdkZ2HQ0H7441Nv4Oz359C7bzdcKqvAto/3YP6rs8Uulug6DBnJXSorx97th/Dzh+8Jeo2ltj+89gTeXPIB1q36HMuWrEHL1GQMGNJH4EqJ/OO2AiISitdkiEgohgwRCcWQISKhGDJEJJTy0yVN0/DjpQq9l0EKslqtiE9oeB8YNZ/yIVN8/iLGDp6h9zJIQWnpLbB662LY7TF6L8XQlD9dOnnijN5LIEUVnbuIDatz9V6G4SnfZGqHTNcemWiZlqLfYkgJPp+GA3sOAQBW/GUdRo8fzjYjkKFCZuaTU3BDVncdV0NK8Gl4dc4iHNjzNc5daTPjJo/Se1WGpfzpUn6tkOnYuZ2OKyFlVHnwdGlLrOk1FHaTBSv+sg4ul1vvVRmW0iGjaRpO5p0FAKS1bokER3yQVxDVx2szYikdMsXnL6L8yvi6U5cOQY4mCoxtRhylQ6b29ZhOXer/+hCiYAbeeQsAthmRDBMyvB5DoZjw0Niax2wzYhgmZHi6RKHo3L0jBg8dAIBtRhSlQ4aTJQqHiY+Mq3nMNhN+yoYMJ0sUMrMZ7mE94R7WEzCb0bVHJtuMQMqGDCdLFDKbBe5Jt8M96XbAZgHANiOSsiHDyRKFE9uMOIYIGV6PoSbRNODHyuo/tW5xzTYjhiFChqdL1CRuDxyzV8MxezXg9tQ8zTYjhrIhw8kSicA2E35KhgwnSyQK20z4KRkynCyRSGwz4aVkyHCyRCKxzYSX8iHD6zEkAttM+CgfMjxdIhHYZsJHyZDhZImaxWxG1eCuqBrcFTAH/hFgmwkP5UKGkyVqNpsFril3wDXljpptBf6wzYSHciHDyRJFEttM8ykXMpwsUbNpGuCqqv5Ta1uBP2wzzad0yPB6DIXE7YFjxko4Zqyss60gELaZ5lE6ZHi6RJHANtM8yoUMJ0ukB7aZ0CkVMpwskV7YZkKnVMhwskR6YpsJjVIhc7XFAJwsUeSxzYRGrZA5frrmMa/HkB7YZppOrZDhZInCwWyG59ZO8NzaqcFtBf6wzTSdUiGTX+t0iU2GQmazoHLGUFTOGNrgtoJA2GaaRpmQ0TStpslwskR6YptpGmVChpMlkgnbTOMpEzKcLFHYuKrgmPIWHFPeqt6/FAK2mcZTJ2Q4WSLJsM00jjohw8kSSYZtpnGUCRlOlkhGbDPBKREynCyRrNhmglMiZDhZIpmxzTRMiZDhZIlkxjbTMDVChpMlCiezGZ6sdvBktWvytoJA2GYCUyNkOFmicLJZUDl7JCpnjwxpW4E/bDOBKREynCyRCthm/JM+ZDhZIlWwzfgnfchwskRh56pCwvR3kDD9nZC3FQTCNlOf9CHDyRKJYHJ7YGrEr0NpKraZ+qx6LyAYTpZIBtadebBt+Q/MBaVArA3ezDRUPjYUiKn/IzTxkXHYtW0/gOo2M3r8cNjtMZFdsETkbzKcLJHObBu+hn3lPnhuy4TzN3ej8sFB0NIcgM//b59km6lL+pDhZIn0ZCosQ8xHB1H56J2o+kkWfD0z4O3fCa4HbwdibQFfx2sz10h9usTJEunNtiMPWloivFlNux7YtUcmsu8agPbfXMC9SR1gvX8VkBQL9E4HHhsMJMQAqw4C674BXhgFvLEXOFkCtE8GZg4G2qcAy/YB/84HYq3AT28ExvQW8RaFkzpkOFkivVm+uwBfuxTY1h+C7fOjMF12w9c5Fa7xA+Dr0qrB187p1AcpxWfwXlE+jleexjOzp8J2qBCorKoOGQDw+IDFO4ExNwDJccDbB4A/bQNuaA0kxwJz7gL2fQ8s2w/0SAN6tRb/psNM6pDhZImEMJng7Zle87jBQ8ucMOcXw3y2FK5JA4EYK2I2Hkbcn7fg8gs/g5YU5/91hWVIPfgDNic48dqRYwCArPwTGDdrVN0DPT5g8i3ArVf++9Y0YEFudaD8qvq6DrIygJ2ngJ35SoaM1NdkOFkiIWKscM4dBefcUX6nQ3VogMnlQeX0u+Dtnwlvn/ZwzhoOaIAt92jAl1mOFsKkAR1/NbLmOb/XZswmoE+ba1+3Tar+Z99az1nMQEYiUHS5se9QKnKHDCdLpDMtPgaaww5fh5bXnnTY4evYEuazpQFfZyp3QbOY0Klfj4YnTTGWuvunrFceJ1w38raagSpvM96JfqQOGU6WSG++timB/7KBH3rNYYfJq8F0yRn1kyZpQ4aTJRLGVYWEx99FwuPvBt1W4OnbHqZyF8zfl1x7srwS5lPF8GWmBnydt1cGNBNg3ZEX9Z+bkfbCLydLJJKp3NWo47z9OsLbORWxr2+D+2f9oMVYELPxCGCzoGpYr4Cv0zKS4bmrJ2LWfgVThRvTRgyD5ctTGJTYGmv/uqn6U8DhejOSkzZkOFkiKZhNcD4+EvZ398P+9m7A64O3ezouPzkKWrL/ydJVrokD4WvlgG37CXQpKsfTmf2w72IhzhSUYMPqXIyzZUToTehL3pDhZIlkkRgL19QhaFz3qcVsQtWom1A16iYAwMnj+fj9pKcAXNnTtHUx7PffXPc16Q5g7UP1v9eCUfWfU4S012Q4WSKjidZrM9KGDCdLZETROGmSMmQ4WSKjisY2I2XIcLJEQplM8GamwpuZGnRbgQjR1makDBlOlkioGCucOaPhzBkdfFuBANHWZuQMGU6WyOCiqc3IGTKcLJHBRVObkTJkOFkioVwexM9dg/i5awBX+G8m3ljR0makCxlOlkg8DebiCpiLKwD4v09vJERLm5EuZDhZomgSDW1GupDhZImiSTS0GflChpMlijJGbzPyhQwnSxRljN5mpAsZTpYoGhm5zUgVMpwsUWSY4G2bDG/bZACR31bgj5HbjFQhw8kSRYTdCufzY+F8fixgl+eWSkZtM1KFDCdLFM2M2mbkChlOlijKGbHNyBUynCxRJLg8iMtZi7ictbpuK/DHiG1GqpDhZIkiQ4PlhzJYfiiDntsKAjFam5EmZDhZIqpmtDYjTchwskR0jZHajDQhw8kS0TVGajPyhAwnS0R1GKXNyBMynCwR1WGUNiNNyHCyRJFjgi81Ab7UBMiyrSAQI7QZKUKGkyWKKLsVlxfeh8sL75NqW4E/RmgzUoQMJ0tEganeZqQIGU6WiAJTvc3IETKcLFEkuT2Ie34D4p7fALjl2lYQiMptRoqQya/TZHi6RIJpGiz5xbDkFwOafNsK/FG5zUgRMrXH12wyRP6p2mZ0DxlOlogaR9U2o3vIFF8o5WSJqJFUbDO6h0zdT/pyskTUEBXbjP4hw8kSUZOo1mZ0DxlOlkgPmsMOzWHXexkhUa3N6B4ynCxRxNltqFg8ARWLJwB2m96rCYlKbUbXkOFkiSg0KrUZXUOGkyWi0KnSZnQNGU6WSBduD+IWbkbcws3KbCvwR5U2o2/IcLJEetA0WI6dg+XYOWW2FQSiQpvRNWQ4WSJqHhXajDSnS2wyRKGRvc3oFjKcLBGFh+xtRreQ4WSJKHxkbjO63eCUkyUKN1NxOUzlruAHKjxRCuRqm9m1bX9Nmxk3eZTeywKgZ8hwskRhZCouR/zv1sHUhADRAJhKKqC1SRG2rkia+Mg47Nq2H0B1mxk9fjjs9hidV6VjyHCyROFkKnfB5PagcuoQ+NokBz3eXFCG2L/9Gya3F2oPsa+Rtc1IcbrEJkPh4muTDF+nVL2XoRsZ24wuF345WSISQ8ZJky4hw8kS6arKC/vKfdWPPV591yKAbJMmXUKGkyXSlc8HS975K4+NckXmGtnajD4hw8kSkVAytRldQoaTJSKxZGozup8usckQiSFLm4l4yHCyRBQZsrSZiH9OpvZkSdM0/G3xikgvgQyo9WUNEwF8uHIjzsebGjzW6tMw68rjj97bjAKH7re6Fsbn89U81utzMxEPmdqnSsUXLuKDdzZGeglkQD1ikzCxezbyth7EqcryBo+NMZmBboMAANs+3Y0jztIIrFB/en0KOPIhU2uyRBQuZV43nD4PnuvQt9Gvcfo8uOCpFLgq+ejRZkyaFtn7DxacOY8LhRcj+a+kKGErc8F6ufEbJD3xVlQlq/m7l5qja88OSEiM3LXQiIcMEUUX417xIiIpMGSISCiGDBEJxZAhIqEYMkQkFEOGiIRiyBCRUAwZIhJKtxuJk1hn8gux6u8b8M3BEzh5/DQ6dmmLFZtfqnfc5xt2IXfTHnx7KA8XCksw46mJeGDqvTqsmIyKTcagTp44g91bv0T7TunI7Bb4FqdbN+/FD6fPY/CwWyK4OoombDIGlT3iFgy5uz8AYMGc13D08Hd+j5u/5HGYzdX/r1m36rOIrY+iB0PGoK4GR7iO8yc/7yz++vK7+Grvt3C7qtA+MwOTpv0Ud4/JBgDc0XUCHp17Pyp+dGL96lx4qjwYM2EEpj/5AA7sOoKlf/xfnD1ViN59u+G/F05Hetu0kNdC8mLIUEhOnyzAo/floHWbVMx+9mG0bJWCk8dP41xBUZ3j/vn2J+h3e2/kvPwYvj2Uh38seh9enw9f7DiMyTPGwmqzYvH85fjT02/glbee0endkEgMGQrJsiVrYLVZ8fp782puGzAgO6vecanpLZDz8kwAwMA7+2LHZwfw3rJNWLH5JWR2q76/c9G5Erwybzl+vFSBxKSEyL0Jighe+KWQHNh1BEPvGRj0viQDsvvU+bpD5wykpbeoCZjq59oAAC4UlIR/oaQ7hgyFpKy0HGmtWwQ9zpFUN4RsNisc1wWT1VZdqN06/6ZDEoMhQyFJTnGg6DzvcEjBMWQoJP2zs7Dt4724XO7UeykkOV74NahKpwu7t30FACg8W4SKcie2frwHAHDzbb3RIjUJQPWH9vLzrv0Gie+OncbWj/cgNs6OQUP7Bfz+v5w1Drtyv8T08c9h4n+NQWqrFOTnnUGl042J08YIfGekGoaMQV0sLkPOzEV1nrv69ZJ3ctAi9UYAQO6m3XhzyQc1x2z+cDs2f7gdGe3SsGb70oDfv0PnNnj9/fl446VVePnZf8Dr9aFD5zaYxICh6/BG4kQkFK/JEJFQDBkiEoohQ0RCMWSISCiGDBEJxZAhIqEYMkQkFEOGiIRiyBCRUAwZIhKKIUNEQjFkiEgohgwRCcWQISKhGDJEJBRDhoiEYsgQkVAMGSISiiFDREIxZIhIKIYMEQnFkCEiof4fEYpLWkydUUoAAAAASUVORK5CYII="
+  },
+  {
+   "id": "p2",
+   "type": "mcq",
+   "topic": "Circles_Composite_Shapes",
+   "difficulty": 2,
+   "stem": "Find the area of this parallelogram.",
+   "options": [
+    "60 cm²",
+    "84 cm²",
+    "30 cm²",
+    "38 cm²"
+   ],
+   "answer": 0,
+   "explanation": "A = base × PERPENDICULAR height = 12 × 5 = 60 cm². The slanted 7 cm side is not the height.",
+   "technique": "Parallelogram: base × the height that makes a right angle with the base.",
+   "trap": "Using the slanted side (12 × 7 = 84)",
+   "source": "FormulaSheet 2026-10-08 (Oxford Yr 7-10) §11; Test_Analysis_2026-06-18 log Q32 (area formula)",
+   "shuffle": true,
+   "image": "data:image/png;base64,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"
+  },
+  {
+   "id": "p3",
+   "type": "mcq",
+   "topic": "Circles_Composite_Shapes",
+   "difficulty": 2,
+   "stem": "A kite has diagonals of 10 cm and 14 cm. What is its area?",
+   "options": [
+    "70 cm²",
+    "140 cm²",
+    "48 cm²",
+    "24 cm²"
+   ],
+   "answer": 0,
+   "explanation": "Kite: A = ½ × x × y = ½ × 10 × 14 = 70 cm².",
+   "technique": "Kite or rhombus: half the product of the diagonals.",
+   "trap": "Forgetting the ½ (140)",
+   "source": "FormulaSheet 2026-10-08 (Oxford Yr 7-10) §11 (Yr 8 kite/rhombus)",
+   "shuffle": true
+  },
+  {
+   "id": "p4",
+   "type": "numeric",
+   "topic": "Circles_Composite_Shapes",
+   "difficulty": 2,
+   "stem": "A circle has a DIAMETER of 14 cm. Find its circumference. (Use π = 3.14)",
+   "answer": 43.96,
+   "tolerance": 0.01,
+   "unit": "cm",
+   "explanation": "C = π × d = 3.14 × 14 = 43.96 cm.",
+   "technique": "C = πd = 2πr. Check whether you're given r or d.",
+   "trap": "Using 14 as the radius (87.92)",
+   "source": "FormulaSheet 2026-10-08 (Oxford Yr 7-10) §11; Test_Analysis_2025-10-01 Circles Q9 (wrong circle measure)"
+  },
+  {
+   "id": "p5",
+   "type": "mcq",
+   "topic": "Circles_Composite_Shapes",
+   "difficulty": 2,
+   "stem": "Find the area of a circle with radius 5 cm. (Use π = 3.14)",
+   "options": [
+    "78.5 cm²",
+    "31.4 cm²",
+    "15.7 cm²",
+    "314 cm²"
+   ],
+   "answer": 0,
+   "explanation": "A = πr² = 3.14 × 5 × 5 = 78.5 cm².",
+   "technique": "Area has r² (the 2 is a POWER). Circumference has 2πr (the 2 is in front).",
+   "trap": "Using 2πr (31.4), which is the circumference",
+   "source": "FormulaSheet 2026-10-08 (Oxford Yr 7-10) §11",
+   "shuffle": true
+  },
+  {
+   "id": "p6",
+   "type": "mcq",
+   "topic": "Circles_Composite_Shapes",
+   "difficulty": 2,
+   "stem": "Find the PERIMETER of this semicircle. (Use π = 3.14)",
+   "options": [
+    "51.4 cm",
+    "31.4 cm",
+    "62.8 cm",
+    "82.8 cm"
+   ],
+   "answer": 0,
+   "explanation": "Curved part = half of πd = ½ × 3.14 × 20 = 31.4 cm. Add the straight diameter 20 cm: 51.4 cm.",
+   "technique": "Semicircle perimeter = curved half + the straight diameter.",
+   "trap": "Leaving out the straight edge (31.4)",
+   "source": "FormulaSheet 2026-10-08 (Oxford Yr 7-10) §11; Test_Analysis_2025-01-07 Q20-23",
+   "shuffle": true,
+   "image": "data:image/png;base64,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"
+  },
+  {
+   "id": "p7",
+   "type": "mcq",
+   "topic": "Circles_Composite_Shapes",
+   "difficulty": 2,
+   "stem": "What is the length of the curved edge of a quarter circle with radius 10 cm? (Use π = 3.14)",
+   "options": [
+    "15.7 cm",
+    "7.85 cm",
+    "31.4 cm",
+    "78.5 cm"
+   ],
+   "answer": 0,
+   "explanation": "Quarter arc = 2πr ÷ 4 = 2 × 3.14 × 10 ÷ 4 = 15.7 cm.",
+   "technique": "Arc = (fraction of the circle) × 2πr.",
+   "trap": "πr ÷ 4 = 7.85 (the Term 3 slip)",
+   "source": "FormulaSheet 2026-10-08 (Oxford Yr 7-10) watch-outs; Test_Analysis_2026-10-02 P2 Q12a",
+   "shuffle": true
+  },
+  {
+   "id": "p8",
+   "type": "numeric",
+   "topic": "Circles_Composite_Shapes",
+   "difficulty": 2,
+   "stem": "Find the area of a sector with radius 8 cm and angle 45°. (Use π = 3.14)",
+   "answer": 25.12,
+   "tolerance": 0.01,
+   "unit": "cm²",
+   "explanation": "45° is 45/360 = 1/8 of the circle. Circle = 3.14 × 64 = 200.96. ÷ 8 = 25.12 cm².",
+   "technique": "Sector = (angle ÷ 360) × πr².",
+   "trap": "Using 2πr instead of πr²",
+   "source": "FormulaSheet 2026-10-08 (Oxford Yr 7-10) §11 (sector)"
+  },
+  {
+   "id": "p9",
+   "type": "mcq",
+   "topic": "Money_Measurement",
+   "difficulty": 2,
+   "stem": "A triangular prism is 10 cm long. Its triangle end has base 6 cm and height 4 cm. What is its volume?",
+   "options": [
+    "120 cm³",
+    "240 cm³",
+    "100 cm³",
+    "60 cm³"
+   ],
+   "answer": 0,
+   "explanation": "Cross-section = ½ × 6 × 4 = 12 cm². Volume = 12 × 10 = 120 cm³.",
+   "technique": "Any prism: volume = area of the cross-section × length.",
+   "trap": "Forgetting the ½ of the triangle (240)",
+   "source": "FormulaSheet 2026-10-08 (Oxford Yr 7-10) §12",
+   "shuffle": true
+  },
+  {
+   "id": "p10",
+   "type": "numeric",
+   "topic": "Money_Measurement",
+   "difficulty": 2,
+   "stem": "A cylinder has radius 2 cm and height 10 cm. Find its volume. (Use π = 3.14)",
+   "answer": 125.6,
+   "tolerance": 0.01,
+   "unit": "cm³",
+   "explanation": "V = πr²h = 3.14 × 4 × 10 = 125.6 cm³.",
+   "technique": "Cylinder = circle area × height.",
+   "trap": "Using 2πr (circumference) instead of πr²",
+   "source": "FormulaSheet 2026-10-08 (Oxford Yr 7-10) §12"
+  },
+  {
+   "id": "p11",
+   "type": "mcq",
+   "topic": "Money_Measurement",
+   "difficulty": 2,
+   "stem": "A box is 30 cm × 20 cm × 10 cm. How many litres does it hold?",
+   "options": [
+    "6 L",
+    "60 L",
+    "0.6 L",
+    "600 L"
+   ],
+   "answer": 0,
+   "explanation": "V = 30 × 20 × 10 = 6000 cm³. 1000 cm³ = 1 L, so 6000 ÷ 1000 = 6 L.",
+   "technique": "cm³ → L: divide by 1000.",
+   "trap": "Dividing by 100 (60 L)",
+   "source": "FormulaSheet 2026-10-08 (Oxford Yr 7-10) §12; Test_Analysis_2025-12-05 Q47 (L vs cm³)",
+   "shuffle": true
+  },
+  {
+   "id": "p12",
+   "type": "mcq",
+   "topic": "Money_Measurement",
+   "difficulty": 2,
+   "stem": "Convert 2.5 m² to cm².",
+   "options": [
+    "25 000 cm²",
+    "250 cm²",
+    "2500 cm²",
+    "250 000 cm²"
+   ],
+   "answer": 0,
+   "explanation": "1 m = 100 cm, so 1 m² = 100 × 100 = 10 000 cm². 2.5 × 10 000 = 25 000 cm².",
+   "technique": "Area units: square the length factor (100² = 10 000).",
+   "trap": "Multiplying by 100 only (250)",
+   "source": "FormulaSheet 2026-10-08 (Oxford Yr 7-10) §11 (area units)",
+   "shuffle": true
+  },
+  {
+   "id": "p13",
+   "type": "mcq",
+   "topic": "Angles_Geometry",
+   "difficulty": 2,
+   "stem": "What is the size of each interior angle of a REGULAR octagon?",
+   "options": [
+    "135°",
+    "1080°",
+    "45°",
+    "120°"
+   ],
+   "answer": 0,
+   "explanation": "Angle sum = (8 − 2) × 180 = 1080°. Regular, so each = 1080 ÷ 8 = 135°.",
+   "technique": "Polygon angle sum = (n − 2) × 180°. Regular → divide by n.",
+   "trap": "Giving the angle sum (1080°) or the exterior angle (45°)",
+   "source": "FormulaSheet 2026-10-08 (Oxford Yr 7-10) §9",
+   "shuffle": true
+  },
+  {
+   "id": "p14",
+   "type": "mcq",
+   "topic": "Angles_Geometry",
+   "difficulty": 2,
+   "stem": "A right-angled triangle has a hypotenuse of 13 cm and one short side of 5 cm. How long is the other short side?",
+   "options": [
+    "12 cm",
+    "13.9 cm",
+    "8 cm",
+    "18 cm"
+   ],
+   "answer": 0,
+   "explanation": "a² = c² − b² = 169 − 25 = 144, so a = 12 cm. (5-12-13 is a Pythagorean triple.)",
+   "technique": "Finding a SHORTER side: subtract the squares.",
+   "trap": "Adding the squares (√194 ≈ 13.9)",
+   "source": "FormulaSheet 2026-10-08 (Oxford Yr 7-10) §10; Test_Analysis_2026-05-15 Q13-16",
+   "shuffle": true
+  },
+  {
+   "id": "p15",
+   "type": "mcq",
+   "topic": "Indices",
+   "difficulty": 2,
+   "stem": "Simplify (a⁴)³ ÷ a⁵",
+   "options": [
+    "a⁷",
+    "a²",
+    "a¹²",
+    "a¹⁷"
+   ],
+   "answer": 0,
+   "explanation": "(a⁴)³ = a¹² (multiply the powers). a¹² ÷ a⁵ = a⁷ (subtract the powers).",
+   "technique": "Power of a power: multiply. Dividing: subtract.",
+   "trap": "Adding 4 + 3 = 7 then subtracting 5 (a²)",
+   "source": "FormulaSheet 2026-10-08 (Oxford Yr 7-10) §5; Test_Analysis_2026-03-09 Q5a/Q7",
+   "shuffle": true
+  },
+  {
+   "id": "p16",
+   "type": "mcq",
+   "topic": "Algebra",
+   "difficulty": 2,
+   "stem": "Expand −2(x − 5)",
+   "options": [
+    "−2x + 10",
+    "−2x − 10",
+    "−2x − 5",
+    "2x + 10"
+   ],
+   "answer": 0,
+   "explanation": "−2 × x = −2x and −2 × (−5) = +10.",
+   "technique": "A minus in front flips every sign inside.",
+   "trap": "−2x − 10 (forgot negative × negative)",
+   "source": "FormulaSheet 2026-10-08 (Oxford Yr 7-10) §6; topictest4 Q1d/Q8d (sign errors)",
+   "shuffle": true
+  },
+  {
+   "id": "p17",
+   "type": "mcq",
+   "topic": "Algebra",
+   "difficulty": 2,
+   "stem": "Which rule fits this table?  x: 0, 1, 2, 3  →  y: 5, 8, 11, 14",
+   "options": [
+    "y = 3x + 5",
+    "y = 5x + 3",
+    "y = x + 3",
+    "y = 3x"
+   ],
+   "answer": 0,
+   "explanation": "y goes up by 3 each time, so 3x. When x = 0, y = 5, so + 5: y = 3x + 5.",
+   "technique": "Linear rule = (change in y each step) × x + (y when x = 0).",
+   "trap": "Swapping the numbers (y = 5x + 3)",
+   "source": "FormulaSheet 2026-10-08 (Oxford Yr 7-10) §8 (Yr 8 linear rules)",
+   "shuffle": true
+  },
+  {
+   "id": "p18",
+   "type": "mcq",
+   "topic": "Percentages",
+   "difficulty": 2,
+   "stem": "$800 is invested at 5% per year SIMPLE interest for 3 years. How much INTEREST is earned?",
+   "options": [
+    "$120",
+    "$40",
+    "$920",
+    "$126.10"
+   ],
+   "answer": 0,
+   "explanation": "I = PrT = 800 × 0.05 × 3 = $120.",
+   "technique": "Simple interest I = P × r × T (r as a decimal).",
+   "trap": "One year only ($40), the total ($920) or compound ($126.10)",
+   "source": "FormulaSheet 2026-10-08 (Oxford Yr 7-10) §3; Test_Analysis_2026-02-14 Q20-22",
+   "shuffle": true
+  },
+  {
+   "id": "p19",
+   "type": "mcq",
+   "topic": "Percentages",
+   "difficulty": 2,
+   "stem": "A price rises from $50 to $65. What is the percentage increase?",
+   "options": [
+    "30%",
+    "23%",
+    "15%",
+    "130%"
+   ],
+   "answer": 0,
+   "explanation": "Increase = 15. % change = 15 ÷ ORIGINAL 50 × 100 = 30%.",
+   "technique": "% change = change ÷ original × 100.",
+   "trap": "Dividing by the new price (≈ 23%)",
+   "source": "FormulaSheet 2026-10-08 (Oxford Yr 7-10) §3; Test_Analysis_2026-07-10 P1 Q25",
+   "shuffle": true
+  },
+  {
+   "id": "p20",
+   "type": "mcq",
+   "topic": "Percentages",
+   "difficulty": 2,
+   "stem": "A shop buys a toy for $40 and sells it for $50. What is the percentage PROFIT?",
+   "options": [
+    "25%",
+    "20%",
+    "10%",
+    "125%"
+   ],
+   "answer": 0,
+   "explanation": "Profit = $10. % profit = 10 ÷ COST 40 × 100 = 25%.",
+   "technique": "% profit = profit ÷ cost price × 100.",
+   "trap": "Dividing by the selling price (20%)",
+   "source": "FormulaSheet 2026-10-08 (Oxford Yr 7-10) §3",
+   "shuffle": true
+  },
+  {
+   "id": "p21",
+   "type": "mcq",
+   "topic": "Speed_Distance_Time",
+   "difficulty": 2,
+   "stem": "A car travels 150 km in 2 hours 30 minutes. What is its average speed?",
+   "options": [
+    "60 km/h",
+    "65 km/h",
+    "50 km/h",
+    "375 km/h"
+   ],
+   "answer": 0,
+   "explanation": "2 h 30 min = 2.5 h. Speed = 150 ÷ 2.5 = 60 km/h.",
+   "technique": "Speed = distance ÷ time, with time in HOURS for km/h.",
+   "trap": "Using 2.3 h for 2 h 30 min (≈ 65)",
+   "source": "FormulaSheet 2026-10-08 (Oxford Yr 7-10) §13; Test_Analysis_2025-10-01 Speed Q10/19",
+   "shuffle": true
+  },
+  {
+   "id": "p22",
+   "type": "numeric",
+   "topic": "Statistics_Probability",
+   "difficulty": 2,
+   "stem": "Priya's mean mark over 5 tests is 84. Her first four marks add up to 330. What did she get on the fifth test?",
+   "answer": 90,
+   "tolerance": 0.001,
+   "unit": "marks",
+   "explanation": "Total for 5 tests = 5 × 84 = 420. Fifth = 420 − 330 = 90.",
+   "technique": "Total = mean × count. Then subtract what you know.",
+   "trap": "Averaging 84 and 330 in some way",
+   "source": "FormulaSheet 2026-10-08 (Oxford Yr 7-10) §14; Test_Analysis_2026-10-02 P1 Q13 (average → total)"
+  },
+  {
+   "id": "p23",
+   "type": "mcq",
+   "topic": "Statistics_Probability",
+   "difficulty": 2,
+   "stem": "In a class, 18 play football, 15 play tennis and 7 play both. How many play football OR tennis (or both)?",
+   "options": [
+    "26",
+    "33",
+    "40",
+    "19"
+   ],
+   "answer": 0,
+   "explanation": "n(A or B) = 18 + 15 − 7 = 26. The 7 were counted twice.",
+   "technique": "Venn: add the two groups, take away the overlap once.",
+   "trap": "Adding without removing the overlap (33)",
+   "source": "FormulaSheet 2026-10-08 (Oxford Yr 7-10) §15; Test_Analysis_2026-05-15 (sets)",
+   "shuffle": true
+  }
+ ],
+ "minutes": 34
+}

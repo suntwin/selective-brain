@@ -22,6 +22,8 @@ XP = {
     "recall_got": 4,
     "recall_try": 1,
     "technique_added": 6,
+    "writing_done": 20,    # submitted a writing task
+    "writing_check": 2,    # each checklist item she ticked
 }
 
 # ---------------------------------------------------------------- levels
@@ -204,9 +206,18 @@ def next_review(box: int, got_it: bool) -> tuple[int, date, bool]:
 
 
 # ---------------------------------------------------------------- topic map
-TOPICS = ["Fractions", "Ratio_Proportion", "Percentages", "Indices", "Algebra",
-          "Angles_Geometry", "Circles_Composite_Shapes", "Statistics_Probability",
-          "Speed_Distance_Time", "Money_Measurement", "Number", "Quantitative_Reasoning"]
+MATHS_TOPICS = ["Fractions", "Ratio_Proportion", "Percentages", "Indices", "Algebra",
+                "Angles_Geometry", "Circles_Composite_Shapes", "Statistics_Probability",
+                "Speed_Distance_Time", "Money_Measurement", "Number", "Quantitative_Reasoning"]
+# English side of the SEHS exam (block 2: Reading + Verbal Reasoning; block 3: Writing)
+READING_TOPICS = ["Reading_Retrieve", "Reading_Infer", "Reading_Vocab", "Reading_Purpose"]
+VERBAL_TOPICS = ["Verbal_Vocabulary", "Verbal_Analogies", "Verbal_Classify", "Verbal_Codes", "Verbal_Logic"]
+WRITING_TOPICS = ["Writing_Creative", "Writing_Persuasive"]
+TOPICS = MATHS_TOPICS + READING_TOPICS + VERBAL_TOPICS + WRITING_TOPICS
+
+SUBJECTS = {"Maths": "🔢", "Reading": "📖", "Verbal": "🧠", "Writing": "✍️", "English": "📚"}
+TOPIC_SUBJECT = {**{t: "Maths" for t in MATHS_TOPICS}, **{t: "Reading" for t in READING_TOPICS},
+                 **{t: "Verbal" for t in VERBAL_TOPICS}, **{t: "Writing" for t in WRITING_TOPICS}}
 
 TOPIC_LABEL = {
     "Fractions": "Fractions", "Ratio_Proportion": "Ratio", "Percentages": "Percentages",
@@ -214,18 +225,26 @@ TOPIC_LABEL = {
     "Circles_Composite_Shapes": "Circles & Shapes", "Statistics_Probability": "Stats & Probability",
     "Speed_Distance_Time": "Speed", "Money_Measurement": "Money & Measures",
     "Number": "Number", "Quantitative_Reasoning": "Quant Reasoning",
+    "Reading_Retrieve": "Finding information", "Reading_Infer": "Reading between the lines",
+    "Reading_Vocab": "Words in context", "Reading_Purpose": "Author's purpose & tone",
+    "Verbal_Vocabulary": "Word meanings", "Verbal_Analogies": "Analogies", "Verbal_Classify": "Odd one out",
+    "Verbal_Codes": "Codes & sequences", "Verbal_Logic": "Logic",
+    "Writing_Creative": "Creative writing", "Writing_Persuasive": "Persuasive writing",
 }
 
 
 def topic_map(answers: list[dict]) -> list[dict]:
     out = []
     for t in TOPICS:
-        rows = [a for a in answers if a.get("topic") == t]
+        if t in WRITING_TOPICS:          # writing is marked separately, not right/wrong
+            continue
+        subj = TOPIC_SUBJECT[t]
+        rows = [a for a in answers if a.get("topic") == t and a.get("correct") is not None]
         if not rows:
-            out.append({"topic": t, "label": TOPIC_LABEL[t], "n": 0, "acc": None, "color": "grey"})
+            out.append({"topic": t, "label": TOPIC_LABEL[t], "n": 0, "acc": None, "color": "grey", "subject": subj})
             continue
         recent = rows[-20:]
         acc = sum(1 for a in recent if a.get("correct")) / len(recent)
         color = "green" if acc >= 0.8 else "amber" if acc >= 0.6 else "red"
-        out.append({"topic": t, "label": TOPIC_LABEL[t], "n": len(rows), "acc": acc, "color": color})
+        out.append({"topic": t, "label": TOPIC_LABEL[t], "n": len(rows), "acc": acc, "color": color, "subject": subj})
     return out

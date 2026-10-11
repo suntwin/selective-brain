@@ -1,0 +1,64 @@
+{
+ "id": "2026-10-08_writing_baseline",
+ "title": "English 3 · Writing Baseline ✍️",
+ "drill_date": "2026-10-08",
+ "subject": "Writing",
+ "pace_seconds": 90,
+ "focus": [
+  "Creative story",
+  "Persuasive piece",
+  "20 minutes each"
+ ],
+ "source_note": "Baseline writing sample: one creative and one persuasive task, 20 minutes each like the 40-minute exam block. Marked by Claude with wiki/English/Writing_Rubric.md after export.",
+ "questions": [
+  {
+   "id": "w1",
+   "type": "writing",
+   "topic": "Writing_Creative",
+   "difficulty": 3,
+   "seconds": 1200,
+   "stem": "Write a story that begins with this sentence:\n\n“The door had been locked for as long as anyone could remember, until this morning.”",
+   "tips": [
+    "Plan: who is the main character, what's the problem, how does it end?",
+    "Show feelings through actions ('her hands shook') instead of naming them ('she was scared').",
+    "One strong setting detail beats five weak ones.",
+    "Finish the story: a rushed or missing ending loses marks."
+   ],
+   "checklist": [
+    "I spent 2–3 minutes planning first",
+    "I used paragraphs",
+    "I used at least three precise, interesting words",
+    "I varied how my sentences start",
+    "I checked spelling and punctuation at the end",
+    "My story has a clear beginning, problem and ending"
+   ],
+   "technique": "Plan, write, check: 3 min / 15 min / 2 min.",
+   "source": "ACER SEHS skill description: Writing, two tasks in 40 minutes"
+  },
+  {
+   "id": "w2",
+   "type": "writing",
+   "topic": "Writing_Persuasive",
+   "difficulty": 3,
+   "seconds": 1200,
+   "stem": "Some people think students should be allowed to use their mobile phones at school during lunchtime. Others think phones should stay switched off all day.\n\nWrite a persuasive piece giving YOUR opinion. Try to convince the reader.",
+   "tips": [
+    "Say your opinion clearly in the first paragraph.",
+    "Give 2–3 reasons, each in its own paragraph, with an example.",
+    "Answer one argument from the other side ('Some people say… however…').",
+    "End with a strong conclusion that restates your view."
+   ],
+   "checklist": [
+    "I spent 2–3 minutes planning first",
+    "I used paragraphs",
+    "I used at least three precise, interesting words",
+    "I varied how my sentences start",
+    "I checked spelling and punctuation at the end",
+    "I answered one argument from the other side"
+   ],
+   "technique": "Opinion, reasons with examples, counter-argument, conclusion.",
+   "source": "ACER SEHS skill description: Writing, two tasks in 40 minutes"
+  }
+ ],
+ "minutes": 40
+}

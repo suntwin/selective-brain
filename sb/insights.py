@@ -52,7 +52,7 @@ def topic_progress(answers: list[dict], topic: str | None, last: int = 20) -> di
     """Accuracy on her most recent app answers for one topic: {n, acc, recent_n} or None if none yet."""
     if not topic:
         return None
-    rows = [a for a in answers if a.get("topic") == topic]
+    rows = [a for a in answers if a.get("topic") == topic and a.get("correct") is not None]
     if not rows:
         return None
     recent = rows[-last:]

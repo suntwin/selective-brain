@@ -118,6 +118,22 @@ Uploading again replaces the old map. The format is described at the top of `sb/
 - **Her view (🎯 My focus):** her top 4 focus areas with tips and progress bars, wins so far, and "super-power habits" she can add to her notebook with one tap (+XP).
 - **One-time setup:** run `supabase/003_mistake_map.sql` in Supabase → SQL Editor. It creates the `insights` table. New installs get it from `schema.sql`.
 
+## English: Reading, Verbal Reasoning and Writing (added 2026-10-08)
+
+The SEHS exam has three blocks: Maths + Quantitative Reasoning (60 min), Reading + Verbal Reasoning (55 min), and Writing (40 min, 2 tasks). Drills now carry a top-level `"subject"`: `Maths` (the default), `Reading`, `Verbal`, `Writing` or `English`. The drill picker shows a subject filter, and the Topic Map has one row per subject.
+
+- **Reading:** put the passages at the top level, `"passages": {"id": {"title", "kind", "text", "source"}}`. Each question then names its passage with `"passage": "id"`. On a laptop the passage shows in a scrolling box beside the question; on a phone it shows above. The review screen, Past drills and notebook cards let her re-read the passage.
+- **Writing:** use `"type": "writing"` with `stem` (the task), `seconds` (e.g. 1200), `tips` [..] and `checklist` [..].
+  - She writes in a text box, ticks the checklist, and hands it in for +20 XP, plus 2 XP for each item she ticked.
+  - Writing isn't marked right or wrong (`correct` = null). Scores, accuracy and the topic map skip it.
+  - The vault export has a "Writing (for Claude to mark)" section with the full text.
+  - Claude marks it with `wiki/English/Writing_Rubric.md` in the vault.
+- **New topics:**
+  - Reading: `Reading_Retrieve`, `Reading_Infer`, `Reading_Vocab`, `Reading_Purpose`.
+  - Verbal: `Verbal_Vocabulary`, `Verbal_Analogies`, `Verbal_Classify`, `Verbal_Codes`, `Verbal_Logic`.
+  - Writing: `Writing_Creative`, `Writing_Persuasive`.
+- **Build scripts:** `tools/build_english_NNN.py` (the first one is the baseline pack: Verbal, Reading and Writing).
+
 ## Where things live
 | | |
 |---|---|

@@ -72,6 +72,10 @@ button[data-testid="stBaseButton-tertiary"]:hover{border-color:var(--pink) !impo
 /* answer option buttons: bigger, left-aligned */
 [class*="st-key-opt_"] button[data-testid="stBaseButton-tertiary"]{min-height:3.6rem; justify-content:flex-start}
 [class*="st-key-opt_"] button[data-testid="stBaseButton-tertiary"] p{font-size:1.2rem !important}
+/* long answer options (reading / verbal) wrap instead of being cut off */
+[class*="st-key-opt_"] button[data-testid="stBaseButton-tertiary"]{height:auto !important; padding-top:.7rem !important; padding-bottom:.7rem !important}
+[class*="st-key-opt_"] button[data-testid="stBaseButton-tertiary"] p,
+[class*="st-key-opt_"] button[data-testid="stBaseButton-tertiary"] div{white-space:normal !important; text-align:left !important; overflow:visible !important; text-overflow:clip !important}
 /* inputs */
 .stTextInput input, .stTextArea textarea, .stNumberInput input{border-radius:14px !important; border:2px solid var(--line) !important; background:#fff !important}
 [data-baseweb="select"]>div{border-radius:14px !important}

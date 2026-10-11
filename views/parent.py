@@ -47,7 +47,8 @@ def _week(kid):
     att = [a for a in s["attempts"] if a.get("finished_at") and g.to_local_date(a["finished_at"]) >= since]
     ans = [a for a in s["answers"] if g.to_local_date(a["created_at"]) >= since]
     cis = [c for c in s["checkins"] if g.to_local_date(c["day"]) >= since]
-    acc = (sum(1 for a in ans if a["correct"]) / len(ans)) if ans else None
+    marked = [a for a in ans if a.get("correct") is not None]
+    acc = (sum(1 for a in marked if a["correct"]) / len(marked)) if marked else None
     secs = sorted(a["seconds"] for a in ans if a.get("seconds"))
     c = st.columns(5)
     c[0].metric("Drills (7 days)", len(att))
@@ -58,8 +59,9 @@ def _week(kid):
     st.caption(f"Level {s['level']['num']} {s['level']['name']} · {s['xp']} XP · "
                f"{g.days_to_exam(kid.get('exam_date'))} days to exam")
 
-    if ans:
-        df = pd.DataFrame(ans)
+    if marked:
+        df = pd.DataFrame(marked)
+        df["correct"] = df["correct"].astype(bool)
         tdf = df.groupby("topic").agg(n=("correct", "size"), acc=("correct", "mean")).reset_index()
         tdf["acc"] = (tdf["acc"] * 100).round()
         tdf["label"] = tdf["topic"].map(lambda t: g.TOPIC_LABEL.get(t, t))
@@ -70,7 +72,7 @@ def _week(kid):
                           paper_bgcolor="rgba(0,0,0,0)")
         st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
 
-    wrong = [a for a in ans if not a["correct"]]
+    wrong = [a for a in ans if a.get("correct") is False]
     rc = Counter(a.get("reason") or "untagged" for a in wrong)
     l, r = st.columns(2)
     with l:
@@ -87,7 +89,7 @@ def _week(kid):
             ci = next((c for c in cis if g.to_local_date(c["day"]) == d), None)
             did = [a for a in att if g.to_local_date(a["finished_at"]) == d]
             mark = "✅" if did else ("🛌" if ci and ci.get("session_size") == "Rest" else ("☑️ check-in only" if ci else "·"))
-            extra = " · ".join(f"{a['score']}/{a['total']}" for a in did)
+            extra = " · ".join(f"{a['score']}/{a['total']}" if a.get("total") else "✍️" for a in did)
             st.markdown(f"{d.strftime('%a %d %b')}: {mark} {extra}")
 
     nb = [n for n in s["notebook"] if g.to_local_date(n.get("created_at")) and g.to_local_date(n["created_at"]) >= since]
@@ -133,6 +135,11 @@ def _publish():
         for d in ok:
             row = {k: d.get(k) for k in ("id", "title", "drill_date", "minutes", "pace_seconds", "subject",
                                          "focus", "questions", "source_note")}
+            # the drills table has no 'passages' column: carry each reading passage inside its questions
+            passages = d.get("passages") or {}
+            if passages:
+                row["questions"] = [dict(q, passage_obj=passages[q["passage"]]) if q.get("passage") in passages else q
+                                    for q in d["questions"]]
             row.update({"family_id": fam, "status": "published", "minutes": d.get("minutes", 40),
                         "pace_seconds": d.get("pace_seconds", 90), "subject": d.get("subject", "Maths"),
                         "focus": d.get("focus", [])})
@@ -174,7 +181,7 @@ def _export(kid):
         md = drillspec.attempt_markdown(d, a, data.attempt_answers(a["id"]), cis.get(str(day)))
         name = f"Result_{day}_{d['id']}_{a['id'][:6]}.md"
         files[name] = md
-        with st.expander(f"{day} · {d['title']} · {a['score']}/{a['total']}"):
+        with st.expander(f"{day} · {d['title']} · " + (f"{a['score']}/{a['total']}" if a.get("total") else "✍️ writing")):
             st.markdown(style.md(md))
     buf = io.BytesIO()
     with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:

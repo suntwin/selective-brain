@@ -27,12 +27,15 @@ def _attempt_label(a, drills, flags_by_attempt):
     title = d["title"] if d else a["drill_id"]
     n = flags_by_attempt.get(a["id"], 0)
     talk = f" · 🗣️ {n}" if n else ""
-    return f"{day.strftime('%a %d %b') if day else '?'} · {title} · {a.get('score', 0)}/{a.get('total', 0)}{talk}"
+    sc = f"{a.get('score', 0)}/{a.get('total', 0)}" if a.get("total") else "✍️ writing"
+    return f"{day.strftime('%a %d %b') if day else '?'} · {title} · {sc}{talk}"
 
 
 def _status(q, a):
     if not a or a.get("chosen") in (None, "", "None"):
         return "skip"
+    if not ans.is_scored(q):
+        return "written"
     return "right" if a.get("correct") else "wrong"
 
 
@@ -62,7 +65,13 @@ def _mcq_html(q, a, attempt_id):
 
 def _answer_block(q, a, attempt_id):
     t = q.get("type", "mcq")
-    if t == "word":
+    if t == "writing":
+        w = ans.writing_given(a["chosen"]) if a else {"text": "", "checks": [], "words": 0}
+        st.markdown(f'<div class="sb-small">✍️ {w["words"]} words'
+                    f'{" · ticked: " + esc("; ".join(w["checks"])) if w["checks"] else ""}</div>'
+                    f'<div class="sb-card" style="white-space:pre-wrap">{esc(w["text"] or "Not handed in.")}</div>',
+                    unsafe_allow_html=True)
+    elif t == "word":
         from views.drill import _word_table
         st.markdown(_word_table(q, a["chosen"] if a else None), unsafe_allow_html=True)
     elif t == "numeric":
@@ -116,9 +125,9 @@ def _discussion(attempt, q, a, is_child):
                 st.rerun()
 
 
-def _question(i, attempt, q, a, budget, is_child):
+def _question(i, attempt, q, a, budget, is_child, d=None):
     stt = _status(q, a)
-    icon = {"right": "✅", "wrong": "❌", "skip": "⏭️"}[stt]
+    icon = {"right": "✅", "wrong": "❌", "skip": "⏭️", "written": "✍️"}[stt]
     talk = " 🗣️" if a and a.get("discuss") and not a.get("discussed") else ""
     short = q.get("short") or q["stem"]
     short = short if len(short) <= 70 else short[:68] + "…"
@@ -126,6 +135,11 @@ def _question(i, attempt, q, a, budget, is_child):
         secs = (a or {}).get("seconds")
         timing = (f"⏱️ {_fmt_secs(secs)} (exam pace {_fmt_secs(budget)})" if secs else "⏱️ not answered")
         slow = " · 🐢 over pace" if secs and secs > budget else ""
+        p = data.passage_for(d, q) if d else None
+        if p:
+            from views.drill import _passage_html
+            with st.popover(f"📖 Read the passage: {p.get('title', '')}", use_container_width=True):
+                st.markdown(_passage_html(p, "70vh"), unsafe_allow_html=True)
         st.markdown(f'<div class="sb-small">{timing}{slow}</div>'
                     f'<div class="sb-q" style="font-size:1.05rem;margin-top:4px">{esc(q["stem"])}</div>'
                     f'{style.img(q.get("image"), 380)}', unsafe_allow_html=True)
@@ -209,12 +223,13 @@ def render():
     am = by_attempt.get(attempt["id"], {})
     pace = int(d.get("pace_seconds", 90))
 
-    score = sum(1 for qid in served if am.get(qid, {}).get("correct"))
+    marked = [qid for qid in served if ans.is_scored(qm[qid])]
+    score = sum(1 for qid in marked if am.get(qid, {}).get("correct"))
     n_skip = sum(1 for qid in served if _status(qm[qid], am.get(qid)) == "skip")
     took = int(data.seconds_since(attempt["started_at"]) - data.seconds_since(attempt["finished_at"]))
     limit = int(attempt.get("time_limit_sec") or len(served) * pace)
     style.card(f'<div class="sb-title" style="font-size:1.25rem">{esc(d["title"])}</div>'
-               f'<div class="sb-small">{score} / {len(served)} right · {n_skip} not answered · '
+               f'<div class="sb-small">{score} / {len(marked)} right · {n_skip} not answered · '
                f'⏱️ {_fmt_secs(took)} of {_fmt_secs(limit)} · {esc(attempt.get("session_size") or "")}'
                f'{" · 🏁 beat the clock" if attempt.get("beat_clock") else ""}</div>'
                f'<div style="margin-top:6px">{"".join(style.pill(f, "lav") for f in (d.get("focus") or [])[:6])}</div>')
@@ -229,13 +244,13 @@ def render():
     for i, qid in enumerate(served, 1):
         q, a = qm[qid], am.get(qid)
         stt = _status(q, a)
-        if flt == "wrong" and stt == "right":
+        if flt == "wrong" and stt in ("right", "written"):
             continue
         if flt == "right" and stt != "right":
             continue
         if flt == "talk" and not (a and a.get("discuss")):
             continue
         shown += 1
-        _question(i, attempt, q, a, ans.q_seconds(q, pace), is_child)
+        _question(i, attempt, q, a, ans.q_seconds(q, pace), is_child, d)
     if not shown:
         st.caption("Nothing here for this filter.")
