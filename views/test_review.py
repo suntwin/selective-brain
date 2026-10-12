@@ -190,6 +190,10 @@ def _logging(t, ms):
     style.card(f'<div class="sb-title" style="font-size:1.25rem">📝 {esc(t["title"])}</div>'
                f'<div class="sb-small">{esc(str(t["test_date"]))} · {esc(t.get("source") or "")} · '
                f'{esc(t.get("subject") or "")} · {_score_txt(t)}</div>{prog}', "sb-card")
+    if st.session_state.pop("tr_edt_close", None) == t["id"]:
+        st.session_state[f"tr_edt_{t['id']}"] = False
+    if st.toggle("✏️ Fix the test details", key=f"tr_edt_{t['id']}"):
+        _edit_test(t)
 
     if t.get("status") == "done":
         style.card(_summary_html(t, ms))
@@ -202,13 +206,9 @@ def _logging(t, ms):
 
     if ms:
         st.markdown(f"#### Logged so far ({len(lost)} lost · {s['lucky']} lucky)")
+        st.caption("Made a mistake in a card? Tap ✏️ to fix it.")
         for m in ms:
-            c1, c2 = st.columns([12, 1])
-            with c1:
-                style.card(_mistake_html(m))
-            if c2.button("🗑️", key=f"tr_del_{m['id']}", type="tertiary", help="Remove this one"):
-                tl.delete_mistake(m)
-                st.rerun()
+            _logged_row(t, m)
 
     st.divider()
     c1, c2 = st.columns(2)
@@ -229,6 +229,137 @@ def _logging(t, ms):
     if st.session_state.get("tr_done") == t["id"]:
         st.session_state.tr_done = None
         style.sparkle_burst("tr")
+
+
+LOSS_KEYS = list(tl.LOSS)
+
+
+def _loss_fmt(k):
+    return f"{tl.LOSS[k][0]} {tl.LOSS[k][1]}"
+
+
+def _logged_row(t, m):
+    """One logged card with ✏️ edit and 🗑️ delete (delete asks first)."""
+    mid = m["id"]
+    editing = st.session_state.get("tr_edit") == mid
+    c1, c2, c3 = st.columns([12, 1, 1])
+    with c1:
+        style.card(_mistake_html(m))
+    if c2.button("✏️", key=f"tr_ed_{mid}", type="tertiary", help="Fix this card"):
+        st.session_state.tr_edit = None if editing else mid
+        st.session_state.tr_delask = None
+        st.rerun()
+    if c3.button("🗑️", key=f"tr_del_{mid}", type="tertiary", help="Remove this card"):
+        st.session_state.tr_delask = mid
+        st.session_state.tr_edit = None
+        st.rerun()
+    if st.session_state.get("tr_delask") == mid:
+        st.warning(f"Remove {m['q_ref']} completely?" + (" Its notebook card goes too." if m.get("card_id") else ""))
+        a, b = st.columns(2)
+        if a.button("Yes, remove it", key=f"tr_dely_{mid}", use_container_width=True):
+            tl.delete_mistake(m)
+            st.session_state.tr_delask = None
+            st.rerun()
+        if b.button("No, keep it", key=f"tr_deln_{mid}", use_container_width=True, type="tertiary"):
+            st.session_state.tr_delask = None
+            st.rerun()
+    if editing:
+        _edit_mistake(t, m)
+
+
+def _edit_mistake(t, m):
+    mid = m["id"]
+    lucky = m.get("kind") == "lucky"
+    with st.form(f"tr_ef_{mid}"):
+        st.markdown(f"**✏️ Fixing {m['q_ref']}**")
+        kind = st.radio("This was…", ["lost", "lucky"], index=1 if lucky else 0, horizontal=True,
+                        format_func=lambda k: "❌ a mark I lost" if k == "lost" else "🍀 a lucky guess (I got it right)")
+        c1, c2, c3 = st.columns([1.2, 1, 1.6])
+        q_ref = c1.text_input("Question number", value=m.get("q_ref") or "")
+        marks = c2.number_input("Marks lost", min_value=0.0, step=0.5, format="%.1f",
+                                value=float(m.get("marks") or 1.0) if not lucky else 1.0)
+        topics = TOPICS_FOR.get(t.get("subject") or "Maths", g.MATHS_TOPICS) + ["Other"]
+        if m.get("topic") and m["topic"] not in topics:
+            topics = [m["topic"]] + topics
+        topic = c3.selectbox("Topic", topics, format_func=_topic_fmt,
+                             index=topics.index(m["topic"]) if m.get("topic") in topics else None)
+        cur = m.get("loss_type")
+        loss = st.selectbox("Why did I lose it? (for a lost mark)", LOSS_KEYS, format_func=_loss_fmt,
+                            index=LOSS_KEYS.index(cur) if cur in LOSS_KEYS else None,
+                            placeholder="Pick the reason")
+        cl = list(tl.CONF)
+        conf = st.radio("How sure was I?", cl, format_func=tl.CONF.get, horizontal=True,
+                        index=cl.index(m["confidence"]) if m.get("confidence") in cl else None)
+        did = st.text_input("What did I do? (or what wasn't I sure about)", value=m.get("what_i_did") or "")
+        should = st.text_input("What should I have done? (my trick for next time)", value=m.get("should_do") or "")
+        talk = st.checkbox("🗣️ I want to talk about this with Papa", value=bool(m.get("discuss")))
+        talk_note = st.text_input("What's confusing? (if talking with Papa)", value=m.get("discuss_note") or "")
+        card = False
+        if not m.get("card_id"):
+            card = st.checkbox("📒 Also make a notebook card")
+        a, b = st.columns(2)
+        save = a.form_submit_button("Save changes 💾", use_container_width=True)
+        cancel = b.form_submit_button("Cancel", use_container_width=True, type="tertiary")
+    if cancel:
+        st.session_state.tr_edit = None
+        st.rerun()
+    if save:
+        errs = []
+        if not q_ref.strip():
+            errs.append("The question number can't be empty.")
+        if not topic:
+            errs.append("Pick a topic.")
+        if kind == "lost" and not loss:
+            errs.append("Pick why you lost it.")
+        if kind == "lost" and not marks:
+            errs.append("Marks lost should be more than 0.")
+        for e in errs:
+            st.error(e)
+        if not errs:
+            tl.edit_mistake(t, m, kind=kind, q_ref=q_ref, marks=marks, topic=topic, loss_type=loss,
+                            confidence=conf, what_i_did=did, should_do=should, discuss=talk,
+                            discuss_note=talk_note, make_card=card)
+            st.session_state.tr_edit = None
+            st.toast("Card fixed ✅", icon="✏️")
+            st.rerun()
+
+
+def _edit_test(t):
+    with st.form(f"tr_et_{t['id']}"):
+        title = st.text_input("Test name", value=t.get("title") or "")
+        c1, c2, c3 = st.columns(3)
+        try:
+            from datetime import date
+            d0 = date.fromisoformat(str(t.get("test_date"))[:10])
+        except Exception:
+            d0 = g.today()
+        day = c1.date_input("Date of the test", value=d0, format="DD/MM/YYYY")
+        src = tl.SOURCES
+        source = c2.selectbox("Where's it from?", src, index=src.index(t["source"]) if t.get("source") in src else 0)
+        sub = tl.SUBJECTS
+        subject = c3.selectbox("Which part of the exam?", sub, index=sub.index(t["subject"]) if t.get("subject") in sub else 0,
+                               format_func=lambda x: f"{g.SUBJECTS.get(x, '')} {x}")
+        c4, c5, c6 = st.columns(3)
+        score = c4.number_input("My score", min_value=0.0, step=0.5,
+                                value=float(t["score"]) if t.get("score") is not None else None)
+        total = c5.number_input("Out of", min_value=0.0, step=0.5,
+                                value=float(t["total"]) if t.get("total") is not None else None)
+        minutes = c6.number_input("Minutes allowed (optional)", min_value=0, step=5,
+                                  value=int(t["minutes"]) if t.get("minutes") else None)
+        ran_out = st.checkbox("⏰ I ran out of time", value=bool(t.get("ran_out_of_time")))
+        ok = st.form_submit_button("Save test details 💾", use_container_width=True)
+    if ok:
+        if not title.strip():
+            st.error("Give the test a name.")
+        elif score is not None and total and score > total:
+            st.error("Your score is bigger than the total. Check those two numbers.")
+        else:
+            tl.update_test(t, {"title": title.strip(), "test_date": str(day), "source": source, "subject": subject,
+                               "score": score, "total": total, "minutes": int(minutes) if minutes else None,
+                               "ran_out_of_time": bool(ran_out)})
+            st.session_state.tr_edt_close = t["id"]
+            st.toast("Test details saved ✅", icon="✏️")
+            st.rerun()
 
 
 def _add_mistake(t):
@@ -366,7 +497,7 @@ def _mine_tab(tests, allm):
                 st.session_state.tr_new = False
                 st.rerun()
             if t.get("status") == "done":
-                st.caption("To change an answer here, tap Open and remove it with 🗑️, then log it again.")
+                st.caption("To fix a card, tap Open, then ✏️ on that card.")
 
 
 def _trend_chart(tests, allm, kid_voice):

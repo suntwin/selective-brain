@@ -158,6 +158,39 @@ def add_mistake(test: dict, *, kind, q_ref, marks, topic, loss_type, confidence,
 
 def delete_mistake(m: dict):
     data.store().delete("test_mistakes", {"id": m["id"]})
+    if m.get("card_id"):
+        data.store().delete("notebook", {"id": m["card_id"]})
+
+
+def edit_mistake(test: dict, m: dict, *, kind, q_ref, marks, topic, loss_type, confidence, what_i_did,
+                 should_do, discuss, discuss_note, make_card=False):
+    """Fix a logged card. No XP changes; the redo schedule is kept.
+
+    If she changes the reason, Papa's re-tag is cleared and the test goes back to 'to check'."""
+    lost = kind == "lost"
+    fields = {"kind": kind, "q_ref": q_ref.strip(), "marks": float(marks or 0) if lost else 0, "topic": topic,
+              "loss_type": loss_type if lost else None, "confidence": confidence,
+              "what_i_did": (what_i_did or "").strip(), "should_do": (should_do or "").strip(),
+              "discuss": bool(discuss), "discuss_note": (discuss_note or "").strip() or None}
+    if fields["loss_type"] != m.get("loss_type") or kind != m.get("kind"):
+        fields["parent_type"] = None
+        if test.get("parent_checked"):
+            update_test(test, {"parent_checked": False})
+    if not discuss:
+        fields["discussed"] = False
+    update_mistake(m, fields)
+    card_fields = {"title": f"{test['title']} · {fields['q_ref']}", "topic": topic,
+                   "question": {"stem": ("What went wrong: " + fields["what_i_did"]) if fields["what_i_did"] else "",
+                                "type": "test"},
+                   "my_fix": fields["should_do"], "reason": NOTEBOOK_REASON.get(loss_type) if lost else None}
+    if m.get("card_id"):
+        data.store().update("notebook", {"id": m["card_id"]}, card_fields)
+    elif make_card:
+        card = data.store().insert("notebook", dict(card_fields, user_id=data.me()["id"], kind="mistake",
+                                                    technique="", source=f"test:{test['id']}", box=0,
+                                                    next_review=str(g.today()), reviews=0, mastered=False))
+        update_mistake(m, {"card_id": card.get("id")})
+        data.add_xp(g.XP["technique_added"], "Made a notebook card")
 
 
 def update_mistake(m: dict, fields: dict):
