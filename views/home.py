@@ -63,6 +63,14 @@ def render():
                        f'+{g.XP["recall_got"]} XP.</div>')
             if is_child and st.button("Open my notebook 📒", use_container_width=True):
                 nav.go("notebook")
+        from sb import testlog
+        redo = testlog.due_redos(kid["id"])
+        if redo:
+            style.card(f'<div class="sb-title" style="font-size:1.15rem">🔁 Test redo time</div>'
+                       f'<div class="sb-small">{len(redo)} test question(s) are ready for a fresh try on paper. '
+                       f'Two clean redos and each one is fixed for good.</div>')
+            if is_child and st.button("Open my redo list 📝", use_container_width=True):
+                nav.go("tests")
 
     st.markdown("#### 🗺️ My Topic Map")
     tm = g.topic_map(s["answers"])

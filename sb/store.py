@@ -84,7 +84,7 @@ class SupabaseStore:
 # Local JSON backend (demo / offline testing)
 # ----------------------------------------------------------------------------
 _LOCK = threading.Lock()
-_ID_TABLES = {"families", "checkins", "attempts", "answers", "notebook", "xp_events"}
+_ID_TABLES = {"families", "checkins", "attempts", "answers", "notebook", "xp_events", "tests", "test_mistakes"}
 
 
 class LocalStore:
@@ -99,7 +99,8 @@ class LocalStore:
         fam = str(uuid.uuid4())
         kid, dad = str(uuid.uuid4()), str(uuid.uuid4())
         data = {t: [] for t in ["families", "profiles", "drills", "checkins", "attempts",
-                                "answers", "notebook", "xp_events", "badges", "insights"]}
+                                "answers", "notebook", "xp_events", "badges", "insights",
+                                "tests", "test_mistakes"]}
         data["families"].append({"id": fam, "name": "Demo family"})
         data["profiles"] += [
             {"id": kid, "family_id": fam, "display_name": "Siyonah", "role": "child",

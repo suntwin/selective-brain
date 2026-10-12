@@ -58,7 +58,7 @@ if "profile" not in st.session_state or not st.session_state.profile:
     login()
     st.stop()
 
-from views import drill, home, notebook, parent, past, stars  # noqa: E402
+from views import drill, home, notebook, parent, past, stars, test_review  # noqa: E402
 
 prof = st.session_state.profile
 if prof["role"] == "child":
@@ -66,6 +66,7 @@ if prof["role"] == "child":
         st.Page(home.render, title="Home", icon="🏠", url_path="home", default=True),
         st.Page(drill.render, title="Today's Drill", icon="🎯", url_path="drill"),
         st.Page(past.render, title="Past drills", icon="📚", url_path="past"),
+        st.Page(test_review.render, title="Test Review", icon="📝", url_path="tests"),
         st.Page(notebook.render, title="My Notebook", icon="📒", url_path="notebook"),
         st.Page(stars.render, title="My Stars", icon="🏆", url_path="stars"),
     ]
@@ -73,6 +74,7 @@ else:
     pages = [
         st.Page(parent.render, title="Parent Hub", icon="🧭", url_path="parent", default=True),
         st.Page(past.render, title="Past drills", icon="📚", url_path="past"),
+        st.Page(test_review.render, title="Her Test Reviews", icon="📝", url_path="tests"),
         st.Page(home.render, title="Siyonah's Home", icon="🏠", url_path="home"),
         st.Page(notebook.render, title="Her Notebook", icon="📒", url_path="notebook"),
         st.Page(stars.render, title="Her Stars", icon="🏆", url_path="stars"),

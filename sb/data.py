@@ -244,8 +244,10 @@ def stats(uid=None):
     xp = xp_total(uid)
     s = g.streak(a, c)
     recall_got = sum(1 for e in xp_events(uid) if e["reason"] == "Remembered a card")
+    from . import testlog          # Test Review (paper tests); empty until 005_test_review.sql is run
     return {"attempts": a, "checkins": c, "answers": ans, "notebook": nb, "xp": xp,
-            "level": g.level_for(xp), "streak": s, "recall_got": recall_got}
+            "level": g.level_for(xp), "streak": s, "recall_got": recall_got,
+            "tests": testlog.safe_tests(uid), "test_mistakes": testlog.safe_mistakes(uid)}
 
 
 def award_badges(ctx) -> list[str]:

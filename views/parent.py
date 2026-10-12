@@ -15,13 +15,16 @@ from sb.store import now_iso
 def render():
     kid = data.child()
     st.markdown(f"## 🧭 Parent Hub · {kid['display_name']}")
-    t1, tm, t2, t3, t4 = st.tabs(["📈 This week", "🗺️ Mistake Map", "🪄 Publish a drill", "📤 Export to vault",
-                                  "⚙️ Settings"])
+    t1, tm, tt, t2, t3, t4 = st.tabs(["📈 This week", "🗺️ Mistake Map", "📝 Test Reviews", "🪄 Publish a drill",
+                                      "📤 Export to vault", "⚙️ Settings"])
     with t1:
         _week(kid)
     with tm:
         from views import mistake_map
         mistake_map.render_parent(kid)
+    with tt:
+        from views import test_review
+        test_review.render_parent(kid)
     with t2:
         _publish()
     with t3:
@@ -42,6 +45,16 @@ def _week(kid):
             st.session_state.past_filter = "talk"
             from sb import nav
             nav.go("past")
+    from sb import testlog
+    t_talk = testlog.open_talk(kid["id"])
+    t_new = [t for t in testlog.safe_tests(kid["id"]) if t.get("status") == "done" and not t.get("parent_checked")]
+    if t_talk or t_new:
+        bits = []
+        if t_new:
+            bits.append(f"**{len(t_new)}** test review(s) to check")
+        if t_talk:
+            bits.append(f"**{len(t_talk)}** test question(s) she wants to talk about")
+        st.info("📝 " + " · ".join(bits) + " → see the 📝 Test Reviews tab.")
     s = data.stats(kid["id"])
     since = g.today() - timedelta(days=6)
     att = [a for a in s["attempts"] if a.get("finished_at") and g.to_local_date(a["finished_at"]) >= since]
@@ -161,13 +174,17 @@ def _publish():
 
 # ---------------------------------------------------------------- export
 def _export(kid):
-    st.markdown("Download finished drills as Markdown for `Practice/Results/` in the vault. Claude then folds the "
-                "mistakes into `Mistake_Tracker` and `Maths_Brain` and builds the next drill.")
+    st.markdown("Download finished drills and test reviews as Markdown for `Practice/Results/` in the vault. "
+                "Claude then folds the mistakes into `Mistake_Tracker` and `Maths_Brain` and builds the next drill.")
     att = [a for a in data.attempts(kid["id"]) if a.get("finished_at")]
     show_all = st.toggle("Include already-exported", value=False)
     if not show_all:
         att = [a for a in att if not a.get("exported_at")]
-    if not att:
+    from sb import testlog
+    tests = [t for t in testlog.safe_tests(kid["id"]) if t.get("status") == "done"]
+    if not show_all:
+        tests = [t for t in tests if not t.get("exported_at")]
+    if not att and not tests:
         st.caption("Nothing new to export.")
         return
     drills = {d["id"]: d for d in data.drills(include_archived=True)}
@@ -183,6 +200,13 @@ def _export(kid):
         files[name] = md
         with st.expander(f"{day} · {d['title']} · " + (f"{a['score']}/{a['total']}" if a.get("total") else "✍️ writing")):
             st.markdown(style.md(md))
+    all_tm = testlog.safe_mistakes(kid["id"])
+    for t in tests:
+        md = testlog.test_markdown(t, [m for m in all_tm if m["test_id"] == t["id"]])
+        slug = "".join(ch if ch.isalnum() else "_" for ch in t["title"]).strip("_")[:40]
+        files[f"TestReview_{t['test_date']}_{slug}_{t['id'][:6]}.md"] = md
+        with st.expander(f"📝 {t['test_date']} · {t['title']} (test review)"):
+            st.markdown(style.md(md))
     buf = io.BytesIO()
     with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
         for n, md in files.items():
@@ -194,6 +218,8 @@ def _export(kid):
     if c2.button("Mark these as exported ✅", use_container_width=True, type="tertiary"):
         for a in att:
             data.store().update("attempts", {"id": a["id"]}, {"exported_at": now_iso()})
+        for t in tests:
+            data.store().update("tests", {"id": t["id"]}, {"exported_at": now_iso()})
         st.rerun()
 
 
@@ -224,7 +250,7 @@ def _reset(kid):
             st.rerun()
     with c2:
         st.markdown("**Start completely fresh**")
-        st.caption("Wipes ALL her attempts, answers, notebook cards, XP, badges and check-ins. "
+        st.caption("Wipes ALL her attempts, answers, test reviews, notebook cards, XP, badges and check-ins. "
                    "Drills you've published stay.")
         word = st.text_input("Type RESET to confirm", key="reset_word")
         if st.button("Wipe everything", disabled=word.strip() != "RESET", use_container_width=True):
@@ -232,6 +258,11 @@ def _reset(kid):
                 s.delete("answers", {"attempt_id": a["id"]})
             for t in ("attempts", "notebook", "xp_events", "badges", "checkins"):
                 s.delete(t, {"user_id": uid})
+            for t in ("test_mistakes", "tests"):       # Test Review (skip quietly if 005 isn't run yet)
+                try:
+                    s.delete(t, {"user_id": uid})
+                except Exception:
+                    pass
             st.session_state.pop("run", None)
             st.success("All clean ✨ She starts at Level 1 with a fresh streak.")
             st.rerun()

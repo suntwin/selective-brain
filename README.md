@@ -134,6 +134,20 @@ The SEHS exam has three blocks: Maths + Quantitative Reasoning (60 min), Reading
   - Writing: `Writing_Creative`, `Writing_Persuasive`.
 - **Build scripts:** `tools/build_english_NNN.py` (the first one is the baseline pack: Verbal, Reading and Writing).
 
+## Test Review (added 2026-10-12)
+
+Sidebar → 📝 **Test Review** (her login). After she gets a paper test back, she opens the test PDF and the answer sheet and logs every mark she lost.
+
+- **Start:** test name, date, source (School test / Practice paper / Mock exam), exam block, score / out of, ran out of time.
+- **One card per lost mark:** question number, marks lost, topic, then guided "why did I lose it?" questions that set the loss type: 🧩 method gap, 👀 misread, 🎯 right working but wrong final answer, 🙈 calculation slip, ⏭️ skipped, ⏰ ran out of time (same types as the Mistake Map). Then "how sure was I?" (😎 / 🤔 / 🎲), what I did, what I should do next time, and optional 📒 notebook card and 🗣️ talk-with-Papa.
+- **🍀 Lucky guesses:** questions she got right but wasn't sure about.
+- **Summary:** marks lost split into ✨ easy marks to win back (misread / final answer / slip), 📚 marks to learn (method / skipped) and ⏰ time marks.
+- **🔁 Redo list:** every entry comes back for a fresh redo on paper after 3 days, then 14 days. Two clean redos = ✅ fixed. "Still tricky" resets it to 3 days. Home shows a card when redos are due.
+- **Parent Hub → 📝 Test Reviews:** trend chart per test, topic × reason table, a warning for wrong answers she was sure about, re-tag any entry (Papa's tag wins), notes she can see, "talked ✅", and "I've checked her tags".
+- **Export to vault** now also writes `TestReview_<date>_<test>.md` with ready-made `Mistake_Tracker` lines.
+- **XP:** +5 per lost mark logged, +3 per lucky guess, +15 for finishing a review, +6 per right redo, +10 when fixed, +2 for a try. Badges: 🕵️ Test Detective (3 reviews), 🔁 Comeback Kid (10 fixed).
+- **One-time setup:** run `supabase/005_test_review.sql` in Supabase → SQL Editor (creates `tests` and `test_mistakes`). Code: `views/test_review.py`, `sb/testlog.py`.
+
 ## Where things live
 | | |
 |---|---|

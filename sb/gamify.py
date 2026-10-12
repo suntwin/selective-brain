@@ -24,6 +24,12 @@ XP = {
     "technique_added": 6,
     "writing_done": 20,    # submitted a writing task
     "writing_check": 2,    # each checklist item she ticked
+    "test_logged": 5,      # Test Review: logged a lost mark from a paper test
+    "lucky_logged": 3,     # Test Review: spotted a lucky guess
+    "test_reviewed": 15,   # Test Review: finished reviewing a whole test
+    "redo_right": 6,       # redid a test question fresh, right
+    "redo_fixed": 10,      # second clean redo → fixed for good
+    "redo_try": 2,         # redid it, still tricky
 }
 
 # ---------------------------------------------------------------- levels
@@ -132,6 +138,8 @@ BADGES = {
     "q_500":         ("🚀", "Rocket Brain", "Answered 500 questions"),
     "indices_hero":  ("🦸", "Indices Hero", "80%+ on 20 indices questions"),
     "level_5":       ("🔮", "Sparkle Scholar", "Reached level 5"),
+    "detective_3":   ("🕵️", "Test Detective", "Reviewed 3 paper tests"),
+    "comeback_10":   ("🔁", "Comeback Kid", "Fixed 10 test mistakes with clean redos"),
 }
 
 
@@ -170,6 +178,10 @@ def earned_badges(ctx: dict) -> set[str]:
         got.add("indices_hero")
     if level_for(ctx["xp"])["num"] >= 5:
         got.add("level_5")
+    if sum(1 for t in ctx.get("tests", []) if t.get("status") == "done") >= 3:
+        got.add("detective_3")
+    if sum(1 for m in ctx.get("test_mistakes", []) if m.get("fixed")) >= 10:
+        got.add("comeback_10")
     return got
 
 
