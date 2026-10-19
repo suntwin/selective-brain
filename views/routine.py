@@ -148,30 +148,63 @@ def _block_row(b, day, log, is_child, kid, st_):
 
 
 # ---------------------------------------------------------------- week
+def _dur(m) -> str:
+    if not m:
+        return ""
+    h, mm = divmod(int(m), 60)
+    return (f"{h}h" if h else "") + (f" {mm}m" if h and mm else f"{mm}m" if mm else "")
+
+
 def _week_grid(kid, ws):
     all_b = rt.blocks()
+    st_ = rt.settings()
     s = rt.week_summary(kid["id"], ws)
     lm = s["map"]
     today = g.today()
     cols = ""
+    pot_week = earned_week = 0
     for i in range(7):
         d = ws + timedelta(days=i)
         bl = rt.day_blocks(d, all_b)
         full = rt.day_complete(d, lm, all_b)
         chips = ""
+        pot_day = earned_day = 0
         for b in bl:
             lg = lm.get((b["id"], str(d)))
-            ic = STATUS.get((lg or {}).get("status"), STATUS[None])[0]
+            status = (lg or {}).get("status")
+            ic = STATUS.get(status, STATUS[None])[0]
             if lg is None and d < today and not b.get("optional"):
                 ic = "▫️"
-            t = rt.time_label(b).split(" – ")[0]
+            xp = int(lg["xp"]) if status == "approved" and lg.get("xp") is not None else rt.block_xp(b, st_)
+            pot_day += xp
+            if status == "approved":
+                earned_day += xp
+                xp_html = f'<em class="rt-xp got">✨ +{xp} XP</em>'
+            elif status in ("skipped", "declined") or ic == "▫️":
+                xp_html = f'<em class="rt-xp lost">✨ {xp} XP</em>'
+            elif status == "excused":
+                xp_html = '<em class="rt-xp exc">🌿 excused</em>'
+            else:
+                xp_html = f'<em class="rt-xp">✨ {xp} XP</em>'
+            dur = _dur(rt.block_minutes(b))
             chips += (f'<div class="rt-chip{" opt" if b.get("optional") else ""}">{ic} {rt.emoji(b["kind"])} '
-                      f'<b>{esc(b["title"])}</b><span>{esc(t)}</span></div>')
+                      f'<b>{esc(b["title"])}</b><span>{esc(rt.time_label(b))}{" · " + dur if dur else ""}</span>'
+                      f'{xp_html}</div>')
         if not bl:
             chips = '<div class="rt-free">🌈 Free day</div>'
+        else:
+            pot_day += int(st_["day_bonus"])
+            if full:
+                earned_day += int(st_["day_bonus"])
+        pot_week += pot_day
+        earned_week += earned_day
         head = f'{rt.SHORT[i]} {d.day}' + (" 🌟" if full else "")
-        cols += (f'<div class="rt-day{" today" if d == today else ""}"><div class="rt-head">{head}</div>{chips}</div>')
+        sub = (f'<div class="rt-sub">{earned_day} / {pot_day} XP</div>' if bl else "")
+        cols += (f'<div class="rt-day{" today" if d == today else ""}"><div class="rt-head">{head}</div>{sub}{chips}</div>')
     st.markdown(f'<div class="rt-week">{cols}</div>', unsafe_allow_html=True)
+    pot_week += int(st_["week_bonus"])
+    s["pot_week"], s["earned_week"] = pot_week, earned_week + (
+        int(st_["week_bonus"]) if s["required"] and s["done"] == s["required"] else 0)
     return s
 
 
@@ -200,10 +233,12 @@ def _week(kid):
         + (f'<div class="box"><div class="big">⏭️ {skipped}</div><div class="lbl">skipped</div></div>' if auto else
            f'<div class="box"><div class="big">⏳ {s["waiting"]}</div><div class="lbl">waiting to confirm</div></div>')
         + f'<div class="box"><div class="big">🌟 {s["days_full"]}</div><div class="lbl">whole days done</div></div>'
-        f'<div class="box"><div class="big">✨ {s["xp"]}</div><div class="lbl">routine XP (plus bonuses)</div></div>'
+        f'<div class="box"><div class="big">✨ {s["earned_week"]:,}</div>'
+        f'<div class="lbl">XP earned of {s["pot_week"]:,} possible this week</div></div>'
         '</div>', unsafe_allow_html=True)
     st.markdown(f'<div style="margin-top:.6rem">{style.bar(pct)}</div>'
-                f'<div class="sb-small">Whole week: +{st_["week_bonus"]} XP when every block is done or excused. '
+                f'<div class="sb-small">Each day shows XP earned / possible (including the +{st_["day_bonus"]} whole-day bonus). '
+                f'Whole week: +{st_["week_bonus"]} XP when every block is done or excused. '
                 '⭕ not ticked · ✅ done · ⏭️ skipped · 🌿 excused · ▫️ missed' + ('' if auto else ' · ⏳ waiting') + '</div>',
                 unsafe_allow_html=True)
 

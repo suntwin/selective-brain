@@ -93,6 +93,12 @@ button[data-testid="stBaseButton-tertiary"]:hover{border-color:var(--pink) !impo
   font-size:.82rem; line-height:1.25}
 .rt-chip b{font-weight:800} .rt-chip span{display:block; color:var(--ink2); font-size:.74rem}
 .rt-chip.opt{border-style:dashed; opacity:.85}
+.rt-xp{display:inline-block; margin-top:3px; font-style:normal; font-weight:800; font-size:.74rem; color:#8a5a00;
+  background:#fff3c9; border-radius:999px; padding:1px 8px}
+.rt-xp.got{color:#0d7a55; background:#d9f7ea}
+.rt-xp.lost{color:var(--ink2); background:#f1edf6; text-decoration:line-through}
+.rt-xp.exc{color:var(--ink2); background:#eaf7ee}
+.rt-sub{text-align:center; font-size:.76rem; font-weight:800; color:var(--ink2); margin:-.25rem 0 .35rem}
 .rt-free{text-align:center; color:var(--ink2); font-size:.9rem; padding:.8rem 0}
 /* bookshelf */
 .bk-shelf{display:flex; align-items:flex-end; gap:6px; flex-wrap:wrap; padding:14px 12px 0; min-height:210px;
