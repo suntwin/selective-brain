@@ -4,9 +4,9 @@ Tables (supabase/006_routine_rewards.sql):
   routine_blocks  the family's timetable: weekday (0 = Mon), start/end 'HH:MM' (or blank = any time),
                   kind, title, optional. Both Siyonah and her parents can edit it. Removing a block only
                   hides it (active = false), so old ticks keep their history.
-  routine_logs    one row per block per day she ticks: done (waiting) → approved | declined,
-                  or skipped (with a reason) / excused (a parent let her off). XP is snapshotted on the row
-                  and only paid when a parent confirms it.
+  routine_logs    one row per block per day she ticks: approved straight away (auto_approve, the default:
+                  XP paid at once, a parent can take it back → declined) or done (waiting) → approved | declined
+                  when auto_approve is off; or skipped (with a reason) / excused (a parent let her off).
   rewards         the family's shop catalogue (parent edits). ask_book = ask "which book?" when she swaps.
   redemptions     her swaps: requested (XP held) → given | declined (XP back).
   book_wishlist   books she'd love; a parent can see the list when buying.
@@ -37,12 +37,29 @@ KINDS = {
     "Other":       ("⭐", "active", "gold"),
 }
 
+# XP per activity, in line with Aadiv's Banana Quest (1 XP a minute, sport lesson +10, game/match +20).
+#   per_min  XP for each minute of the block
+#   cap      most XP the minutes can give in one block
+#   bonus    added on top for every block of this kind
+#   flat     XP when the block has no set time (e.g. "Tennis match · any time")
+KIND_XP = {
+    "Maths":        {"per_min": 1, "cap": 120, "bonus": 0,  "flat": 30},
+    "English":      {"per_min": 1, "cap": 120, "bonus": 0,  "flat": 30},
+    "Writing":      {"per_min": 1, "cap": 120, "bonus": 0,  "flat": 30},
+    "School work":  {"per_min": 1, "cap": 120, "bonus": 0,  "flat": 30},
+    "Reading":      {"per_min": 1, "cap": 120, "bonus": 0,  "flat": 30},
+    "Tennis":       {"per_min": 1, "cap": 120, "bonus": 10, "flat": 70},
+    "Tennis match": {"per_min": 1, "cap": 120, "bonus": 20, "flat": 80},
+    "Swimming":     {"per_min": 1, "cap": 120, "bonus": 10, "flat": 70},
+    "Other":        {"per_min": 1, "cap": 120, "bonus": 0,  "flat": 20},
+}
+
 DEFAULT_SETTINGS = {
-    "xp_per_hour": 20,     # study blocks: XP per hour (rounded to 5, min 5)
-    "active_xp": 10,       # tennis, swimming, matches, other
+    "kinds": KIND_XP,      # XP per activity (Parent Hub → ⚙️ XP rules)
     "day_bonus": 15,       # every non-optional block that day confirmed
     "week_bonus": 50,      # every non-optional block Mon–Sun confirmed
     "days_back": 1,        # she can tick today and this many days back
+    "auto_approve": True,  # True: XP the moment she ticks (a parent can take it back). False: a parent confirms first
 }
 
 # Siyonah's paper timetable, worked out with Mum (2026-10-19). (weekday, start, end, kind, title, optional)
@@ -117,6 +134,11 @@ def settings() -> dict:
     s = dict(DEFAULT_SETTINGS)
     if rows:
         s.update({k: v for k, v in (rows[0].get("data") or {}).items() if k in DEFAULT_SETTINGS})
+    kinds = {k: dict(v) for k, v in KIND_XP.items()}           # saved values on top of the defaults
+    for k, v in (s.get("kinds") or {}).items():
+        if k in kinds and isinstance(v, dict):
+            kinds[k].update({f: v[f] for f in ("per_min", "cap", "bonus", "flat") if f in v})
+    s["kinds"] = kinds
     return s
 
 
@@ -142,15 +164,16 @@ def block_minutes(b: dict) -> int | None:
     return e - s if e > s else e + 24 * 60 - s
 
 
-def block_xp(b: dict, st: dict | None = None) -> int:
+def kind_xp(kind: str, minutes: int | None, st: dict | None = None) -> int:
     st = st or settings()
-    group = KINDS.get(b.get("kind"), KINDS["Other"])[1]
-    if group != "study":
-        return int(st["active_xp"])
-    m = block_minutes(b)
-    if not m:
-        return int(st["active_xp"])
-    return max(5, int(round(m / 60 * float(st["xp_per_hour"]) / 5)) * 5)
+    r = st["kinds"].get(kind) or st["kinds"]["Other"]
+    if not minutes:
+        return int(r["flat"])
+    return int(min(float(r["cap"]), round(minutes * float(r["per_min"])))) + int(r["bonus"])
+
+
+def block_xp(b: dict, st: dict | None = None) -> int:
+    return kind_xp(b.get("kind"), block_minutes(b), st)
 
 
 def time_label(b: dict) -> str:
@@ -244,11 +267,18 @@ def _snap(b: dict, st=None) -> dict:
     return {"title": b["title"], "kind": b["kind"], "minutes": block_minutes(b), "xp": block_xp(b, st)}
 
 
-def tick(b: dict, day: date):
-    """She says she did it: waiting for a parent to confirm."""
+def tick(b: dict, day: date) -> list[str]:
+    """She did it. With auto_approve (default) the XP and any day/week bonus are paid at once;
+    otherwise it waits for a parent to confirm. Returns messages."""
+    st_ = settings()
     data.store().upsert("routine_logs", {
         "user_id": data.me()["id"], "block_id": b["id"], "day": str(day), "status": "done",
-        **_snap(b), "note": None, "ticked_at": now_iso(), "reviewed_at": None}, on_conflict="user_id,block_id,day")
+        **_snap(b, st_), "note": None, "parent_note": None, "ticked_at": now_iso(), "reviewed_at": None},
+        on_conflict="user_id,block_id,day")
+    if not st_.get("auto_approve", True):
+        return []
+    log = data.store().select("routine_logs", eq={"user_id": data.me()["id"], "block_id": b["id"], "day": str(day)})
+    return confirm(log[0], auto=True) if log else []
 
 
 def skip(b: dict, day: date, reason: str):
@@ -257,22 +287,34 @@ def skip(b: dict, day: date, reason: str):
         **_snap(b), "note": reason.strip(), "ticked_at": now_iso()}, on_conflict="user_id,block_id,day")
 
 
-def undo(log: dict):
-    """Only while it's not confirmed yet."""
-    if log.get("status") in ("done", "skipped"):
+def undo(log: dict) -> list[str]:
+    """She un-ticks a block (e.g. tapped by mistake). An approved block gives its XP back."""
+    msgs = []
+    if log.get("status") == "approved":
+        msgs = take_back(log)
+    if log.get("status") in ("done", "skipped", "approved"):
         data.store().delete("routine_logs", {"id": log["id"]})
+    return msgs
+
+
+def _net_paid(uid, reason) -> int:
+    ev = data.xp_events(uid)
+    return (sum(1 for e in ev if e["reason"] == reason)
+            - sum(1 for e in ev if e["reason"] == f"{reason} (taken back)"))
 
 
 def _bonus_paid(uid, reason) -> bool:
-    return any(e["reason"] == reason for e in data.xp_events(uid))
+    return _net_paid(uid, reason) > 0
 
 
-def confirm(log: dict, xp: int | None = None) -> list[str]:
-    """Parent confirms a tick: pays its XP, then any day / week bonus. Returns messages."""
+def confirm(log: dict, xp: int | None = None, auto: bool = False) -> list[str]:
+    """Approve a tick: pays its XP, then any day / week bonus. Returns messages.
+    auto=True when it's approved the moment she ticks (no parent involved)."""
     uid = log["user_id"]
     amount = int(log.get("xp") or 0) if xp is None else int(xp)
     data.store().update("routine_logs", {"id": log["id"]}, {
-        "status": "approved", "xp": amount, "reviewed_at": now_iso(), "reviewed_by": data.me()["id"]})
+        "status": "approved", "xp": amount, "reviewed_at": now_iso(),
+        "reviewed_by": None if auto else data.me()["id"]})
     day = date.fromisoformat(str(log["day"])[:10])
     msgs = []
     if amount:
@@ -282,10 +324,39 @@ def confirm(log: dict, xp: int | None = None) -> list[str]:
     return msgs
 
 
-def decline(log: dict, note: str = ""):
+def decline(log: dict, note: str = "") -> list[str]:
+    """Parent: 'not done'. If the XP was already paid (auto-approve), it is taken back, with any bonus it unlocked."""
+    msgs = take_back(log) if log.get("status") == "approved" else []
     data.store().update("routine_logs", {"id": log["id"]}, {
         "status": "declined", "parent_note": note.strip() or None, "reviewed_at": now_iso(),
         "reviewed_by": data.me()["id"]})
+    return msgs
+
+
+def take_back(log: dict) -> list[str]:
+    """Reverse an approved block's XP, then any day/week bonus that no longer holds. Returns messages."""
+    uid = log["user_id"]
+    day = date.fromisoformat(str(log["day"])[:10])
+    amount = int(log.get("xp") or 0)
+    msgs = []
+    if amount:
+        data.add_xp_for(uid, -amount, f"Routine taken back: {log.get('title')} ({SHORT[day.weekday()]} {day.day})")
+        msgs.append(f"-{amount} XP · {log.get('title')}")
+    data.store().update("routine_logs", {"id": log["id"]}, {"status": "declined"})   # so the bonus check sees it
+    st_, all_b = settings(), blocks()
+    ws = week_start(day)
+    lm = log_map(uid, ws, ws + timedelta(days=6))
+    day_ok = bool(day_complete(day, lm, all_b))
+    week = [day_complete(ws + timedelta(days=i), lm, all_b) for i in range(7)]
+    week_ok = any(w is not None for w in week) and all(w in (True, None) for w in week)
+    for reason, amt, still in ((f"Routine day complete · {day}", st_["day_bonus"], day_ok),
+                               (f"Routine week complete · {ws}", st_["week_bonus"], week_ok)):
+        if not still and _bonus_paid(uid, reason):
+            ev = [e for e in data.xp_events(uid) if e["reason"] == reason]
+            paid = int(ev[-1]["amount"]) if ev else int(amt)
+            data.add_xp_for(uid, -paid, f"{reason} (taken back)")
+            msgs.append(f"-{paid} XP · bonus")
+    return msgs
 
 
 def excuse(b: dict, day: date, uid: str, note: str = "") -> list[str]:

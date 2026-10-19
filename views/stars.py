@@ -52,4 +52,4 @@ def render():
     ev = data.xp_events(kid["id"])[-12:][::-1]
     if ev:
         st.markdown("### ✨ Recent XP")
-        st.markdown("".join(style.pill(f'+{e["amount"]} {e["reason"]}', "gold") for e in ev), unsafe_allow_html=True)
+        st.markdown("".join(style.pill(f'{int(e["amount"]):+d} {e["reason"]}', "gold") for e in ev), unsafe_allow_html=True)

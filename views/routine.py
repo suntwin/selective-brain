@@ -12,7 +12,7 @@ from sb.style import esc
 STATUS = {
     None:       ("⭕", "Not ticked yet"),
     "done":     ("⏳", "Waiting for Mum or Papa to confirm"),
-    "approved": ("✅", "Confirmed"),
+    "approved": ("✅", "Done · XP in the wallet"),
     "declined": ("❌", "Not confirmed"),
     "skipped":  ("⏭️", "Skipped"),
     "excused":  ("🌿", "Excused"),
@@ -38,8 +38,8 @@ def render():
     style.card(
         f'<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">'
         f'<div><div class="sb-title" style="font-size:1.2rem">Tick each block when it\'s done ✨</div>'
-        f'<div class="sb-small">Mum or Papa confirm it, then the XP lands in your wallet. Finish a whole day for a bonus, '
-        f'and a whole week for a big one. Spend XP in the 🎁 Reward Shop on books and tennis treats.</div></div>'
+        f'<div class="sb-small">{"The XP lands in your wallet straight away." if rt.settings().get("auto_approve", True) else "Mum or Papa confirm it, then the XP lands in your wallet."} '
+        f'Finish a whole day for a bonus, and a whole week for a big one. Spend XP in the 🎁 Reward Shop on books and tennis treats.</div></div>'
         f'<div style="text-align:right"><div style="font-size:1.6rem;font-weight:900">🪙 {w["balance"]:,} XP</div>'
         f'<div class="sb-small">in {"my" if is_child else "her"} wallet</div></div></div>', "sb-hero")
     t1, t2, t3 = st.tabs(["📅 Today", "🗓️ My week", "✏️ Change my routine"])
@@ -73,7 +73,8 @@ def _today(kid, is_child):
     ticked = sum(1 for b in req if lm.get((b["id"], str(day)), {}).get("status") in ("done",) + rt.OK_STATES)
     full = rt.day_complete(day, lm, all_b)
     st.markdown(f'{style.bar(ticked / len(req) if req else 1)}'
-                f'<div class="sb-small" style="margin:.3rem 0 .8rem">{ticked} of {len(req)} ticked · {ok} confirmed'
+                f'<div class="sb-small" style="margin:.3rem 0 .8rem">{ticked} of {len(req)} ticked'
+                f'{"" if st_.get("auto_approve", True) else " · " + str(ok) + " confirmed"}'
                 f'{" · 🌟 whole day done, +" + str(st_["day_bonus"]) + " XP bonus!" if full else " · finish them all for +" + str(st_["day_bonus"]) + " XP"}'
                 f'</div>', unsafe_allow_html=True)
     for b in todays:
@@ -103,8 +104,11 @@ def _block_row(b, day, log, is_child, kid, st_):
         if is_child:
             if status is None or status == "declined":
                 if st.button("✅ Done!", key=f"tick_{k}", use_container_width=True):
-                    rt.tick(b, day)
-                    st.toast(f"Ticked {b['title']} ⏳ Mum or Papa will confirm it")
+                    msgs = rt.tick(b, day)
+                    if not st_.get("auto_approve", True):
+                        st.toast(f"Ticked {b['title']} ⏳ Mum or Papa will confirm it")
+                    elif any("whole" in m for m in msgs):
+                        style.sparkle_burst(f"day{k}")
                     st.rerun()
                 with st.popover("Skip…", use_container_width=True):
                     why = st.radio("Why are you skipping it?", SKIP_REASONS, key=f"why_{k}", index=None)
@@ -112,12 +116,21 @@ def _block_row(b, day, log, is_child, kid, st_):
                     if st.button("Save", key=f"skip_{k}", disabled=not why):
                         rt.skip(b, day, more if why == "Other" and more.strip() else why)
                         st.rerun()
-            elif status in ("done", "skipped"):
-                if st.button("↩️ Undo", key=f"undo_{k}", use_container_width=True, type="tertiary"):
+            elif status in ("done", "skipped", "approved"):
+                if st.button("↩️ Undo", key=f"undo_{k}", use_container_width=True, type="tertiary",
+                             help="Tapped it by mistake? Undo gives the XP back." if status == "approved" else None):
                     rt.undo(log)
                     st.rerun()
         else:
-            if status == "done":
+            if status == "approved":
+                with st.popover("Not done ❌", use_container_width=True):
+                    st.caption(f"Takes back the +{xp} XP (and a day/week bonus if it no longer holds).")
+                    note = st.text_input("Note for her (optional)", key=f"tbn_{k}")
+                    if st.button("Take it back", key=f"tb_{k}"):
+                        for m in rt.decline(log, note):
+                            st.toast(m)
+                        st.rerun()
+            elif status == "done":
                 if st.button("Confirm ✅", key=f"ok_{k}", use_container_width=True):
                     for m in rt.confirm(log):
                         st.toast(m)
@@ -179,16 +192,19 @@ def _week(kid):
     s = _week_grid(kid, ws)
     st_ = rt.settings()
     pct = s["done"] / s["required"] if s["required"] else 0
+    auto = st_.get("auto_approve", True)
+    skipped = sum(1 for r in s["map"].values() if r.get("status") == "skipped")
     st.markdown(
         '<div class="sb-stat">'
-        f'<div class="box"><div class="big">✅ {s["done"]}/{s["required"]}</div><div class="lbl">blocks confirmed</div></div>'
-        f'<div class="box"><div class="big">⏳ {s["waiting"]}</div><div class="lbl">waiting to confirm</div></div>'
-        f'<div class="box"><div class="big">🌟 {s["days_full"]}</div><div class="lbl">whole days done</div></div>'
+        f'<div class="box"><div class="big">✅ {s["done"]}/{s["required"]}</div><div class="lbl">blocks done</div></div>'
+        + (f'<div class="box"><div class="big">⏭️ {skipped}</div><div class="lbl">skipped</div></div>' if auto else
+           f'<div class="box"><div class="big">⏳ {s["waiting"]}</div><div class="lbl">waiting to confirm</div></div>')
+        + f'<div class="box"><div class="big">🌟 {s["days_full"]}</div><div class="lbl">whole days done</div></div>'
         f'<div class="box"><div class="big">✨ {s["xp"]}</div><div class="lbl">routine XP (plus bonuses)</div></div>'
         '</div>', unsafe_allow_html=True)
     st.markdown(f'<div style="margin-top:.6rem">{style.bar(pct)}</div>'
                 f'<div class="sb-small">Whole week: +{st_["week_bonus"]} XP when every block is done or excused. '
-                '⭕ not ticked · ⏳ waiting · ✅ confirmed · ⏭️ skipped · 🌿 excused · ▫️ missed</div>',
+                '⭕ not ticked · ✅ done · ⏭️ skipped · 🌿 excused · ▫️ missed' + ('' if auto else ' · ⏳ waiting') + '</div>',
                 unsafe_allow_html=True)
 
 
@@ -278,7 +294,7 @@ def render_parent(kid):
     if not rt.ready():
         _not_ready()
         return
-    a, b, c, d = st.tabs(["✅ To confirm", "🗓️ Her week", "🎁 Rewards", "⚙️ XP rules"])
+    a, b, c, d = st.tabs(["✅ Her ticks", "🗓️ Her week", "🎁 Rewards", "⚙️ XP rules"])
     with a:
         _confirm_list(kid)
     with b:
@@ -292,10 +308,11 @@ def render_parent(kid):
 
 
 def _confirm_list(kid):
+    _recent_ticks(kid)
     pend = rt.pending(kid["id"])
     if not pend:
-        st.success("Nothing waiting. All her ticks are confirmed 🎉")
         return
+    st.divider()
     st.markdown(f"**{len(pend)} block(s) she ticked as done.** Confirm to pay her XP (day and week bonuses are added "
                 "by themselves).")
     if st.button(f"Confirm all {len(pend)} ✅", key="rt_all"):
@@ -321,21 +338,90 @@ def _confirm_list(kid):
                 st.rerun()
 
 
+def _recent_ticks(kid):
+    """Auto-approved ticks from the last 7 days, newest first, with 'take back'."""
+    since = g.today() - timedelta(days=6)
+    rows = [r for r in rt.logs(kid["id"], since) if r.get("status") in ("approved", "skipped", "declined")]
+    rows.sort(key=lambda r: (str(r["day"]), str(r.get("ticked_at"))), reverse=True)
+    auto = rt.settings().get("auto_approve", True)
+    st.caption("Her XP is added the moment she ticks a block. If something wasn't really done, tap "
+               "**Take back** and the XP (and any bonus it unlocked) comes off." if auto else
+               "Approval is ON (⚙️ XP rules): ticks below this list wait for you to confirm.")
+    if not rows:
+        st.caption("No ticks in the last 7 days.")
+        return
+    for r in rows:
+        day = pd.to_datetime(str(r["day"])[:10]).date()
+        ic = STATUS.get(r["status"], ("•", ""))[0]
+        c1, c2 = st.columns([4.2, 1], vertical_alignment="center")
+        extra = f' · _{style.md(r["note"])}_' if r["status"] == "skipped" and r.get("note") else ""
+        c1.markdown(f'{ic} {rt.emoji(r.get("kind"))} **{style.md(r.get("title"))}** · {rt.SHORT[day.weekday()]} {day.day} '
+                    f'{day.strftime("%b")}' + (f' · +{r.get("xp")} XP' if r["status"] == "approved" else "") + extra)
+        if r["status"] == "approved":
+            with c2.popover("Take back", use_container_width=True):
+                note = st.text_input("Note for her (optional)", key=f"rtb_{r['id']}")
+                if st.button("Take back the XP", key=f"rtbb_{r['id']}"):
+                    for m in rt.decline(r, note):
+                        st.toast(m)
+                    st.rerun()
+
+
 def _xp_rules():
     s = rt.settings()
-    st.caption("How much the routine pays. A normal school week (about 21 hours of study) comes to roughly "
-               "550 XP with the defaults, on top of drill XP.")
+    st.markdown("##### XP for each activity")
+    st.caption("Same idea as Aadiv's Banana Quest: **1 XP a minute**, with **+10 for a tennis or swim session** and "
+               "**+20 for a match**. Change any number below and press Save. A block with no set time (like the "
+               "Sunday match) gets the 'no set time' XP.")
+    rows = []
+    for k, r in s["kinds"].items():
+        rows.append({"activity": f"{rt.KINDS[k][0]} {k}", "kind": k, "XP per minute": float(r["per_min"]),
+                     "max XP from minutes": int(r["cap"]), "bonus per block": int(r["bonus"]),
+                     "XP if no set time": int(r["flat"]),
+                     "60 min →": rt.kind_xp(k, 60, s)})
+    df = pd.DataFrame(rows)
+    ed = st.data_editor(
+        df, key="kind_xp_edit", hide_index=True, use_container_width=True, num_rows="fixed",
+        disabled=["activity", "60 min →"],
+        column_config={
+            "kind": None,
+            "activity": st.column_config.TextColumn("activity", width="medium"),
+            "XP per minute": st.column_config.NumberColumn(min_value=0.0, max_value=10.0, step=0.1, format="%.1f"),
+            "max XP from minutes": st.column_config.NumberColumn(min_value=0, max_value=1000, step=10),
+            "bonus per block": st.column_config.NumberColumn(min_value=0, max_value=500, step=5),
+            "XP if no set time": st.column_config.NumberColumn(min_value=0, max_value=1000, step=5),
+            "60 min →": st.column_config.NumberColumn("60 min =", help="XP for a 60-minute block (before you save)"),
+        })
     with st.form("rt_rules"):
+        st.markdown("##### Bonuses and ticking")
         c1, c2 = st.columns(2)
-        xph = c1.number_input("Study blocks: XP per hour", 0, 200, int(s["xp_per_hour"]), 5)
-        act = c2.number_input("Tennis / swimming / match: XP per block", 0, 200, int(s["active_xp"]), 5)
         dayb = c1.number_input("Whole day done: bonus XP", 0, 500, int(s["day_bonus"]), 5)
         wkb = c2.number_input("Whole week done: bonus XP", 0, 1000, int(s["week_bonus"]), 5)
         back = c1.number_input("She can tick blocks up to … days back", 0, 3, int(s["days_back"]), 1)
-        if st.form_submit_button("Save XP rules"):
-            rt.save_settings({"xp_per_hour": int(xph), "active_xp": int(act), "day_bonus": int(dayb),
-                              "week_bonus": int(wkb), "days_back": int(back)})
-            st.success("Saved. New ticks use these numbers (already-ticked blocks keep theirs).")
+        auto = st.toggle("XP the moment she ticks (no confirming needed)", value=bool(s.get("auto_approve", True)),
+                         help="Off = each tick waits for Mum or Papa to confirm before the XP is paid.")
+        c3, c4 = st.columns(2)
+        save = c3.form_submit_button("Save XP rules 💾", use_container_width=True)
+        reset = c4.form_submit_button("Back to the Banana Quest defaults", use_container_width=True, type="tertiary")
+    if save or reset:
+        kinds = {k: dict(v) for k, v in rt.KIND_XP.items()} if reset else {
+            row["kind"]: {"per_min": float(row["XP per minute"] or 0), "cap": int(row["max XP from minutes"] or 0),
+                          "bonus": int(row["bonus per block"] or 0), "flat": int(row["XP if no set time"] or 0)}
+            for _, row in ed.iterrows()}
+        rt.save_settings({"kinds": kinds, "day_bonus": int(dayb), "week_bonus": int(wkb), "days_back": int(back),
+                          "auto_approve": bool(auto)})
+        st.session_state.pop("kind_xp_edit", None)
+        st.success("Saved ✨ New ticks use these numbers; blocks already ticked keep the XP they got.")
+        st.rerun()
+    wk = _weekly_estimate(rt.settings())
+    st.caption(f"With these numbers her current timetable is worth about **{wk:,} XP a week** if every block is done "
+               f"(including the day and week bonuses), on top of drill XP. Reward prices are in the 🎁 Rewards tab.")
+
+
+def _weekly_estimate(s) -> int:
+    all_b = rt.blocks()
+    tot = sum(rt.block_xp(b, s) for b in all_b if not b.get("optional"))
+    days = len({int(b["weekday"]) for b in all_b if not b.get("optional")})
+    return tot + days * int(s["day_bonus"]) + int(s["week_bonus"])
 
 
 def home_card(kid, is_child):

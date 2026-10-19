@@ -211,7 +211,7 @@ def stars(n: int, out_of: int = 3) -> str:
 
 def xp_toasts():
     for amount, reason in st.session_state.pop("xp_toasts", []):
-        st.toast(f"+{amount} XP · {reason}", icon="✨")
+        st.toast(f"{amount:+d} XP · {reason}", icon="✨" if amount >= 0 else "↩️")
 
 
 def sparkle_burst(key: str = "x"):
