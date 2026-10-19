@@ -140,6 +140,10 @@ BADGES = {
     "level_5":       ("🔮", "Sparkle Scholar", "Reached level 5"),
     "detective_3":   ("🕵️", "Test Detective", "Reviewed 3 paper tests"),
     "comeback_10":   ("🔁", "Comeback Kid", "Fixed 10 test mistakes with clean redos"),
+    "routine_30":    ("🗓️", "Routine Rockstar", "30 routine blocks done and confirmed"),
+    "routine_week":  ("🏰", "Whole Week Hero", "Finished every block of a whole routine week"),
+    "bookworm":      ("🐛", "Bookworm", "Got your first book from the Reward Shop"),
+    "bookworm_5":    ("📚", "Library Legend", "Five books earned from the Reward Shop"),
 }
 
 
@@ -182,6 +186,14 @@ def earned_badges(ctx: dict) -> set[str]:
         got.add("detective_3")
     if sum(1 for m in ctx.get("test_mistakes", []) if m.get("fixed")) >= 10:
         got.add("comeback_10")
+    if ctx.get("routine_done", 0) >= 30:
+        got.add("routine_30")
+    if ctx.get("routine_weeks", 0) >= 1:
+        got.add("routine_week")
+    if ctx.get("books_got", 0) >= 1:
+        got.add("bookworm")
+    if ctx.get("books_got", 0) >= 5:
+        got.add("bookworm_5")
     return got
 
 

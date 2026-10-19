@@ -76,6 +76,32 @@ button[data-testid="stBaseButton-tertiary"]:hover{border-color:var(--pink) !impo
 [class*="st-key-opt_"] button[data-testid="stBaseButton-tertiary"]{height:auto !important; padding-top:.7rem !important; padding-bottom:.7rem !important}
 [class*="st-key-opt_"] button[data-testid="stBaseButton-tertiary"] p,
 [class*="st-key-opt_"] button[data-testid="stBaseButton-tertiary"] div{white-space:normal !important; text-align:left !important; overflow:visible !important; text-overflow:clip !important}
+/* exam mode: the chosen option stands out but keeps the same shape */
+[class*="st-key-opt_"] button[data-testid="stBaseButton-secondary"]{min-height:3.6rem; height:auto !important; justify-content:flex-start;
+  padding-top:.7rem !important; padding-bottom:.7rem !important; border:3px solid var(--pink) !important; background:#ffe6f4 !important}
+[class*="st-key-opt_"] button[data-testid="stBaseButton-secondary"] p,
+[class*="st-key-opt_"] button[data-testid="stBaseButton-secondary"] div{font-size:1.2rem !important; font-weight:800 !important; color:var(--ink) !important; white-space:normal !important; text-align:left !important}
+/* question map: small number buttons */
+.st-key-qmap button{min-height:2.2rem !important; padding:.2rem .3rem !important}
+.st-key-qmap button p{font-size:.85rem !important}
+/* routine week grid */
+.rt-week{display:grid; grid-template-columns:repeat(auto-fit,minmax(138px,1fr)); gap:.6rem; margin:.4rem 0 .8rem}
+.rt-day{background:#ffffffd9; border:2px solid var(--line); border-radius:18px; padding:.55rem .55rem .7rem}
+.rt-day.today{border:3px solid var(--pink); box-shadow:0 4px 16px #ff4fa033}
+.rt-head{font-family:'Fredoka',sans-serif; font-weight:700; font-size:1.05rem; margin-bottom:.35rem; text-align:center}
+.rt-chip{background:#fff6fc; border:1.5px solid var(--line); border-radius:12px; padding:.3rem .45rem; margin:.25rem 0;
+  font-size:.82rem; line-height:1.25}
+.rt-chip b{font-weight:800} .rt-chip span{display:block; color:var(--ink2); font-size:.74rem}
+.rt-chip.opt{border-style:dashed; opacity:.85}
+.rt-free{text-align:center; color:var(--ink2); font-size:.9rem; padding:.8rem 0}
+/* bookshelf */
+.bk-shelf{display:flex; align-items:flex-end; gap:6px; flex-wrap:wrap; padding:14px 12px 0; min-height:210px;
+  background:linear-gradient(#fff7fb,#fde9f6); border-radius:18px 18px 0 0; border:2px solid var(--line); border-bottom:none}
+.bk-spine{width:46px; border-radius:6px 6px 2px 2px; box-shadow:inset -5px 0 0 #00000014, 0 2px 4px #0002;
+  display:flex; align-items:center; justify-content:center; overflow:hidden}
+.bk-spine span{writing-mode:vertical-rl; transform:rotate(180deg); font-weight:800; font-size:.78rem; color:#3b2257;
+  padding:8px 0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-height:95%}
+.bk-plank{height:16px; background:linear-gradient(#c58b5a,#9b6a42); border-radius:0 0 10px 10px}
 /* inputs */
 .stTextInput input, .stTextArea textarea, .stNumberInput input{border-radius:14px !important; border:2px solid var(--line) !important; background:#fff !important}
 [data-baseweb="select"]>div{border-radius:14px !important}

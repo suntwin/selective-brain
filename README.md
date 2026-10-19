@@ -149,11 +149,29 @@ Sidebar → 📝 **Test Review** (her login). After she gets a paper test back, 
 - **XP:** +5 per lost mark logged, +3 per lucky guess, +15 for finishing a review, +6 per right redo, +10 when fixed, +2 for a try. Badges: 🕵️ Test Detective (3 reviews), 🔁 Comeback Kid (10 fixed).
 - **One-time setup:** run `supabase/005_test_review.sql` in Supabase → SQL Editor (creates `tests` and `test_mistakes`). Code: `views/test_review.py`, `sb/testlog.py`.
 
+## Exam mode (added 2026-10-11)
+Drills now work like the real exam: no right/wrong while she plays. A numbered question map (✅ answered · 🚩 flagged · ⭕ blank) jumps to any question; ◀ Back / Next ▶ and pre-filled answers let her change anything; 🚩 **Flag to check** marks the doubtful ones. **Check & submit 🔎** shows the flagged / unanswered list with Open ✏️, and only **Submit my drill ✅** marks it and shows the score, every answer and Fix-it. Answers save straight away, so Pause/Resume keeps them (flags don't survive a reload). Code: `views/drill.py`.
+
+## My Routine + Reward Shop (added 2026-10-19)
+Her weekly timetable (worked out with Mum on paper) lives in the app, earns XP, and the XP buys books and tennis treats.
+
+- **🗓️ My Routine** (sidebar, both logins):
+  - **📅 Today:** each block with time, XP and status. She taps **✅ Done!** (or **Skip…** with a reason); it waits ⏳ until Mum or Papa confirm, then the XP is paid. She can also tick yesterday's blocks. A parent sees Confirm / Not done / Excuse 🌿 on the same screen (excused = no XP, but counts for bonuses).
+  - **🗓️ My week:** Mon–Sun grid with ⭕ ⏳ ✅ ⏭️ 🌿 ▫️, blocks confirmed, whole days done, routine XP.
+  - **✏️ Change my routine:** per day: edit ✏️ or remove 🗑️ a block, ➕ add a block (several days at once, start/end or "no set time", kind, name, "only if needed"), 📋 copy a day, ↩️ restore the paper timetable. Removing only hides a block, so past ticks stay.
+- **XP (Parent Hub → 🗓️ Routine & rewards → ⚙️ XP rules):** study blocks 20 XP per hour (rounded to 5), tennis / swimming / match 10, whole day +15, whole week +50, tick up to 1 day back. A normal school week ≈ 550 XP.
+- **🎁 Reward Shop** (sidebar): wallet = all XP earned − swaps waiting − swaps given (levels use lifetime XP, so spending never drops a level). 🛍️ Shop by 📚 Books / 🎾 Tennis / 🍦 Treats with 🎯 pin-a-goal (savings bar on Home); book rewards ask "which book?" (from her 📝 wishlist or typed). 📦 My swaps (cancel while waiting). 📚 **My bookshelf**: a spine for every book earned. 📝 **Book wishlist** for Mum and Papa to see.
+- **Parent Hub → 🗓️ Routine & rewards:** ✅ To confirm (one by one or **Confirm all**), 🗓️ Her week, 🎁 Rewards (hand over 🎁 / decline with refund, her wishlist, and the shop catalogue as an editable table: emoji, title, category, cost, ask book, show), ⚙️ XP rules. A banner on top of Parent Hub says when something is waiting.
+- **Starter shop:** bedtime reading 150 · library trip 250 · bookmark set 400 · reading night-in 500 · bookshop + hot chocolate 600 · paperback 1,200 · hardback 2,000 · series box set 5,000 · tennis balls 300 · overgrips 350 · hitting session with Papa 400 · headband/wristbands 700 · live pro match 4,000 · weekend treat 300.
+- **Badges:** 🗓️ Routine Rockstar (30 blocks confirmed), 🏰 Whole Week Hero, 🐛 Bookworm (first book), 📚 Library Legend (5 books).
+- **One-time setup:** run `supabase/006_routine_rewards.sql` in Supabase → SQL Editor. It adds `profiles.reward_goal`, the tables `routine_blocks`, `routine_logs`, `rewards`, `redemptions`, `book_wishlist`, a policy that lets a parent pay XP into her `xp_events`, and loads her paper timetable + the starter shop. Mum can use Papa's login, or get her own parent login (add the auth user, then a `profiles` row with role `parent` in the same family).
+- **Code:** `sb/routine.py`, `views/routine.py`, `views/shop.py`; test `tools/e2e_routine.py`.
+
 ## Where things live
 | | |
 |---|---|
 | `app.py` | Login and navigation (child pages vs parent pages) |
-| `views/` | `home` (check-in, plan, topic map), `drill` (player, timer, fix-it), `notebook`, `stars`, `parent` |
+| `views/` | `home` (check-in, plan, topic map), `drill` (player, timer, fix-it), `routine`, `shop`, `notebook`, `stars`, `parent` |
 | `sb/gamify.py` | XP rules, levels, streak (rest days allowed), badges, spaced-recall intervals |
 | `sb/drillspec.py` | Drill validation and the Markdown export for the vault |
 | `sb/store.py` | Supabase backend, plus a local JSON backend for demo mode |

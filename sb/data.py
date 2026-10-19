@@ -102,6 +102,14 @@ def add_xp(amount: int, reason: str):
         st.session_state.setdefault("xp_toasts", []).append((amount, reason))
 
 
+def add_xp_for(uid: str, amount: int, reason: str):
+    """XP for someone else in the family (a parent confirming her routine). Needs 006_routine_rewards.sql."""
+    if uid == me()["id"]:
+        return add_xp(amount, reason)
+    if amount:
+        store().insert("xp_events", {"user_id": uid, "amount": int(amount), "reason": reason})
+
+
 def save_checkin(energy, mood, minutes, size):
     first = checkin_today() is None
     store().upsert("checkins", {"user_id": me()["id"], "day": str(g.today()), "energy": energy,
@@ -245,9 +253,11 @@ def stats(uid=None):
     s = g.streak(a, c)
     recall_got = sum(1 for e in xp_events(uid) if e["reason"] == "Remembered a card")
     from . import testlog          # Test Review (paper tests); empty until 005_test_review.sql is run
+    from . import routine          # Routine & Reward Shop; empty until 006_routine_rewards.sql is run
     return {"attempts": a, "checkins": c, "answers": ans, "notebook": nb, "xp": xp,
             "level": g.level_for(xp), "streak": s, "recall_got": recall_got,
-            "tests": testlog.safe_tests(uid), "test_mistakes": testlog.safe_mistakes(uid)}
+            "tests": testlog.safe_tests(uid), "test_mistakes": testlog.safe_mistakes(uid),
+            **routine.safe_stats(uid)}
 
 
 def award_badges(ctx) -> list[str]:

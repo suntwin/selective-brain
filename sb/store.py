@@ -84,7 +84,8 @@ class SupabaseStore:
 # Local JSON backend (demo / offline testing)
 # ----------------------------------------------------------------------------
 _LOCK = threading.Lock()
-_ID_TABLES = {"families", "checkins", "attempts", "answers", "notebook", "xp_events", "tests", "test_mistakes"}
+_ID_TABLES = {"families", "checkins", "attempts", "answers", "notebook", "xp_events", "tests", "test_mistakes",
+              "routine_blocks", "routine_logs", "rewards", "redemptions", "book_wishlist"}
 
 
 class LocalStore:
@@ -100,7 +101,8 @@ class LocalStore:
         kid, dad = str(uuid.uuid4()), str(uuid.uuid4())
         data = {t: [] for t in ["families", "profiles", "drills", "checkins", "attempts",
                                 "answers", "notebook", "xp_events", "badges", "insights",
-                                "tests", "test_mistakes"]}
+                                "tests", "test_mistakes", "routine_blocks", "routine_logs", "rewards",
+                                "redemptions", "book_wishlist"]}
         data["families"].append({"id": fam, "name": "Demo family"})
         data["profiles"] += [
             {"id": kid, "family_id": fam, "display_name": "Siyonah", "role": "child",
@@ -108,6 +110,16 @@ class LocalStore:
             {"id": dad, "family_id": fam, "display_name": "Papa", "role": "parent",
              "avatar": "🧭", "exam_date": "2027-06-19", "email": "papa@demo"},
         ]
+        # Routine and Reward Shop starters (same as supabase/006_routine_rewards.sql)
+        from .routine import STARTER, STARTER_REWARDS
+        for wd, st_, en, kind, title, opt in STARTER:
+            data["routine_blocks"].append({"id": str(uuid.uuid4()), "family_id": fam, "weekday": wd, "start_time": st_,
+                                           "end_time": en, "kind": kind, "title": title, "optional": opt,
+                                           "active": True, "created_at": now_iso()})
+        for i, (em, title, cat, cost, ask) in enumerate(STARTER_REWARDS):
+            data["rewards"].append({"id": str(uuid.uuid4()), "family_id": fam, "emoji": em, "title": title,
+                                    "category": cat, "cost": cost, "ask_book": ask, "active": True, "sort": i,
+                                    "created_at": now_iso()})
         # Pre-load any drills shipped in drills/*.json so the demo has content
         for p in sorted(Path(__file__).resolve().parent.parent.glob("drills/*.json")):
             try:

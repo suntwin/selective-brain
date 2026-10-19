@@ -47,28 +47,55 @@ with sync_playwright() as p:
     click(page, "Start my drill")
     wait(page, 1500)
     shot(page, "04_drill_q1", full=False)
+    # exam mode: answer everything, flag one, go back once, then check & submit
     n = 0
-    while n < 40:
+    reopened = False
+    while n < 60:
         n += 1
-        if page.get_by_role("button", name="See my results").count():
-            click(page, "See my results")
+        if page.get_by_role("button", name="Submit my drill ✅").count():
+            shot(page, f"05_check_{n}")
+            opn = page.get_by_role("button", name="Open ✏️")
+            if not reopened and opn.count():
+                reopened = True
+                opn.first.click(); wait(page)
+                shot(page, "05_reopened", full=False)
+                click(page, "🚩 Unflag")
+                page.locator('[class*="st-key-opt_"] button').nth(2).click(); wait(page)
+                continue
+            box = page.locator('[class*="st-key-submit_ok"] input')
+            if box.count():
+                page.locator('[class*="st-key-submit_ok"] label').first.click(); wait(page)
+            click(page, "Submit my drill ✅")
             break
-        if page.get_by_role("button", name="Next question").count():
-            click(page, "Next question")
-            continue
-        if n == 3 and page.get_by_role("button", name="Skip for now").count():
-            click(page, "Skip for now")
-            continue
+        if n == 2:
+            click(page, "🚩 Flag to check")
+            shot(page, "05_flagged", full=False)
+        if n == 4 and page.get_by_role("button", name="◀ Back").count():
+            click(page, "◀ Back")
+            shot(page, "05_back_prefilled", full=False)
+            click(page, "Next ▶")
         opts = page.locator('[class*="st-key-opt_"] button')
-        if opts.count() == 0:
+        num = page.locator('[class*="st-key-in_"] input')
+        wrd = page.locator('[class*="st-key-w_"] input')
+        txt = page.locator('textarea')
+        if opts.count():
+            opts.nth(1 if n % 2 else 0).click(); wait(page)
+        elif num.count():
+            num.first.fill("7"); click(page, "Save my answer 💾")
+        elif wrd.count():
+            for i in range(wrd.count()):
+                wrd.nth(i).fill("5")
+            click(page, "Save my answers 💾")
+            if page.get_by_role("button", name="Next ▶").count() and page.get_by_role("button", name="Next ▶").is_enabled():
+                click(page, "Next ▶")
+        elif txt.count():
+            txt.first.fill("The key glinted in the gutter. " * 12)
+            click(page, "Save my writing 💾")
+            if page.get_by_role("button", name="Next ▶").count() and page.get_by_role("button", name="Next ▶").is_enabled():
+                click(page, "Next ▶")
+        else:
             shot(page, f"stuck_{n}")
             break
-        # alternate: pick B on odd, A on even (mix of right/wrong)
-        idx = 1 if n % 2 else 0
-        opts.nth(idx).click()
-        wait(page)
-        if n == 2:
-            shot(page, "05_feedback", full=False)
     wait(page, 2500)
     shot(page, "06_review")
     # fix first mistake

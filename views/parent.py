@@ -15,8 +15,18 @@ from sb.store import now_iso
 def render():
     kid = data.child()
     st.markdown(f"## 🧭 Parent Hub · {kid['display_name']}")
-    t1, tm, tt, t2, t3, t4 = st.tabs(["📈 This week", "🗺️ Mistake Map", "📝 Test Reviews", "🪄 Publish a drill",
-                                      "📤 Export to vault", "⚙️ Settings"])
+    from sb import routine as rt
+    pend, asks = rt.pending(kid["id"]), [r for r in rt.redemptions(kid["id"]) if r["status"] == "requested"]
+    banner = st.container(key="routine_banner")      # always present, so the tabs keep their place on rerun
+    if pend or asks:
+        bits = ([f"✅ {len(pend)} routine block(s) to confirm"] if pend else []) + \
+               ([f"🎁 {len(asks)} reward swap(s) to hand over"] if asks else [])
+        banner.info(" · ".join(bits) + " → open the 🗓️ Routine & rewards tab.")
+    t1, tr, tm, tt, t2, t3, t4 = st.tabs(["📈 This week", "🗓️ Routine & rewards", "🗺️ Mistake Map", "📝 Test Reviews",
+                                          "🪄 Publish a drill", "📤 Export to vault", "⚙️ Settings"])
+    with tr:
+        from views import routine
+        routine.render_parent(kid)
     with t1:
         _week(kid)
     with tm:
@@ -250,15 +260,15 @@ def _reset(kid):
             st.rerun()
     with c2:
         st.markdown("**Start completely fresh**")
-        st.caption("Wipes ALL her attempts, answers, test reviews, notebook cards, XP, badges and check-ins. "
-                   "Drills you've published stay.")
+        st.caption("Wipes ALL her attempts, answers, test reviews, notebook cards, XP, badges, check-ins, routine "
+                   "ticks and reward swaps. Drills, her timetable and the shop stay.")
         word = st.text_input("Type RESET to confirm", key="reset_word")
         if st.button("Wipe everything", disabled=word.strip() != "RESET", use_container_width=True):
             for a in att:
                 s.delete("answers", {"attempt_id": a["id"]})
             for t in ("attempts", "notebook", "xp_events", "badges", "checkins"):
                 s.delete(t, {"user_id": uid})
-            for t in ("test_mistakes", "tests"):       # Test Review (skip quietly if 005 isn't run yet)
+            for t in ("test_mistakes", "tests", "routine_logs", "redemptions"):  # skip quietly if 005/006 aren't run
                 try:
                     s.delete(t, {"user_id": uid})
                 except Exception:

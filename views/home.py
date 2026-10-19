@@ -54,6 +54,8 @@ def render():
         else:
             _today_plan(ci, is_child, stk)
     with right:
+        from views import routine as _rt
+        _rt.home_card(kid, is_child)
         tip = TIPS[g.today().toordinal() % len(TIPS)]
         style.card(f'<div class="sb-title" style="font-size:1.15rem">💡 Today\'s Brain Tip</div>'
                    f'<div style="margin-top:6px;font-weight:700">{esc(tip)}</div>', "sb-card sb-tip")
